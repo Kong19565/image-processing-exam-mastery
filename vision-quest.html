@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="th" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Vision Quest: ไต่หอคอยประมวลผลภาพ 6 ชั้น — Image Processing Exam Mastery</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Sarabun:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Sarabun', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+            display: ['Chakra Petch', 'Sarabun', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              900: '#1e3a8a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root {
+      --bg: #090d16;
+      --panel: #0f172a;
+      --panel2: #1e293b;
+      --line: #334155;
+      --line2: #475569;
+      --ink: #f8fafc;
+      --ink2: #cbd5e1;
+      --ink3: #94a3b8;
+      --run: #38bdf8;
+      --wait: #a855f7;
+      --done: #10b981;
+      --bad: #ef4444;
+      --block: #f59e0b;
+      --boss: #ec4899;
+      --k: #c084fc;
+      --s: #86efac;
+      --n: #fb923c;
+      --c: #64748b;
+      --d: #fde047;
+    }
+    body { font-family: 'Sarabun', sans-serif; background-color: #020617; }
+    code, pre { font-family: 'JetBrains Mono', monospace; }
+    .font-display { font-family: 'Chakra Petch', sans-serif; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* Code Highlighting */
+    .code { font-family: 'JetBrains Mono', monospace; background: #090d16; border: 1px solid #1e293b; border-radius: 0.75rem; padding: 1rem; font-size: 0.85rem; line-height: 1.5; overflow-x: auto; margin: 0.75rem 0; }
+    .code.clickable div[data-i] { cursor: pointer; padding: 2px 8px; border-radius: 4px; transition: background 0.15s; }
+    .code.clickable div[data-i]:hover { background: rgba(56, 189, 248, 0.15); }
+    .code.clickable div.good { background: rgba(16, 185, 129, 0.3) !important; border-left: 4px solid #10b981; font-weight: 700; }
+    .code.clickable div.bad { background: rgba(239, 68, 68, 0.3) !important; border-left: 4px solid #ef4444; }
+    .k { color: var(--k); font-weight: 600; }
+    .s { color: var(--s); }
+    .n { color: var(--n); }
+    .c { color: var(--c); font-style: italic; }
+    .d { color: var(--d); }
+
+    /* Screens Animation */
+    .screen { display: none; animation: fadeIn 0.25s ease-out; }
+    .screen.on { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* HUD pulse */
+    @keyframes pulse-dot { 50% { opacity: 0.3; } }
+    .pulse-dot { animation: pulse-dot 1.5s infinite; }
+
+    /* Shake on error */
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
+    }
+    .shake { animation: shake 0.4s; }
+
+    /* Custom Input Blanks */
+    .blank-in {
+      background: #1e293b;
+      border: 2px solid #38bdf8;
+      color: #38bdf8;
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      outline: none;
+      min-width: 140px;
+      transition: all 0.2s;
+    }
+    .blank-in:focus { border-color: #60a5fa; box-shadow: 0 0 10px rgba(96, 165, 250, 0.4); }
+    .blank-in.ok { border-color: #10b981; color: #10b981; background: rgba(16, 185, 129, 0.15); }
+    .blank-in.no { border-color: #ef4444; color: #ef4444; background: rgba(239, 68, 68, 0.15); }
+    .filled { background: rgba(56, 189, 248, 0.12); color: #7dd3fc; padding: 2px 6px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; }
+
+    /* Boss Editor */
+    .editor {
+      width: 100%;
+      min-height: 280px;
+      background: #090d16;
+      border: 1px solid #334155;
+      border-radius: 0.75rem;
+      padding: 1rem;
+      color: #f8fafc;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.875rem;
+      line-height: 1.5;
+      resize: vertical;
+      outline: none;
+    }
+    .editor:focus { border-color: #38bdf8; box-shadow: 0 0 12px rgba(56, 189, 248, 0.25); }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-blue-600 selection:text-white">
+
+  <!-- Top Sticky Navigation Bar -->
+  <header class="sticky top-0 z-50 bg-slate-900/98 backdrop-blur-md border-b border-slate-800 shadow-xl">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-13 sm:h-16 py-2 gap-2">
+        <a href="index.html" class="flex items-center space-x-2 font-bold text-sm sm:text-base md:text-lg text-white hover:text-blue-400 transition-colors flex-shrink-0">
+          <span class="text-xl sm:text-2xl">🖼️</span>
+          <span class="tracking-tight">Image <span class="text-blue-500 font-extrabold">Mastery</span></span>
+        </a>
+        
+        <!-- Desktop Nav Items -->
+        <nav class="hidden lg:flex items-center space-x-1">
+          <a href="index.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">🏠 หน้าหลัก</a>
+          <a href="questions-bank.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">🎯 คลัง 72 ข้อ</a>
+          <a href="exam-simulator.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">⏱️ จำลองสอบ</a>
+          <a href="vision-quest.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap bg-blue-600 text-white font-semibold shadow-md">🗼 ไต่หอคอย</a>
+          <a href="simulators.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">🧪 ห้องทดลอง</a>
+          <a href="lab-pretest.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">💻 แล็บ Pre-Test</a>
+          <a href="lectures.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">📚 สรุป 12 บท</a>
+          <a href="downloads.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">📦 ดาวน์โหลด</a>
+        </nav>
+
+        <!-- Right Side: Sound & Quick Link -->
+        <div class="flex items-center space-x-2 flex-shrink-0">
+          <button id="btn-sound-toggle" type="button" class="p-1.5 sm:p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition text-xs flex items-center gap-1">
+            <span id="sound-icon">🔊</span> <span class="hidden sm:inline">เสียง</span>
+          </button>
+          <a href="downloads.html" class="inline-flex items-center px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-emerald-600 hover:bg-emerald-500 text-white shadow transition-all">
+            📥 ZIP
+          </a>
+        </div>
+      </div>
+
+      <!-- Mobile Horizontal Pill Scroller -->
+      <div class="lg:hidden flex space-x-1.5 py-1.5 overflow-x-auto no-scrollbar border-t border-slate-800/80 -mx-3 px-3">
+        <a href="index.html" class="px-2.5 py-1 rounded-full text-xs transition-all whitespace-nowrap flex-shrink-0 bg-slate-800/90 text-slate-300 border border-slate-700/50">🏠 หน้าหลัก</a>
+        <a href="questions-bank.html" class="px-2.5 py-1 rounded-full text-xs transition-all whitespace-nowrap flex-shrink-0 bg-slate-800/90 text-slate-300 border border-slate-700/50">🎯 คลัง 72 ข้อ</a>
+        <a href="exam-simulator.html" class="px-2.5 py-1 rounded-full text-xs transition-all whitespace-nowrap flex-shrink-0 bg-slate-800/90 text-slate-300 border border-slate-700/50">⏱️ จำลองสอบ</a>
+        <a href="vision-quest.html" class="px-2.5 py-1 rounded-full text-xs transition-all whitespace-nowrap flex-shrink-0 bg-blue-600 text-white font-semibold shadow">🗼 ไต่หอคอย</a>
+        <a href="simulators.html" class="px-2.5 py-1 rounded-full text-xs transition-all whitespace-nowrap flex-shrink-0 bg-slate-800/90 text-slate-300 border border-slate-700/50">🧪 ห้องทดลอง</a>
+        <a href="lab-pretest.html" class="px-2.5 py-1 rounded-full text-xs transition-all whitespace-nowrap flex-shrink-0 bg-slate-800/90 text-slate-300 border border-slate-700/50">💻 แล็บ Pre-Test</a>
+        <a href="lectures.html" class="px-2.5 py-1 rounded-full text-xs transition-all whitespace-nowrap flex-shrink-0 bg-slate-800/90 text-slate-300 border border-slate-700/50">📚 สรุป 12 บท</a>
+        <a href="downloads.html" class="px-2.5 py-1 rounded-full text-xs transition-all whitespace-nowrap flex-shrink-0 bg-slate-800/90 text-slate-300 border border-slate-700/50">📦 ดาวน์โหลด</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Arcade HUD Bar -->
+  <div class="sticky top-13 sm:top-16 z-40 bg-slate-900/95 backdrop-blur-md border-b border-slate-800 px-4 py-2">
+    <div class="max-w-4xl mx-auto flex items-center justify-between gap-3 text-xs sm:text-sm">
+      <div class="flex items-center gap-2">
+        <button type="button" id="hud-back" class="hidden px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs border border-slate-700">← หอคอย</button>
+        <span class="font-display font-bold text-sky-400 tracking-wider flex items-center gap-1.5">
+          <span class="w-2.5 h-2.5 rounded-full bg-sky-400 shadow-lg shadow-sky-400/50 pulse-dot"></span>
+          <span id="hud-level-text">VISION QUEST</span>
+        </span>
+      </div>
+      <div class="flex items-center gap-3 font-mono">
+        <div id="hud-hearts" class="text-rose-500 font-bold text-base sm:text-lg tracking-wider">♥♥♥</div>
+        <div class="text-slate-400">XP: <b id="hud-xp" class="text-amber-400">0</b></div>
+        <div id="hud-q" class="text-slate-300 font-sans hidden sm:block">ข้อ 0/0</div>
+      </div>
+    </div>
+    <!-- Mini progress bar -->
+    <div class="w-full bg-slate-800 h-1 mt-1.5 rounded-full overflow-hidden">
+      <div id="hud-bar" class="bg-gradient-to-r from-sky-400 to-indigo-500 h-full w-0 transition-all duration-300"></div>
+    </div>
+  </div>
+
+  <!-- Main Game Container -->
+  <main class="flex-grow max-w-4xl mx-auto px-4 py-6 w-full">
+
+    <!-- SCREEN 1: HOME (Tower Map) -->
+    <section class="screen on" id="s-home">
+      <div class="text-center py-6 sm:py-8">
+        <div class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-sky-500/10 text-sky-400 border border-sky-500/20 mb-3 tracking-widest uppercase font-display">
+          ⚡ Digital Image Processing Final Quest
+        </div>
+        <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight font-display">
+          ไต่หอคอยประมวลผลภาพ <span class="text-sky-400">6 ชั้น</span>
+        </h1>
+        <p class="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto mt-2">
+          ฝึกจำโค้ด สูตรคำนวณ และอัลกอริทึมจาก Lectures 1–12 และ Pre-Test Q1–Q4 สุ่มโจทย์ใหม่ทุกครั้ง สะสมดาว ★★★ และพิชิตบอสใหญ่ก่อนลงสนามสอบจริง
+        </p>
+
+        <!-- Stats Tiles -->
+        <div class="grid grid-cols-3 gap-3 max-w-xl mx-auto mt-6">
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-3 text-center">
+            <span class="text-xs text-slate-400 uppercase tracking-wider block font-display">ดาวที่เก็บได้</span>
+            <b id="sum-stars" class="text-lg sm:text-2xl font-mono text-amber-400">0 / 18</b>
+          </div>
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-3 text-center">
+            <span class="text-xs text-slate-400 uppercase tracking-wider block font-display">ชั้นที่ผ่านแล้ว</span>
+            <b id="sum-clear" class="text-lg sm:text-2xl font-mono text-emerald-400">0 / 6</b>
+          </div>
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-3 text-center">
+            <span class="text-xs text-slate-400 uppercase tracking-wider block font-display">ตอบไปแล้ว</span>
+            <b id="sum-answered" class="text-lg sm:text-2xl font-mono text-sky-400">0 ข้อ</b>
+          </div>
+        </div>
+      </div>
+
+      <!-- The Vertical Tower Floors -->
+      <div class="space-y-4 my-6" id="tower-floors">
+        <!-- Generated by JS -->
+      </div>
+
+      <!-- Footer Action Controls -->
+      <div class="flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500 pt-4 border-t border-slate-800/80">
+        <span>💾 บันทึกความคืบหน้าอัตโนมัติในเครื่องของคุณ</span>
+        <div class="flex gap-2">
+          <button type="button" id="btn-unlock" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition">
+            🔓 ปลดล็อกทุกชั้น
+          </button>
+          <button type="button" id="btn-reset" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-rose-900/50 text-slate-300 hover:text-rose-300 border border-slate-700 transition">
+            🔄 ล้างความคืบหน้า
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 2: INTRO -->
+    <section class="screen" id="s-intro">
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl max-w-2xl mx-auto my-6">
+        <div class="text-xs font-semibold text-sky-400 uppercase tracking-wider font-display" id="intro-eyebrow">
+          ชั้น 1 / 6
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1 font-display" id="intro-title">
+          ชื่อชั้น
+        </h2>
+        <div class="my-6 bg-slate-950/70 border border-slate-800 rounded-xl p-4 sm:p-5" id="intro-rules">
+          <!-- Rules HTML -->
+        </div>
+        <div class="flex flex-wrap gap-3 mt-6">
+          <button type="button" id="btn-start" class="px-6 py-2.5 rounded-xl font-bold bg-sky-500 hover:bg-sky-400 text-slate-950 transition font-display shadow-lg shadow-sky-500/20 text-sm sm:text-base">
+            🚀 เริ่มเล่นชั้นนี้
+          </button>
+          <button type="button" id="btn-intro-back" class="px-4 py-2.5 rounded-xl font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 transition text-sm sm:text-base">
+            กลับหอคอย
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 3: PLAY -->
+    <section class="screen" id="s-play">
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-7 shadow-2xl max-w-3xl mx-auto">
+        <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-800">
+          <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-sky-500/10 text-sky-400 border border-sky-500/30" id="q-tag">
+            โหมดคำถาม
+          </span>
+          <span class="font-mono text-xs text-slate-400 bg-slate-800 px-2 py-0.5 rounded" id="q-week">
+            L1-12
+          </span>
+        </div>
+
+        <div id="q-body" class="space-y-4">
+          <!-- Dynamic Question Body -->
+        </div>
+
+        <!-- Real-time Feedback Box -->
+        <div id="fb" class="hidden mt-6 p-4 rounded-xl border transition-all">
+          <div class="flex items-center justify-between mb-1">
+            <span class="font-bold text-base" id="fb-title">ถูกต้อง!</span>
+            <span class="font-mono font-bold text-sm" id="fb-pts">+100</span>
+          </div>
+          <div class="text-xs sm:text-sm text-slate-300 leading-relaxed" id="fb-text">
+            คำอธิบายเชิงลึก
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex items-center justify-between mt-6 pt-4 border-t border-slate-800" id="q-actions">
+          <!-- Action Buttons -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 4: RESULT -->
+    <section class="screen" id="s-result">
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl max-w-2xl mx-auto my-6 text-center">
+        <div class="text-3xl sm:text-5xl font-extrabold font-display mb-2" id="r-big">
+          ผ่านฉลุย!
+        </div>
+        <div class="text-3xl sm:text-4xl text-amber-400 tracking-widest my-3" id="r-stars">
+          ★★★
+        </div>
+        <div class="grid grid-cols-3 gap-3 bg-slate-950/70 border border-slate-800 rounded-xl p-4 my-6 text-center">
+          <div>
+            <span class="text-xs text-slate-400 block font-display">คะแนนรวม</span>
+            <b id="r-score" class="text-xl sm:text-2xl font-mono text-white">100%</b>
+          </div>
+          <div>
+            <span class="text-xs text-slate-400 block font-display">ตอบถูกต้อง</span>
+            <b id="r-acc" class="text-xl sm:text-2xl font-mono text-emerald-400">10 / 10</b>
+          </div>
+          <div>
+            <span class="text-xs text-slate-400 block font-display">XP ที่ได้รับ</span>
+            <b id="r-xp" class="text-xl sm:text-2xl font-mono text-sky-400">+150</b>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap justify-center gap-3 mt-6">
+          <button type="button" id="btn-next-level" class="px-5 py-2.5 rounded-xl font-bold bg-sky-500 hover:bg-sky-400 text-slate-950 transition font-display shadow-lg shadow-sky-500/20 text-sm sm:text-base">
+            ชั้นถัดไป →
+          </button>
+          <button type="button" id="btn-retry" class="px-4 py-2.5 rounded-xl font-semibold bg-indigo-600 hover:bg-indigo-500 text-white transition text-sm sm:text-base">
+            เล่นชั้นนี้อีก
+          </button>
+          <button type="button" id="btn-home" class="px-4 py-2.5 rounded-xl font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 transition text-sm sm:text-base">
+            กลับหอคอย
+          </button>
+        </div>
+
+        <!-- Wrong questions review -->
+        <div class="text-left mt-8 pt-6 border-t border-slate-800" id="r-review"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="toast" class="fixed bottom-6 right-6 z-50 px-4 py-2.5 rounded-xl bg-slate-800 text-white text-xs sm:text-sm shadow-2xl border border-slate-700 opacity-0 pointer-events-none transition-all duration-300 transform translate-y-2"></div>
+
+  <!-- Footer -->
+  <footer class="mt-auto border-t border-slate-800 bg-slate-900/60 py-6 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4">
+      <p>310-3311 Digital Image Processing · Interactive Academic Exam Mastery Portal</p>
+      <p class="mt-1">สร้างสรรค์ด้วย Tailwind CSS, Web Audio API & Pure JavaScript สำหรับการเตรียมสอบปลายภาค</p>
+    </div>
+  </footer>
+
+  <script>
+  /* =====================================================================
+     DATASETS & CONFIG
+     ===================================================================== */
+  const CONCEPT = [{"w": "L1-2", "q": "ในระบบภาพดิจิทัล 8-bit พิกเซลแต่ละจุดเก็บค่าได้เท่าไร และมี Bit-plane กี่แผ่น?", "o": ["0–255 และมี 8 Bit-planes (บิต 0 ถึง บิต 7)", "0–256 และมี 8 Bit-planes", "1–256 และมี 16 Bit-planes", "0–127 และมี 7 Bit-planes"], "a": 0, "x": "ภาพ 8-bit มีระดับความสว่าง $2^8 = 256$ ระดับ (ค่า 0 ถึง 255) แบ่งเป็น 8 Bit-planes จากบิต 0 (LSB) ถึงบิต 7 (MSB)"}, {"w": "L2", "q": "Bit-plane ใดที่เก็บข้อมูลโครงสร้างส่วนใหญ่ของภาพ (ประมาณ 50% ของพลังงานภาพ)?", "o": ["Bit 7 (Most Significant Bit - MSB)", "Bit 0 (Least Significant Bit - LSB)", "Bit 4 (Middle Bit)", "ทุก Bit-plane มีสัดส่วนพลังงานเท่ากัน"], "a": 0, "x": "Bit 7 มีค่าน้ำหนัก $2^7 = 128$ จึงกำหนดโครงสร้างหลักของภาพ ส่วน Bit 0 มีน้ำหนัก $2^0 = 1$ มักใช้ซ่อนลายน้ำหรือ steganography"}, {"w": "L3", "q": "สมการ Gamma Correction คือ $s = c \\cdot r^\\gamma$ หากภาพมืดเกินไป ต้องการเพิ่มความสว่างในเงามืด ควรเลือกค่า $\\gamma$ อย่างไร?", "o": ["$\\gamma < 1$ (เช่น 0.4 หรือ 0.5)", "$\\gamma > 1$ (เช่น 2.0 หรือ 2.5)", "$\\gamma = 1$", "$\\gamma = 0$"], "a": 0, "x": "เมื่อ $\\gamma < 1$ ฟังก์ชันจะดึงระดับสีเทาค่าต่ำ (เงามืด) ให้สว่างขึ้นอย่างนุ่มนวล โดยค่าขาวสุด (255) ยังคงเดิม"}, {"w": "L3", "q": "Histogram Equalization มีจุดประสงค์หลักคืออะไร?", "o": ["กระจายระดับความสว่างให้ทั่วช่วง 0–255 เพื่อเพิ่ม Contrast โดยแปลง CDF ให้ใกล้เคียงเชิงเส้น", "ทำให้ภาพเป็นขาวดำแบบ binary", "ลดสัญญาณรบกวนความถี่สูง", "ปรับสมดุลสีขาว (White Balance)"], "a": 0, "x": "Histogram Equalization ใช้ Cumulative Distribution Function (CDF) ทำการแมปค่าพิกเซล เพื่อให้ฮิสโตแกรมกระจายตัวสม่ำเสมอตลอดช่วงความสว่าง"}, {"w": "L4", "q": "ฟิลเตอร์เชิงพื้นที่ (Spatial Filter) ชนิดใดมีประสิทธิภาพสูงสุดในการกำจัด <b>Salt-and-Pepper Noise</b> โดยไม่ทำให้ขอบภาพเบลอ?", "o": ["Median Filter (Non-linear Order-Statistic)", "Averaging Box Filter (3x3)", "Gaussian Lowpass Filter", "Laplacian Filter"], "a": 0, "x": "Median Filter เรียงลำดับพิกเซลในหน้าต่างแล้วเลือกค่ามัธยฐาน ค่าพิกเซลสุดโต่ง 0 หรือ 255 จะถูกกำจัดทิ้งโดยสิ้นเชิงโดยไม่เบลอเส้นขอบ"}, {"w": "L4", "q": "ผลรวมของสัมประสิทธิ์ในเคอร์เนลของ <b>High-pass Filter / Sharpening Filter</b> (เช่น Laplacian) มักมีค่าเท่ากับเท่าไร?", "o": ["0 (เพื่อรักษาพื้นที่ราบเรียบให้มีค่าเฉลี่ยเป็น 0)", "1 (เพื่อรักษาความสว่างเฉลี่ยของภาพ)", "9 (สำหรับขนาด 3x3)", "-1"], "a": 0, "x": "High-pass filter เช่น Laplacian มีผลรวมสัมประสิทธิ์เป็น 0 เพื่อให้พื้นที่ที่มีสีสม่ำเสมอ (ความถี่ต่ำ) กลายเป็นสีดำ และเน้นเฉพาะขอบที่มีการเปลี่ยนแปลง"}, {"w": "L5", "q": "จุดกึ่งกลางของ Fourier Spectrum $(u=0, v=0)$ หลังทำ <code>np.fft.fftshift()</code> มีค่าเท่ากับเท่าใด?", "o": ["$F(0,0) = M \\times N \\times \\bar{f}$ (ผลรวมความสว่างของทุกพิกเซล = DC Component)", "ค่าความสว่างสูงสุดในภาพ (Maximum Brightness)", "0 เสมอ", "อัตราส่วนขอบภาพ (Edge Ratio)"], "a": 0, "x": "$F(0,0)$ คือความถี่ศูนย์ (DC Component) มีค่าเท่ากับผลรวมความสว่างทั้งหมดของภาพคูณด้วยขนาดภาพ"}, {"w": "L5", "q": "สัญญาณรบกวนแบบคาบเกี่ยว (Periodic Noise) เช่น รูปคลื่นไซน์ จะปรากฏเป็นลักษณะใดในระนาบความถี่ (Fourier Domain)?", "o": ["จุดแสงประกายคู่ดาว (Conjugate Bright Spikes/Stars) ห่างจากจุดกึ่งกลาง", "วงแหวนสีดำรอบจุดศูนย์กลาง", "หมอกสีเทากระจายทั่วทุกความถี่", "เส้นทะแยงมุมเดี่ยว"], "a": 0, "x": "Periodic sine/cosine noise จะเกิดเป็นคู่จุดสมมาตร (Conjugate Impulses) ในสเปกตรัมความถี่ จึงสามารถกำจัดได้ด้วย Notch Reject Filter"}, {"w": "L6", "q": "การทำ Morphological <b>Opening</b> ประกอบด้วยขั้นตอนใดตามลำดับ?", "o": ["Erosion ตามด้วย Dilation ($A \\circ B = (A \\ominus B) \\oplus B$)", "Dilation ตามด้วย Erosion ($A \\bullet B = (A \\oplus B) \\ominus B$)", "Erosion สองครั้งติดกัน", "Dilation แล้วตามด้วย Complement"], "a": 0, "x": "Opening = กร่อน (Erode) เพื่อกำจัดจุดรบกวนเม็ดเล็กๆ แล้วขยาย (Dilate) คืนขนาดของวัตถุหลัก"}, {"w": "L6", "q": "การทำ Morphological <b>Closing</b> เหมาะสำหรับการแก้ปัญหาภาพลักษณะใด?", "o": ["อุดรูโหว่ขนาดเล็ก (Holes) และเชื่อมต่อเส้นที่ขาดออกจากกัน", "กำจัดสัญญาณรบกวนเม็ดสีขาวนอกวัตถุ", "หาเส้นรอบรูปของวัตถุ", "ลดขนาดของวัตถุให้เล็กลง"], "a": 0, "x": "Closing = ขยายก่อน (Dilate) เพื่อเชื่อมรอยต่อและอุดรู แล้วจึงกร่อนคืน (Erode) ขนาดเดิม"}, {"w": "L7", "q": "อัลกอริทึม <b>Otsu's Thresholding</b> ค้นหาค่าขีดแบ่งที่เหมาะสมที่สุดโดยใช้เกณฑ์ใด?", "o": ["หาค่าขีดแบ่งที่ให้ค่าความแปรปรวนระหว่างคลาสสูงสุด (Maximize Between-Class Variance $\\sigma_B^2$)", "หาค่าที่ทำให้ภาพมีสีดำ 50% และสีขาว 50%", "หาค่าเฉลี่ยของฮิสโตแกรม", "หาจุดต่ำสุดระหว่างสองยอดในฮิสโตแกรม"], "a": 0, "x": "Otsu ทำการคำนวณแบบสถิติเพื่อหาขีดแบ่ง $k^*$ ที่แบ่งพิกเซลเป็น Background และ Foreground โดยให้ความแปรปรวนระหว่างสองกลุ่ม (Between-class variance) สูงสุด"}, {"w": "L8", "q": "ขั้นตอนของ <b>Canny Edge Detector</b> ที่ทำหน้าที่ทำให้เส้นขอบมีความบางคมชัดเพียง 1 พิกเซล คือขั้นตอนใด?", "o": ["Non-Maximum Suppression (NMS)", "Gaussian Smoothing", "Double Thresholding", "Hysteresis Edge Tracking"], "a": 0, "x": "Non-Maximum Suppression จะตรวจสอบตามทิศทางความชัน (Gradient direction) หากพิกเซลไม่ใช่จุดสูงสุดเฉพาะที่จะถูกกดค่าเป็น 0 ทำให้เหลือเส้นขอบบาง 1 พิกเซล"}, {"w": "L8", "q": "<b>Hough Transform</b> ใช้สำหรับตรวจจับรูปทรงเรขาคณิตใดในภาพ และแปลงจากพิกเซล $(x, y)$ เป็นปริภูมิพารามิเตอร์ใดสำหรับเส้นตรง?", "o": ["เส้นตรง ในพารามิเตอร์ $(\\rho, \\theta)$ Normal Form", "วงกลม ในพารามิเตอร์ $(x, y, z)$", "รูปหลายเหลี่ยม ในพารามิเตอร์ $(u, v)$", "ตรวจจับเฉพาะจุดมุม (Corners)"], "a": 0, "x": "Hough Transform ใช้สมการ $\\rho = x \\cos\\theta + y \\sin\\theta$ เพื่อหลีกเลี่ยงปัญหาความชันเป็นอนันต์ (Vertical lines)"}, {"w": "L9", "q": "ระบบสีใดต่อไปนี้แยกส่วนข้อมูล <b>ความสว่าง (Luminance)</b> ออกจาก <b>ข้อมูลสี (Chrominance)</b> ได้อย่างเด็ดขาด?", "o": ["HSV / HSL และ CIE Lab", "RGB และ BGR", "CMYK", "Grayscale"], "a": 0, "x": "HSV แยก Hue (เฉดสี), Saturation (ความอิ่มตัว) และ Value (ความสว่าง) ทำให้การตรวจจับสีทนทานต่อการเปลี่ยนแปลงของแสง"}, {"w": "L9", "q": "ใน OpenCV ช่วงค่าของ <b>Hue (H)</b> ในระบบสี 8-bit HSV คือเท่าไร?", "o": ["0 ถึง 179 (เพราะค่าองศา 360 นำมาหาร 2 เพื่อให้บรรจุใน 8-bit uint8 ได้)", "0 ถึง 360", "0 ถึง 255", "0 ถึง 100"], "a": 0, "x": "วงล้อสีมี 360 องศา OpenCV นำมาหาร 2 ให้เหลือ 0–179 เพื่อให้เก็บในประเภทข้อมูล uint8 (0–255) ได้พอดี"}, {"w": "L10", "q": "คุณลักษณะ GLCM (Gray-Level Co-occurrence Matrix) ข้อใดบ่งบอกถึง <b>ความสม่ำเสมอ/ความเรียบเนียน (Homogeneity)</b> ของพื้นผิว?", "o": ["Inverse Difference Moment (IDM / Homogeneity)", "Contrast (ความเปรียบต่าง)", "Entropy (ความไม่เป็นระเบียบ)", "Energy / ASM"], "a": 0, "x": "Homogeneity วัดความเข้มข้นของค่าตามแนวทแยงมุมหลัก ยิ่งพิกเซลข้างเคียงมีค่าเหมือนกันมาก ค่านี้จะยิ่งเข้าใกล้ 1"}, {"w": "L11", "q": "ใน Confusion Matrix หากแบบจำลองทำนายว่าผู้ป่วยติดโรคทั้งหมด 100 คน พบว่าเป็นจริง 80 คน และตรวจไม่พบอีก 20 คน ค่า <b>Precision</b> คำนวณจากสูตรใด?", "o": ["$\\frac{TP}{TP + FP}$", "$\\frac{TP}{TP + FN}$", "$\\frac{TP + TN}{\\text{Total}}$", "$\\frac{TN}{TN + FP}$"], "a": 0, "x": "Precision = ความแม่นยำในการทำนายเชิงบวก (ในบรรดาที่ทายว่าบวก ถูกต้องจริงกี่คน) = $TP / (TP + FP)$"}, {"w": "L11", "q": "ค่า <b>Recall (Sensitivity)</b> ในทางการแพทย์มีความสำคัญอย่างไร?", "o": ["วัดสัดส่วนที่ตรวจพบผู้ป่วยจริงได้ ไม่ให้มีผู้ป่วยหลุดรอด ($FN$ ต่ำสุด)", "วัดว่าผลตรวจเป็นบวกแล้วเชื่อถือได้แค่ไหน", "วัดความถูกต้องของคนไม่เป็นโรค", "หาค่าเฉลี่ยของภาพ"], "a": 0, "x": "Recall = $TP / (TP + FN)$ บ่งบอกว่าในบรรดาคนที่เป็นโรคจริง เราจับได้กี่เปอร์เซ็นต์ ในทางการแพทย์ต้องการ Recall สูงมากเพื่อไม่ให้คนไข้ตกหล่น"}, {"w": "L12", "q": "<b>F1-Score</b> คืออะไร และทำไมจึงนิยมใช้มากกว่า Accuracy เมื่อชุดข้อมูลมีความไม่สมดุล (Imbalanced Data)?", "o": ["Harmonic Mean ของ Precision และ Recall ($2 \\cdot \\frac{P \\cdot R}{P + R}$)", "ค่าเฉลี่ยเลขคณิตธรรมดาของ Precision และ Recall", "อัตราส่วนระหว่าง TP กับ TN", "ค่าพื้นที่ใต้กราฟ ROC"], "a": 0, "x": "F1-Score คือค่าเฉลี่ยฮาร์โมนิก หาก Precision หรือ Recall ต่ำ ค่า F1 จะร่วงลงทันที จึงประเมินโมเดลบน Imbalanced Data ได้แม่นยำกว่า Accuracy"}, {"w": "Lab", "q": "ในข้อสอบ Lab Q1 (Steganography ซ่อนเครื่องบิน) เราซ่อนบิต MSB ของเครื่องบินไว้ที่ตำแหน่งใดของภาพพาหะ (Carrier)?", "o": ["บิต 0 (LSB) ของภาพพาหะ", "บิต 7 (MSB) ของภาพพาหะ", "บิต 4 ตรงกลาง", "สุ่มซ่อนทุกบิต"], "a": 0, "x": "บิต 0 ส่งผลต่อระดับความสว่างเพียง $\\pm 1$ ทำให้สายตามนุษย์มองไม่เห็นการเปลี่ยนแปลง จึงเหมาะเป็นที่ซ่อนข้อมูลลับ"}, {"w": "Lab", "q": "ในข้อสอบ Lab Q2 เพื่อให้ระบบอ่าน Barcode ทนทานต่อการหมุน (Rotation Invariance) ฟังก์ชัน OpenCV ใดช่วยหากรอบสี่เหลี่ยมเอียง?", "o": ["<code>cv2.minAreaRect(cnt)</code> และ <code>cv2.boxPoints(rect)</code>", "<code>cv2.boundingRect(cnt)</code>", "<code>cv2.circle(cnt)</code>", "<code>cv2.warpAffine()</code>"], "a": 0, "x": "<code>cv2.boundingRect</code> ได้เฉพาะกล่องตรงขนานแกน X-Y ส่วน <code>cv2.minAreaRect</code> คืนค่ากล่องสี่เหลี่ยมมุมเอียงที่แนบชิดวัตถุที่สุด"}, {"w": "Lab", "q": "ในข้อสอบ Lab Q3 การตัดภาพเฉพาะป้ายทะเบียนสีเขียว ควรใช้ค่าช่วงสี HSV ใดที่ครอบคลุมสีเขียวได้ดีที่สุด?", "o": ["H: 35–85, S: 40–255, V: 40–255", "H: 100–130, S: 50–255, V: 50–255", "H: 0–20, S: 50–255, V: 50–255", "H: 150–179, S: 50–255, V: 50–255"], "a": 0, "x": "สีเขียวบนวงล้อสี OpenCV (0-179) อยู่ที่ประมาณองศา 60–120 (แปลงเป็น H 35–85) ส่วนสีน้ำเงินอยู่ที่ 100–130 และสีแดงอยู่ที่ 0–10 และ 160–179"}, {"w": "Lab", "q": "ในข้อสอบ Lab Q4 เมื่อสร้าง Notch Filter ในระนาบความถี่เสร็จแล้ว ก่อนทำ Inverse FFT (<code>ifft2</code>) ต้องทำคำสั่งใดก่อน?", "o": ["<code>np.fft.ifftshift()</code> เพื่อย้ายจุด DC กลับไปที่มุมซ้ายบน", "<code>cv2.cvtColor()</code>", "<code>np.fft.fftshift()</code> ซ้ำอีกครั้ง", "<code>cv2.normalize()</code>"], "a": 0, "x": "ตอนคำนวณเราใช้ <code>fftshift</code> ย้าย DC มาไว้ตรงกลางเพื่อให้ฟิลเตอร์ได้ง่าย ก่อนคำนวณ <code>ifft2</code> จึงต้องย้ายจุด DC กลับมุมบนซ้ายด้วย <code>ifftshift</code>"}];
+  const ORDER = [{"w": "Lab-Q1", "t": "Lab Q1: ซ่อนภาพเครื่องบินลงใน LSB ของภาพพาหะ (Steganography)", "lines": ["carrier = cv2.imread(\"carrier.png\", cv2.IMREAD_GRAYSCALE)", "secret = cv2.imread(\"airplane.png\", cv2.IMREAD_GRAYSCALE)", "carrier_clean = carrier & 0b11111110", "secret_msb = (secret >> 7) & 1", "stego = carrier_clean | secret_msb", "cv2.imwrite(\"stego.png\", stego)"]}, {"w": "Lab-Q2", "t": "Lab Q2: ค้นหาและตีกรอบ Barcode ที่หมุนเอียง (Invariant Contour)", "lines": ["gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)", "blurred = cv2.GaussianBlur(gray, (5, 5), 0)", "_, thresh = cv2.threshold(blurred, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)", "contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)", "rect = cv2.minAreaRect(max(contours, key=cv2.contourArea))", "box = np.int0(cv2.boxPoints(rect))", "cv2.drawContours(img, [box], 0, (0, 255, 0), 2)"]}, {"w": "Lab-Q3", "t": "Lab Q3: ตรวจจับวัตถุสีเขียวด้วย HSV และตีกรอบสี่เหลี่ยม (Green ROI)", "lines": ["hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)", "lower_green = np.array([35, 50, 50])", "upper_green = np.array([85, 255, 255])", "mask = cv2.inRange(hsv, lower_green, upper_green)", "kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))", "mask_clean = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)", "contours, _ = cv2.findContours(mask_clean, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)"]}, {"w": "Lab-Q4", "t": "Lab Q4: กำจัดสัญญาณรบกวนคาบเกี่ยวรูป Dio (Notch Reject Filter)", "lines": ["dft = np.fft.fft2(gray)", "dft_shift = np.fft.fftshift(dft)", "mask = create_notch_filter(gray.shape, notch_points)", "filtered_shift = dft_shift * mask", "f_ishift = np.fft.ifftshift(filtered_shift)", "restored = np.abs(np.fft.ifft2(f_ishift))"]}, {"w": "L8", "t": "Canny Edge Detection Pipeline (ลำดับ 5 ขั้นตอน)", "lines": ["blurred = cv2.GaussianBlur(gray, (5, 5), 1.4)", "gx = cv2.Sobel(blurred, cv2.CV_64F, 1, 0, ksize=3)", "gy = cv2.Sobel(blurred, cv2.CV_64F, 0, 1, ksize=3)", "mag = np.hypot(gx, gy); angle = np.arctan2(gy, gx) * 180 / np.pi", "nms = non_maximum_suppression(mag, angle)", "edges = cv2.Canny(gray, threshold1=50, threshold2=150)"]}, {"w": "L3", "t": "Histogram Equalization Algorithm (ขั้นตอนการคำนวณด้วย NumPy)", "lines": ["hist, _ = np.histogram(img.flatten(), 256, [0, 256])", "pdf = hist / img.size", "cdf = pdf.cumsum()", "lut = np.round(cdf * 255).astype(np.uint8)", "equalized = lut[img]"]}, {"w": "L6", "t": "Morphological Operations: กรอง Noise แล้วอุดช่องว่าง", "lines": ["kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))", "eroded = cv2.erode(binary, kernel, iterations=1)", "opened = cv2.dilate(eroded, kernel, iterations=1)", "dilated = cv2.dilate(opened, kernel, iterations=1)", "closed = cv2.erode(dilated, kernel, iterations=1)"]}, {"w": "L7", "t": "Otsu Threshold Optimization (ค้นหาค่า $\\sigma_B^2$ สูงสุด)", "lines": ["hist = cv2.calcHist([gray], [0], None, [256], [0, 256]).ravel() / gray.size", "omega = np.cumsum(hist)", "mu = np.cumsum(hist * np.arange(256))", "mu_t = mu[-1]", "sigma_b = (mu_t * omega - mu)**2 / (omega * (1 - omega) + 1e-10)", "optimal_thresh = np.argmax(sigma_b)"]}];
+  const BLANKS = [{"w": "L9", "t": "แปลงสี BGR เป็น HSV และตัดช่วงสีเขียว", "h": "ระบุ Flag การแปลง และฟังก์ชันสร้าง Mask", "code": "hsv = cv2.cvtColor(img, [[cv2.COLOR_BGR2HSV]])\nlower_bound = np.array([35, 50, 50])\nupper_bound = np.array([85, 255, 255])\nmask = cv2.[[inRange]](hsv, lower_bound, upper_bound)"}, {"w": "L5", "t": "คำนวณ Fast Fourier Transform และสลับตำแหน่ง DC เข้ากึ่งกลาง", "h": "ใช้โมดูล np.fft", "code": "dft = np.fft.[[fft2]](image)\ndft_shift = np.fft.[[fftshift]](dft)\nmagnitude_spectrum = 20 * np.log(np.abs(dft_shift) + 1)"}, {"w": "L4", "t": "กรองสัญญาณรบกวน Salt & Pepper ด้วย Median Blur ขนาด 5x5", "h": "ฟังก์ชันมัธยฐานใน OpenCV", "code": "noisy = cv2.imread('salt_pepper.png', cv2.IMREAD_GRAYSCALE)\nfiltered = cv2.[[medianBlur]](noisy, [[5]])"}, {"w": "L6", "t": "สร้าง Structuring Element สี่เหลี่ยม 5x5 และทำ Morphological Opening", "h": "คำสั่ง getStructuringElement และ morphologyEx", "code": "kernel = cv2.[[getStructuringElement]](cv2.MORPH_RECT, (5, 5))\nclean = cv2.[[morphologyEx]](mask, cv2.[[MORPH_OPEN]], kernel)"}, {"w": "L11", "t": "สูตรคำนวณ Recall และ Precision จาก Confusion Matrix", "h": "ตัวส่วนของ Recall คือพจน์ผลรวมผู้ป่วยจริง", "code": "precision = tp / (tp + fp)\nrecall = tp / ([[tp + fn]])\nf1_score = 2 * (precision * recall) / ([[precision + recall]])"}, {"w": "Lab-Q1", "t": "ถอดรหัสบิตซ่อน LSB และสเกลเป็นขาวดำ 0 หรือ 255", "h": "bitwise AND กับบิต 0 แล้วคูณ 255", "code": "stego = cv2.imread('stego.png', cv2.IMREAD_GRAYSCALE)\nextracted = (stego & [[1]]) * [[255]]\ncv2.imwrite('revealed.png', extracted)"}, {"w": "L8", "t": "หาขอบด้วย Canny Threshold ต่ำ 50 และสูง 150", "h": "พารามิเตอร์ threshold1 และ threshold2", "code": "edges = cv2.[[Canny]](gray_image, [[50]], [[150]])"}, {"w": "L7", "t": "ทำ Binarization อัตโนมัติด้วย Otsu Thresholding", "h": "Flag ใน cv2.threshold", "code": "ret, thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY + [[cv2.THRESH_OTSU]])"}, {"w": "L3", "t": "ปรับปรุง Contrast ภาพด้วย Histogram Equalization", "h": "ฟังก์ชันตรงตัวใน OpenCV", "code": "equalized = cv2.[[equalizeHist]](gray_image)"}, {"w": "L4", "t": "กรองภาพด้วย 2D Convolution โดยใช้ Kernel ที่กำหนดเอง", "h": "ฟังก์ชัน filter2D", "code": "kernel = np.ones((3, 3), np.float32) / 9\nsmoothed = cv2.[[filter2D]](img, -1, [[kernel]])"}];
+  const PREDICT = [{"w": "L4", "code": "# พิกเซลรอบข้างขนาด 3x3:\n# [ 10,  12,  10 ]\n# [ 11, 255,  12 ]\n# [ 13,  11,  10 ]\n# ผ่าน Median Filter 3x3", "q": "พิกเซลตรงกลาง (ค่าเดิม 255) จะกลายเป็นค่าใดหลังผ่าน Median Filter?", "o": ["11", "12", "10", "255"], "a": 0, "x": "เรียงค่าทั้ง 9 ค่า: [10, 10, 10, 11, **11**, 12, 12, 13, 255] -> ตัวตรงกลาง (มัธยฐาน) ลำดับที่ 5 คือ 11 ค่า 255 ถูกกำจัดทิ้ง"}, {"w": "L4", "code": "# หน้าต่างขนาด 3x3 พิกเซลรอบข้างเท่ากับ 10 ทั้งหมด\n# พิกเซลตรงกลางเท่ากับ 100\n# ผ่าน Averaging Box Filter 3x3", "q": "พิกเซลตรงกลางจะได้ค่าใหม่เท่ากับเท่าใด?", "o": ["20", "10", "100", "55"], "a": 0, "x": "ผลรวม = (8 x 10) + 100 = 80 + 100 = 180 -> ค่าเฉลี่ย = 180 / 9 = 20"}, {"w": "L2", "code": "pixel_value = 180\n# 180 ในเลขฐานสอง = 10110100_2", "q": "พิกเซลนี้ใน <b>Bit-Plane 7 (MSB)</b> และ <b>Bit-Plane 0 (LSB)</b> มีค่าบิตเป็นเท่าใดตามลำดับ?", "o": ["Bit 7 = 1, Bit 0 = 0", "Bit 7 = 0, Bit 0 = 1", "Bit 7 = 1, Bit 0 = 1", "Bit 7 = 0, Bit 0 = 0"], "a": 0, "x": "180 = 128 + 32 + 16 + 4 = 10110100 -> บิตซ้ายสุด (บิต 7) คือ 1 และบิตขวาสุด (บิต 0) คือ 0"}, {"w": "L6", "code": "# วัตถุสี่เหลี่ยมสีขาวขนาด 5x5 พิกเซล\n# นำไปทำ Erosion ด้วย Structuring Element ขนาด 3x3", "q": "ขนาดของสี่เหลี่ยมสีขาวหลังการ Erosion จะเหลือเท่าใด?", "o": ["3x3 พิกเซล", "1x1 พิกเซล", "4x4 พิกเซล", "หายไปทั้งหมดกลายเป็นสีดำ"], "a": 0, "x": "การทำ Erosion ด้วยขนาด 3x3 จะกร่อนขอบสีขาวรอบทิศทางด้านละ 1 พิกเซล -> ขนาดลดจาก 5x5 เหลือ 3x3"}, {"w": "L6", "code": "# วัตถุสี่เหลี่ยมสีขาวขนาด 5x5 พิกเซล\n# นำไปทำ Dilation ด้วย Structuring Element ขนาด 3x3", "q": "ขนาดของสี่เหลี่ยมสีขาวหลังการ Dilation จะขยายเป็นเท่าใด?", "o": ["7x7 พิกเซล", "6x6 พิกเซล", "8x8 พิกเซล", "5x5 พิกเซลเท่าเดิม"], "a": 0, "x": "Dilation ขยายขอบสีขาวออกไปด้านละ 1 พิกเซล -> ขนาดเพิ่มจาก 5x5 กลายเป็น 7x7"}, {"w": "L11", "code": "# ผลการทดสอบโมเดล:\nTP = 80,  FP = 20\nFN = 10,  TN = 90", "q": "ค่า Precision และ Recall ของแบบจำลองนี้มีค่าเท่าใดตามลำดับ?", "o": ["Precision = 80.0%, Recall = 88.9%", "Precision = 88.9%, Recall = 80.0%", "Precision = 80.0%, Recall = 80.0%", "Precision = 85.0%, Recall = 90.0%"], "a": 0, "x": "Precision = 80 / (80 + 20) = 80/100 = 80.0% | Recall = 80 / (80 + 10) = 80/90 = 88.89%"}, {"w": "L5", "code": "# ภาพ Grayscale ขนาด 200 x 200 พิกเซล\n# มีค่าความสว่างสม่ำเสมอทุกพิกเซลเท่ากับ 50", "q": "ค่า DC Component $F(0,0)$ ใน Fourier Domain จะมีค่าเท่าใด?", "o": ["2,000,000", "50", "200", "10,000"], "a": 0, "x": "$F(0,0) = M \\times N \\times \\text{Pixel Value} = 200 \\times 200 \\times 50 = 2,000,000$"}, {"w": "L3", "code": "# ภาพ 8 ระดับเทา (L = 8, ค่า 0 ถึง 7)\n# ค่าสะสม CDF ของระดับสีเทา k ใดๆ คำนวณได้ 0.60", "q": "ในการทำ Histogram Equalization ค่าสีเทา $s_k$ หลังการแปลงจะได้เท่าไร?", "o": ["4", "5", "3", "6"], "a": 0, "x": "สูตร $s_k = \\text{round}[(L - 1) \\times \\text{CDF}] = \\text{round}[7 \\times 0.60] = \\text{round}[4.2] = 4$"}];
+  const BUGS = [{"w": "L1", "mode": "line", "bug": 1, "q": "รันโค้ดแล้วหน้าคนกลายเป็นสีฟ้าเอเลี่ยน คลิกบรรทัดที่ทำให้สีเพี้ยน", "code": "img = cv2.imread('portrait.jpg')\nplt.imshow(img)\nplt.title('Face Detection')\nplt.show()", "x": "<code>cv2.imread()</code> อ่านภาพเป็นระบบ BGR แต่ <code>plt.imshow()</code> ต้องการ RGB จึงสลับสีแดงกับสีน้ำเงิน แก้เป็น <code>plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))</code>"}, {"w": "L2", "mode": "line", "bug": 2, "q": "ภาพลบกันแล้วเกิดแสงวาบสีขาว (Underflow Wrap-around) คลิกบรรทัดที่มีข้อผิดพลาด", "code": "img1 = cv2.imread('frame1.png')\nimg2 = cv2.imread('frame2.png')\ndiff = img1 - img2\ncv2.imshow('Motion Diff', diff)", "x": "การใช้เครื่องหมาย <code>-</code> โดยตรงบน NumPy uint8 จะเกิด Underflow เช่น 50 - 100 กลายเป็น 206 แก้โดยใช้ <code>cv2.subtract(img1, img2)</code> หรือแปลงเป็น <code>np.int16</code> ก่อน"}, {"w": "L4", "mode": "line", "bug": 0, "q": "ภาพผลลัพธ์จากการ Smooth ขาวโพลนเต็มจอ (Clamped at 255) คลิกบรรทัดที่ตั้งค่าเคอร์เนลผิด", "code": "kernel = np.ones((3, 3), np.float32)\nfiltered = cv2.filter2D(img, -1, kernel)\ncv2.imshow('Result', filtered)", "x": "เคอร์เนลไม่ได้หารด้วยผลรวมสัมประสิทธิ์ (9) ทำให้ค่าพิกเซลถูกคูณ 9 เท่าจนล้น 255 แก้เป็น <code>kernel = np.ones((3, 3), np.float32) / 9</code>"}, {"w": "L9", "mode": "line", "bug": 2, "q": "ตรวจจับสีเขียวไม่ได้เลยใน OpenCV (Hue หลุดช่วง) คลิกบรรทัดที่มีค่าผิด", "code": "hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)\nlower_green = np.array([35, 50, 50])\nupper_green = np.array([240, 255, 255])\nmask = cv2.inRange(hsv, lower_green, upper_green)", "x": "ใน OpenCV 8-bit HSV ค่า Hue มีค่าสูงสุดเพียง 179 เท่านั้น (0–179) ไม่ใช่ 360 หรือ 255 การใส่ 240 ทำให้ช่วงสีกลายเป็นสีอื่นปนเปื้อน"}, {"w": "L5", "mode": "line", "bug": 2, "q": "ผลลัพธ์ Inverse Fourier ขอบภาพเละและมั่วตำแหน่ง คลิกบรรทัดที่ลืมฟังก์ชันย้อนกลับ", "code": "dft_shift = np.fft.fftshift(np.fft.fft2(gray))\nfiltered = dft_shift * notch_mask\nimg_back = np.fft.ifft2(filtered)\nrestored = np.abs(img_back)", "x": "ก่อนทำ <code>ifft2</code> จะต้องทำ <code>np.fft.ifftshift(filtered)</code> ก่อนเสมอเพื่อย้าย DC Component กลับไปที่มุมซ้ายบน"}, {"w": "L8", "mode": "line", "bug": 1, "q": "Canny Edge ไม่ทำงานหรือตรวจจับเส้นได้ไม่ครบ คลิกบรรทัดที่สลับพารามิเตอร์", "code": "gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)\nedges = cv2.Canny(gray, threshold1=150, threshold2=50)\ncv2.imshow('Edges', edges)", "x": "<code>threshold1</code> คือขีดแบ่งต่ำ (Low Threshold) และ <code>threshold2</code> คือขีดแบ่งสูง (High Threshold) ดังนั้น threshold1 ต้องน้อยกว่า threshold2 แก้เป็น <code>(gray, 50, 150)</code>"}, {"w": "Lab-Q1", "mode": "line", "bug": 2, "q": "ดึงบิตความลับไม่ได้เพราะไม่ได้ล้าง LSB เดิมทิ้ง คลิกบรรทัดที่มีข้อผิดพลาด", "code": "carrier = cv2.imread('carrier.png', 0)\nsecret = cv2.imread('secret.png', 0)\nstego = carrier | ((secret >> 7) & 1)\ncv2.imwrite('stego.png', stego)", "x": "ก่อนใส่บิตความลับลงใน LSB ต้องเคลียร์บิต 0 เดิมของภาพพาหะให้เป็น 0 ก่อนด้วย <code>carrier & 0b11111110</code> (หรือ <code>carrier & 0xFE</code>) มิฉะนั้นถ้าบิตเดิมเป็น 1 อยู่แล้ว OR จะเพี้ยน"}, {"w": "L6", "mode": "mcq", "q": "โค้ด <code>cv2.morphologyEx(img, cv2.MORPH_OPEN, kernel)</code> เกิด Error: <i>Unsupported kernel depth / type</i> เกิดจากอะไร?", "o": ["kernel ถูกสร้างเป็น <code>float64</code> แทนที่จะเป็น <code>uint8</code>", "ขนาด kernel ต้องเป็นเลขคู่เสมอ", "ภาพต้นฉบับต้องเป็น 3-channel BGR", "ต้องใช้ kernel ทรงกลมเท่านั้น"], "a": 0, "x": "ฟังก์ชันสัณฐานวิทยาใน OpenCV ต้องการ Structuring Element ที่มีประเภทข้อมูลเป็น <code>uint8</code> (หรือ <code>np.uint8</code>)"}];
+  const TEMPLATES = [{"w": "Lab-Q1", "t": "Steganography: ซ่อนและกู้คืนภาพลับผ่าน LSB", "h": "carrier & 0xFE · secret >> 7 · bitwise_or · extract (stego & 1) * 255", "keys": ["cv2.imread", "& 0b11111110", "(secret >> 7) & 1", "carrier_clean | secret_bit", "stego & 1", "* 255"], "code": "import cv2\nimport numpy as np\n\ncarrier = cv2.imread('carrier.png', cv2.IMREAD_GRAYSCALE)\nsecret = cv2.imread('airplane.png', cv2.IMREAD_GRAYSCALE)\n\n# 1. เคลียร์ LSB ของภาพพาหะ\ncarrier_clean = carrier & 0b11111110\n\n# 2. นำ MSB (บิต 7) ของภาพความลับมาไว้ที่บิต 0\nsecret_bit = (secret >> 7) & 1\n\n# 3. ซ่อนข้อมูล\nstego = carrier_clean | secret_bit\n\n# 4. ถอดรหัสภาพความลับออกมาแสดง\nextracted = (stego & 1) * 255\ncv2.imwrite('extracted_airplane.png', extracted)"}, {"w": "Lab-Q3", "t": "Color Segmentation: ตรวจจับวัตถุสีเขียวด้วย HSV", "h": "cvtColor HSV · inRange 35-85 · morphologyEx OPEN · findContours · boundingRect", "keys": ["cv2.COLOR_BGR2HSV", "cv2.inRange", "cv2.morphologyEx", "cv2.MORPH_OPEN", "cv2.findContours", "cv2.boundingRect", "cv2.rectangle"], "code": "import cv2\nimport numpy as np\n\nimg = cv2.imread('car_plate.png')\nhsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)\n\nlower_green = np.array([35, 50, 50])\nupper_green = np.array([85, 255, 255])\nmask = cv2.inRange(hsv, lower_green, upper_green)\n\nkernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))\nmask_clean = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)\n\ncontours, _ = cv2.findContours(mask_clean, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)\nfor cnt in contours:\n    if cv2.contourArea(cnt) > 500:\n        x, y, w, h = cv2.boundingRect(cnt)\n        cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)"}, {"w": "Lab-Q4", "t": "Frequency Domain: กำจัด Periodic Noise ด้วย Notch Filter", "h": "fft2 · fftshift · create notch reject mask · ifftshift · ifft2 · np.abs", "keys": ["np.fft.fft2", "np.fft.fftshift", "dft_shift * mask", "np.fft.ifftshift", "np.fft.ifft2", "np.abs"], "code": "import cv2\nimport numpy as np\n\ngray = cv2.imread('dio_noise.png', cv2.IMREAD_GRAYSCALE)\ndft = np.fft.fft2(gray)\ndft_shift = np.fft.fftshift(dft)\n\nrows, cols = gray.shape\ncrow, ccol = rows // 2, cols // 2\nmask = np.ones((rows, cols), np.float32)\n\n# ตัด Notch Filter ที่จุดสมมาตรของสัญญาณรบกวน\ncv2.circle(mask, (ccol + 30, crow + 30), 8, 0, -1)\ncv2.circle(mask, (ccol - 30, crow - 30), 8, 0, -1)\n\nfiltered_shift = dft_shift * mask\nf_ishift = np.fft.ifftshift(filtered_shift)\nrestored = np.abs(np.fft.ifft2(f_ishift))\ncv2.imwrite('restored_dio.png', np.uint8(restored))"}];
+
+  const LEVELS = [
+    {
+      n: 1, key: 'concept', name: 'จำคำสั่ง & นิยามพื้นฐาน',
+      desc: 'ทดสอบความจำฟังก์ชัน OpenCV และทฤษฎีหลัก L1–L12 (ปรนัย 4 ตัวเลือก)',
+      badge: 'CONCEPT', color: 'sky', count: 10, pool: () => CONCEPT.length,
+      rules: [
+        'สุ่ม 10 ข้อจากคลัง ' + CONCEPT.length + ' ข้อ ครอบคลุมทั้ง 12 บทและแล็บ',
+        'ตอบถูกครั้งแรกได้ 100 คะแนน · ตอบผิดเสียหัวใจ 1 ดวง',
+        'กดปุ่มตัวเลข 1–4 บนคีย์บอร์ดเพื่อเลือกคำตอบได้ทันที'
+      ]
+    },
+    {
+      n: 2, key: 'order', name: 'เรียงขั้นตอนอัลกอริทึม',
+      desc: 'โค้ดและขั้นตอนถูกสลับบรรทัด แตะเรียงลำดับ Pipeline ให้ถูกต้อง',
+      badge: 'ORDER', color: 'purple', count: 6, pool: () => ORDER.length,
+      rules: [
+        'สุ่ม 6 อัลกอริทึมสำคัญ (Lab Q1–Q4, Canny, Otsu, HistEqual, Morphology)',
+        'แตะโค้ดในกองด้านล่างเพื่อส่งขึ้นไปเป็นบรรทัดถัดไปตามลำดับการทำงาน',
+        'แตะผิดหัก 25 คะแนน · ผิดครบ 3 ครั้งในข้อเดียวเสียหัวใจ 1 ดวง'
+      ]
+    },
+    {
+      n: 3, key: 'blank', name: 'เติมคำในช่องว่าง',
+      desc: 'พิมพ์คำสั่งหรือพารามิเตอร์ OpenCV ที่หายไปในโค้ดจริง',
+      badge: 'CODE', color: 'amber', count: 10, pool: () => BLANKS.reduce((s, b) => s + countBlanks(b.code), 0),
+      rules: [
+        'สุ่ม 10 ช่องว่างจากชุดโปรแกรมหลัก — พร้อมคำใบ้และบริบทโค้ดรอบข้าง',
+        'ระบบไม่คิดช่องว่างหรือการเว้นวรรค สามารถพิมพ์ตัวพิมพ์เล็ก/ใหญ่ให้ตรงตามฟังก์ชัน',
+        'มีปุ่มขอคำใบ้ (-30 คะแนน) · ผิดครั้งแรกแก้ตัวได้ (60 คะแนน) · ผิด 2 ครั้งเสียหัวใจ'
+      ]
+    },
+    {
+      n: 4, key: 'predict', name: 'ทายผลลัพธ์ภาพ & คำนวณพิกเซล',
+      desc: 'อ่านค่าตัวเลขและสเปกตรัม แล้วทายผลลัพธ์การประมวลผล',
+      badge: 'PREDICT', color: 'emerald', count: 8, pool: () => PREDICT.length,
+      rules: [
+        'สุ่ม 8 ข้อคำนวณจริง (Median, Mean, Bit-plane, Histogram CDF, Confusion Matrix, DC component)',
+        'คำนวณในใจหรือทดเลข แล้วเลือกคำตอบที่ถูกต้องที่สุด 1 ใน 4 ข้อ',
+        'ตอบถูกครั้งแรกได้ 100 คะแนน · ตอบผิดเสียหัวใจ 1 ดวง'
+      ]
+    },
+    {
+      n: 5, key: 'bug', name: 'ล่าบั๊ก & จุดผิดในโค้ด',
+      desc: 'โค้ดหรือ Pipeline แต่ละข้อมีจุดผิดซ่อนอยู่ 1 จุด หาให้เจอ!',
+      badge: 'DEBUG', color: 'rose', count: 8, pool: () => BUGS.length,
+      rules: [
+        'สุ่ม 8 ข้อจับผิดภาพเพี้ยน (BGR vs RGB, uint8 underflow, unnormalized kernel, Hue range 0-179)',
+        'ข้อคลิกบรรทัด: คลิกที่บรรทัดที่ทำให้ภาพพังหรือเกิด Error (มี 2 โอกาส)',
+        'ข้อปรนัย: เลือกสาเหตุที่ถูกต้องที่สุด · อ่านเฉลยเทคนิคจำไปใช้ในห้องสอบ'
+      ]
+    },
+    {
+      n: 6, key: 'boss', name: 'บอสใหญ่: พิชิตโค้ดเต็มระบบ',
+      desc: 'เขียนโค้ดและพิมพ์โปรแกรมสำคัญจากความจำ (Lab Q1, Q3, Q4, Otsu)',
+      badge: 'FINAL BOSS', color: 'pink', count: 3, pool: () => TEMPLATES.length,
+      rules: [
+        'ท้าทายกับโจทย์ข้อสอบ Lab Pre-Test Q1–Q4 ในโหมดพิมพ์โปรแกรมจากความจำ',
+        'ระบบตรวจวัดความครอบคลุมของคีย์เวิร์ดสำคัญ (55%) และโครงสร้างบรรทัด (45%)',
+        'ได้คะแนน 70% ขึ้นไปถือว่าพิชิตข้อนั้นได้สำเร็จ! ยิ่งทำได้มากยิ่งได้ดาวและ XP ระดับตำนาน'
+      ]
+    }
+  ];
+
+  /* =====================================================================
+     WEB AUDIO API SYNTHESIZER
+     ===================================================================== */
+  let soundEnabled = true;
+  let audioCtx = null;
+
+  function initAudio() {
+    if (!audioCtx) {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (AudioContext) audioCtx = new AudioContext();
+    }
+    if (audioCtx && audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+  }
+
+  function playTone(freq, type = 'sine', duration = 0.15, gainVal = 0.1) {
+    if (!soundEnabled) return;
+    try {
+      initAudio();
+      if (!audioCtx) return;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+      gain.gain.setValueAtTime(gainVal, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + duration);
+    } catch(e) {}
+  }
+
+  function playChime() {
+    if (!soundEnabled) return;
+    setTimeout(() => playTone(523.25, 'triangle', 0.12, 0.12), 0);
+    setTimeout(() => playTone(659.25, 'triangle', 0.15, 0.14), 80);
+    setTimeout(() => playTone(783.99, 'triangle', 0.25, 0.16), 160);
+  }
+
+  function playBuzzer() {
+    if (!soundEnabled) return;
+    playTone(140, 'sawtooth', 0.25, 0.15);
+  }
+
+  function playVictory() {
+    if (!soundEnabled) return;
+    const notes = [523.25, 659.25, 783.99, 1046.50];
+    notes.forEach((n, i) => {
+      setTimeout(() => playTone(n, 'triangle', 0.25, 0.15), i * 110);
+    });
+  }
+
+  function playClick() {
+    playTone(400, 'sine', 0.05, 0.05);
+  }
+
+  document.getElementById('btn-sound-toggle').addEventListener('click', () => {
+    soundEnabled = !soundEnabled;
+    document.getElementById('sound-icon').textContent = soundEnabled ? '🔊' : '🔇';
+    toast(soundEnabled ? 'เปิดเสียงแล้ว' : 'ปิดเสียงแล้ว');
+  });
+
+  /* =====================================================================
+     HELPERS & HIGHLIGHTING
+     ===================================================================== */
+  const $ = s => document.querySelector(s);
+  const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const shuffle = a => { a = a.slice(); for(let i=a.length-1; i>0; i--){ const j = Math.floor(Math.random()*(i+1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const pick = (arr, n) => shuffle(arr).slice(0, n);
+  function countBlanks(code) { return (code.match(/\[\[/g) || []).length; }
+
+  const HL_RE = /(#.*$)|("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')|(@\w[\w.]*)|\b(def|class|return|import|from|as|if|elif|else|for|while|try|except|finally|raise|with|in|not|is|and|or|global|break|continue|pass|lambda|None|True|False|uint8|float32)\b|\b(\d+(?:\.\d+)?)\b/gm;
+  function hl(src) {
+    return esc(src).replace(HL_RE, (m, c, s, d, k, n) =>
+      c ? '<span class="c">' + c + '</span>' : s ? '<span class="s">' + s + '</span>' : d ? '<span class="d">' + d + '</span>' : k ? '<span class="k">' + k + '</span>' : '<span class="n">' + n + '</span>');
+  }
+  function codeBlock(code, cls) {
+    return '<div class="code' + (cls ? ' ' + cls : '') + '">' + code.split('\n').map((l, i) => '<div data-i="' + i + '">' + (hl(l) || '&nbsp;') + '</div>').join('') + '</div>';
+  }
+
+  const normq = s => s.replace(/'/g, '"');
+  const squash = s => normq(s).replace(/\s+/g, '').trim();
+  function stripComment(line) {
+    let q = null;
+    for (let i = 0; i < line.length; i++) {
+      const ch = line[i];
+      if (q) { if (ch === '\\') { i++; continue; } if (ch === q) q = null; }
+      else if (ch === '"' || ch === "'") q = ch;
+      else if (ch === '#') return line.slice(0, i);
+    }
+    return line;
+  }
+  const normLine = l => normq(stripComment(l)).replace(/\s+/g, ' ').trim();
+
+  /* Progress in LocalStorage */
+  const STORAGE_KEY = 'image-processing-vision-quest-v1';
+  let P = { xp: 0, unlocked: 1, answered: 0, levels: {} };
+  try { P = Object.assign(P, JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}')); } catch(e) {}
+  function save() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(P)); } catch(e) {} }
+
+  function toast(msg) {
+    const t = $('#toast');
+    t.textContent = msg;
+    t.classList.remove('opacity-0', 'translate-y-2');
+    t.classList.add('opacity-100', 'translate-y-0');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(() => {
+      t.classList.add('opacity-0', 'translate-y-2');
+      t.classList.remove('opacity-100', 'translate-y-0');
+    }, 1800);
+  }
+
+  function starsHTML(n) {
+    let s = '';
+    for (let i = 1; i <= 3; i++) s += '<span class="' + (i > n ? 'opacity-20' : 'text-amber-400') + '">★</span>';
+    return '<span class="tracking-widest">' + s + '</span>';
+  }
+
+  function show(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.toggle('on', s.id === id));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    $('#hud-back').classList.toggle('hidden', id === 's-home');
+  }
+
+  /* =====================================================================
+     HOME SCREEN (Tower)
+     ===================================================================== */
+  function renderHome() {
+    const floorsContainer = $('#tower-floors');
+    floorsContainer.innerHTML = LEVELS.slice().reverse().map(L => {
+      const st = P.levels[L.n] || {};
+      const locked = L.n > P.unlocked;
+      const cleared = !!st.stars;
+
+      const badgeBg = L.key === 'boss' ? 'bg-pink-500/20 text-pink-400 border-pink-500/40' :
+                      L.key === 'bug' ? 'bg-rose-500/20 text-rose-400 border-rose-500/40' :
+                      L.key === 'predict' ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40' :
+                      L.key === 'blank' ? 'bg-amber-500/20 text-amber-400 border-amber-500/40' :
+                      L.key === 'order' ? 'bg-purple-500/20 text-purple-400 border-purple-500/40' :
+                      'bg-sky-500/20 text-sky-400 border-sky-500/40';
+
+      const cardBorder = locked ? 'border-slate-800 opacity-60' : cleared ? 'border-emerald-500/40 bg-slate-900/90' : 'border-sky-500/40 bg-slate-900';
+
+      return `
+        <div class="relative flex items-center justify-between gap-4 p-4 sm:p-5 rounded-2xl border ${cardBorder} transition-all hover:border-slate-700">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl flex flex-col items-center justify-center font-display font-bold text-lg ${locked ? 'bg-slate-800 text-slate-500' : cleared ? 'bg-emerald-500/20 text-emerald-400' : 'bg-sky-500/20 text-sky-400'}">
+              <span class="text-[10px] leading-none uppercase text-slate-400">ชั้น</span>
+              ${L.n}
+            </div>
+            <div>
+              <div class="flex items-center gap-2 flex-wrap">
+                <h3 class="font-bold text-white text-base sm:text-lg font-display">${esc(L.name)}</h3>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold border uppercase font-display ${badgeBg}">${esc(L.badge)}</span>
+              </div>
+              <p class="text-xs sm:text-sm text-slate-400 mt-0.5">${esc(L.desc)}</p>
+              <div class="flex items-center gap-3 mt-2 text-xs font-mono text-slate-400 flex-wrap">
+                <span>${starsHTML(st.stars || 0)}</span>
+                <span>สูงสุด: <b class="text-white">${st.best || 0}%</b></span>
+                <span>เล่น <b class="text-white">${st.plays || 0}</b> ครั้ง</span>
+                <span class="text-slate-500">คลัง: ${L.pool()} ข้อ</span>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="btn-play px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl font-bold font-display text-xs sm:text-sm transition-all whitespace-nowrap ${locked ? 'bg-slate-800 text-slate-500 cursor-not-allowed' : 'bg-sky-500 hover:bg-sky-400 text-slate-950 shadow-lg shadow-sky-500/20'}" data-level="${L.n}" ${locked ? 'disabled' : ''}>
+            ${locked ? '🔒 ล็อก' : (cleared ? 'เล่นอีกครั้ง' : 'ท้าทาย')}
+          </button>
+        </div>
+      `;
+    }).join('');
+
+    const totalStars = LEVELS.reduce((s, L) => s + ((P.levels[L.n] || {}).stars || 0), 0);
+    const clearedCount = LEVELS.filter(L => (P.levels[L.n] || {}).stars).length;
+    $('#sum-stars').textContent = totalStars + ' / 18';
+    $('#sum-clear').textContent = clearedCount + ' / 6';
+    $('#sum-answered').textContent = (P.answered || 0) + ' ข้อ';
+    $('#hud-xp').textContent = P.xp || 0;
+    $('#hud-level-text').textContent = 'VISION QUEST';
+    $('#hud-hearts').textContent = '♥♥♥';
+    $('#hud-q').textContent = '';
+    $('#hud-bar').style.width = '0%';
+  }
+
+  $('#tower-floors').addEventListener('click', e => {
+    const b = e.target.closest('button.btn-play');
+    if (b && !b.disabled) {
+      playClick();
+      openIntro(+b.dataset.level);
+    }
+  });
+
+  $('#btn-unlock').addEventListener('click', () => {
+    P.unlocked = 6;
+    save();
+    renderHome();
+    toast('ปลดล็อกครบทั้ง 6 ชั้นแล้ว!');
+  });
+
+  $('#btn-reset').addEventListener('click', () => {
+    if (confirm('คุณต้องการรีเซ็ตสถิติและคะแนนทั้งหมดใช่หรือไม่?')) {
+      P = { xp: 0, unlocked: 1, answered: 0, levels: {} };
+      save();
+      renderHome();
+      toast('ล้างความคืบหน้าเรียบร้อย');
+    }
+  });
+
+  $('#hud-back').addEventListener('click', () => {
+    playClick();
+    show('s-home');
+    renderHome();
+  });
+
+  /* =====================================================================
+     INTRO SCREEN
+     ===================================================================== */
+  let curLevel = null;
+  function openIntro(n) {
+    curLevel = LEVELS[n - 1];
+    $('#intro-eyebrow').textContent = 'ชั้น ' + n + ' / 6 · ' + curLevel.badge;
+    $('#intro-title').textContent = curLevel.name;
+
+    let rulesHtml = '<h4 class="text-xs uppercase tracking-wider font-display font-bold text-sky-400 mb-2">กติกาประจำชั้น</h4><ul class="space-y-1.5 text-xs sm:text-sm text-slate-300 list-disc list-inside">';
+    rulesHtml += curLevel.rules.map(r => '<li>' + r + '</li>').join('');
+    rulesHtml += '</ul>';
+
+    if (curLevel.key === 'boss') {
+      rulesHtml += '<h4 class="text-xs uppercase tracking-wider font-display font-bold text-pink-400 mt-4 mb-2">เลือกโจทย์ที่ต้องการฝึกฝน</h4><div class="grid grid-cols-1 sm:grid-cols-2 gap-2">';
+      rulesHtml += TEMPLATES.map((t, i) => `
+        <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 text-xs text-slate-300 cursor-pointer hover:border-slate-700">
+          <input type="checkbox" class="boss-picker rounded bg-slate-800 border-slate-700 text-pink-500 focus:ring-0" value="${i}" checked>
+          <span class="font-mono text-sky-400">${esc(t.w)}</span>
+          <span class="truncate">${esc(t.t)}</span>
+        </label>
+      `).join('');
+      rulesHtml += '</div>';
+    }
+
+    $('#intro-rules').innerHTML = rulesHtml;
+    $('#hud-level-text').textContent = 'ชั้น ' + n + ' · ' + curLevel.name;
+    show('s-intro');
+  }
+
+  $('#btn-intro-back').addEventListener('click', () => {
+    playClick();
+    show('s-home');
+    renderHome();
+  });
+
+  $('#btn-start').addEventListener('click', () => {
+    playClick();
+    startLevel();
+  });
+
+  /* =====================================================================
+     GAMEPLAY ENGINE
+     ===================================================================== */
+  let G = null;
+
+  function buildQuestions(L) {
+    switch (L.key) {
+      case 'concept':
+        return pick(CONCEPT, L.count).map(q => ({ type: 'mcq', w: q.w, q: q.q, o: q.o, a: q.a, x: q.x, label: 'จำคำสั่ง & นิยาม' }));
+      case 'order':
+        return pick(ORDER, L.count).map(q => ({ type: 'order', w: q.w, t: q.t, lines: q.lines, label: 'เรียงขั้นตอน' }));
+      case 'blank': {
+        const all = [];
+        BLANKS.forEach(b => {
+          const n = countBlanks(b.code);
+          for (let k = 0; k < n; k++) {
+            all.push({ type: 'blank', w: b.w, t: b.t, h: b.h, code: b.code, k, label: 'เติมคำในช่องว่าง' });
+          }
+        });
+        return pick(all, L.count);
+      }
+      case 'predict':
+        return pick(PREDICT, L.count).map(q => ({ type: 'mcq', w: q.w, code: q.code, q: q.q, o: q.o, a: q.a, x: q.x, label: 'ทายผลลัพธ์ภาพ' }));
+      case 'bug':
+        return pick(BUGS, L.count).map(q => q.mode === 'line' ?
+          { type: 'bugline', w: q.w, q: q.q, code: q.code, bug: q.bug, x: q.x, label: 'ล่าบั๊กในโค้ด' } :
+          { type: 'mcq', w: q.w, code: q.code, q: q.q, o: q.o, a: q.a, x: q.x, label: 'ล่าบั๊กในโค้ด' });
+      case 'boss': {
+        const sel = [...document.querySelectorAll('.boss-picker:checked')].map(i => +i.value);
+        const idx = sel.length ? sel : pick(TEMPLATES.map((_, i) => i), 3);
+        return shuffle(idx).map(i => ({ type: 'type', ...TEMPLATES[i], label: 'บอสใหญ่' }));
+      }
+    }
+  }
+
+  function startLevel() {
+    const qs = buildQuestions(curLevel);
+    if (!qs.length) {
+      toast('กรุณาเลือกอย่างน้อย 1 โจทย์');
+      return;
+    }
+    G = { L: curLevel, qs, i: 0, hearts: 3, score: 0, max: qs.length * 100, wrong: [], correct: 0 };
+    P.levels[curLevel.n] = P.levels[curLevel.n] || {};
+    P.levels[curLevel.n].plays = (P.levels[curLevel.n].plays || 0) + 1;
+    save();
+    show('s-play');
+    renderQ();
+  }
+
+  function updateHUD() {
+    $('#hud-level-text').textContent = 'ชั้น ' + G.L.n + ' · ' + G.L.name;
+    $('#hud-hearts').innerHTML = [0, 1, 2].map(i => '<span class="' + (i < G.hearts ? 'text-rose-500' : 'text-slate-700') + '">♥</span>').join('');
+    $('#hud-q').innerHTML = 'ข้อ <b>' + (G.i + 1) + '</b> / ' + G.qs.length + ' · <b>' + G.score + '</b> คะแนน';
+    $('#hud-bar').style.width = ((G.i / G.qs.length) * 100) + '%';
+  }
+
+  function renderQ() {
+    updateHUD();
+    const q = G.qs[G.i];
+    $('#q-week').textContent = q.w;
+    $('#fb').classList.add('hidden');
+    $('#q-actions').innerHTML = '';
+    const body = $('#q-body');
+    body._key = body._enter = body._ctrlEnter = null;
+
+    ({
+      mcq: renderMCQ,
+      order: renderOrder,
+      blank: renderBlank,
+      bugline: renderBugLine,
+      type: renderType
+    })[q.type](q, body);
+  }
+
+  function finishQ(q, pts, ok, explain) {
+    q.pts = pts;
+    q.ok = ok;
+    G.score += pts;
+    P.answered = (P.answered || 0) + 1;
+
+    if (ok) {
+      playChime();
+      G.correct++;
+    } else {
+      playBuzzer();
+      G.hearts--;
+      G.wrong.push(q);
+    }
+
+    const fb = $('#fb');
+    fb.className = 'mt-6 p-4 rounded-xl border transition-all ' + (ok ? 'bg-emerald-950/40 border-emerald-500/40 text-emerald-200' : 'bg-rose-950/40 border-rose-500/40 text-rose-200');
+    $('#fb-title').textContent = ok ? (pts === 100 ? '🎉 ยอดเยี่ยม ถูกต้องสมบูรณ์!' : '👍 ผ่านด่าน') : '❌ ยังไม่ใช่';
+    $('#fb-pts').textContent = '+' + pts + ' PTS';
+    $('#fb-text').innerHTML = explain || '';
+    fb.classList.remove('hidden');
+
+    const last = G.i === G.qs.length - 1;
+    const dead = G.hearts <= 0;
+
+    $('#q-actions').innerHTML = `
+      <div class="flex items-center gap-2">
+        <span class="text-xs text-slate-500 hidden sm:inline">กด [Enter] เพื่อไปต่อ</span>
+      </div>
+      <button type="button" class="btn-next px-5 py-2 rounded-xl font-bold font-display text-sm bg-sky-500 hover:bg-sky-400 text-slate-950 shadow-lg shadow-sky-500/20 transition">
+        ${dead ? 'ดูผลการทดสอบ' : (last ? 'สรุปคะแนน' : 'ข้อถัดไป →')}
+      </button>
+    `;
+
+    $('.btn-next').addEventListener('click', () => {
+      playClick();
+      if (dead || last) endLevel();
+      else { G.i++; renderQ(); }
+    });
+
+    updateHUD();
+    fb.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function endLevel() {
+    const pct = Math.round((G.score / G.max) * 100);
+    const win = G.hearts > 0;
+    const stars = !win ? 0 : pct >= 90 ? 3 : pct >= 75 ? 2 : 1;
+    const xp = Math.round(G.score / 10) + (win ? 50 : 0) + (stars === 3 ? 50 : 0);
+    P.xp = (P.xp || 0) + xp;
+
+    const st = P.levels[G.L.n];
+    st.best = Math.max(st.best || 0, win ? pct : 0);
+    st.stars = Math.max(st.stars || 0, stars);
+    if (win && G.L.n < 6) P.unlocked = Math.max(P.unlocked, G.L.n + 1);
+    save();
+
+    if (win) playVictory();
+    else playBuzzer();
+
+    $('#r-big').textContent = win ? (stars === 3 ? '🏆 สมบูรณ์แบบระดับปรมาจารย์!' : '🎉 ผ่านการทดสอบชั้น ' + G.L.n + '!') : '💔 หัวใจหมดพลัง...';
+    $('#r-big').className = 'text-3xl sm:text-5xl font-extrabold font-display mb-2 ' + (win ? 'text-sky-400' : 'text-rose-500');
+    $('#r-stars').innerHTML = starsHTML(stars);
+    $('#r-score').textContent = pct + '%';
+    $('#r-acc').textContent = G.correct + ' / ' + G.qs.length;
+    $('#r-xp').textContent = '+' + xp + ' XP';
+
+    $('#btn-next-level').classList.toggle('hidden', !(win && G.L.n < 6));
+    $('#btn-next-level').onclick = () => { playClick(); openIntro(G.L.n + 1); };
+    $('#btn-retry').onclick = () => { playClick(); openIntro(G.L.n); };
+    $('#btn-home').onclick = () => { playClick(); show('s-home'); renderHome(); };
+
+    $('#r-review').innerHTML = G.wrong.length ? `
+      <h3 class="font-bold text-rose-400 text-sm sm:text-base font-display mb-3">⚠️ ข้อที่ควรทบทวนเพิ่มเติม:</h3>
+      <div class="space-y-3">
+        ${G.wrong.map(q => `
+          <div class="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 text-xs sm:text-sm">
+            <b class="text-sky-400 block mb-1">[${esc(q.w)}] ${q.t ? esc(q.t) : (q.q ? q.q.replace(/<[^>]+>/g, '') : '')}</b>
+            <div class="text-slate-300 leading-relaxed">${q.x || q.explain || ''}</div>
+          </div>
+        `).join('')}
+      </div>
+    ` : '<div class="text-emerald-400 font-bold text-center py-4">🎯 ยอดเยี่ยมมาก! คุณตอบถูกต้องครบทุกข้อ 100%</div>';
+
+    $('#hud-bar').style.width = '100%';
+    show('s-result');
+  }
+
+  /* =====================================================================
+     QUESTION TYPE RENDERERS
+     ===================================================================== */
+  function renderMCQ(q, body) {
+    $('#q-tag').textContent = q.label;
+    const order = shuffle(q.o.map((_, i) => i));
+    body.innerHTML = `
+      ${q.code ? codeBlock(q.code) : ''}
+      <p class="text-base sm:text-lg font-medium text-white leading-relaxed mb-4">${q.q}</p>
+      <div class="grid grid-cols-1 gap-2.5">
+        ${order.map((oi, k) => `
+          <button type="button" class="opt-btn flex items-center gap-3 p-3 sm:p-3.5 rounded-xl bg-slate-950/80 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-left transition-all text-xs sm:text-sm text-slate-200" data-oi="${oi}">
+            <span class="w-6 h-6 rounded-lg bg-slate-800 flex items-center justify-center font-mono font-bold text-xs text-sky-400 flex-shrink-0">${k + 1}</span>
+            <span class="flex-grow">${q.o[oi]}</span>
+          </button>
+        `).join('')}
+      </div>
+    `;
+
+    let done = false;
+    const choose = b => {
+      if (done) return;
+      done = true;
+      const oi = +b.dataset.oi;
+      body.querySelectorAll('.opt-btn').forEach(x => {
+        x.disabled = true;
+        if (+x.dataset.oi === q.a) {
+          x.classList.add('bg-emerald-950/60', 'border-emerald-500', 'text-emerald-200');
+        }
+      });
+      if (oi === q.a) {
+        finishQ(q, 100, true, q.x);
+      } else {
+        b.classList.add('bg-rose-950/60', 'border-rose-500', 'text-rose-200');
+        finishQ(q, 0, false, q.x);
+      }
+    };
+
+    body.querySelectorAll('.opt-btn').forEach(b => b.addEventListener('click', () => choose(b)));
+    body._key = k => {
+      const b = body.querySelectorAll('.opt-btn')[k - 1];
+      if (b) choose(b);
+    };
+  }
+
+  function renderOrder(q, body) {
+    $('#q-tag').textContent = 'เรียงขั้นตอน';
+    let pool = shuffle(q.lines.map((l, i) => ({ l, i })));
+    if (pool.every((p, k) => p.i === k)) pool = pool.reverse();
+
+    body.innerHTML = `
+      <div class="mb-4">
+        <h4 class="font-bold text-base text-white font-display">${esc(q.t)}</h4>
+        <p class="text-xs text-slate-400 mt-1">แตะโค้ดในกล่องสีเทาด้านล่างทีละบรรทัดเพื่อเรียงขึ้นไปข้างบน</p>
+      </div>
+      <!-- Answer Area -->
+      <div id="order-ans" class="min-h-[100px] p-3 rounded-xl bg-slate-950/90 border border-sky-500/30 space-y-1.5 mb-4"></div>
+      <!-- Pool Area -->
+      <div id="order-pool" class="space-y-1.5"></div>
+    `;
+
+    const ansEl = $('#order-ans');
+    const poolEl = $('#order-pool');
+    let nextIdx = 0, wrongCount = 0;
+
+    const drawPool = () => {
+      poolEl.innerHTML = pool.map(p => `
+        <button type="button" class="order-line-btn w-full text-left p-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs sm:text-sm font-mono text-slate-200 transition" data-i="${p.i}">
+          ${hl(p.l)}
+        </button>
+      `).join('');
+    };
+
+    drawPool();
+
+    poolEl.addEventListener('click', e => {
+      const b = e.target.closest('.order-line-btn');
+      if (!b) return;
+      playClick();
+      const i = +b.dataset.i;
+
+      if (q.lines[i] === q.lines[nextIdx]) {
+        pool = pool.filter(p => p.i !== i);
+        const lineDiv = document.createElement('div');
+        lineDiv.className = 'p-2 rounded bg-slate-900 border border-slate-800 text-xs sm:text-sm font-mono text-sky-300';
+        lineDiv.innerHTML = hl(q.lines[nextIdx]);
+        ansEl.appendChild(lineDiv);
+        nextIdx++;
+        drawPool();
+
+        if (nextIdx === q.lines.length) {
+          const pts = Math.max(20, 100 - (25 * wrongCount));
+          finishQ(q, pts, wrongCount < 3, (wrongCount ? 'แตะผิด ' + wrongCount + ' ครั้ง · ' : '') + 'ลำดับ Pipeline ที่ถูกต้อง:' + codeBlock(q.lines.join('\n')));
+        }
+      } else {
+        wrongCount++;
+        b.classList.remove('shake');
+        void b.offsetWidth;
+        b.classList.add('shake');
+        playBuzzer();
+        if (wrongCount === 3) toast('ผิดครบ 3 ครั้งแล้ว ข้อนี้จะเสียหัวใจ แต่คุณสามารถเรียงต่อให้เสร็จได้');
+      }
+    });
+  }
+
+  function renderBlank(q, body) {
+    $('#q-tag').textContent = 'เติมคำในช่องว่าง';
+    let k = 0, targetAnswer = '';
+
+    const lines = q.code.split('\n').map(line => {
+      let out = '', last = 0, m;
+      const re = /\[\[(.+?)\]\]/g;
+      while ((m = re.exec(line))) {
+        out += hl(line.slice(last, m.index));
+        if (k === q.k) {
+          targetAnswer = m[1];
+          out += `<input class="blank-in" id="blank-in" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="?">`;
+        } else {
+          out += `<span class="filled">${hl(m[1])}</span>`;
+        }
+        k++;
+        last = re.lastIndex;
+      }
+      return '<div>' + (out + hl(line.slice(last)) || '&nbsp;') + '</div>';
+    }).join('');
+
+    body.innerHTML = `
+      <div class="mb-3">
+        <h4 class="font-bold text-base text-white font-display">${esc(q.t)}</h4>
+        <p class="text-xs text-slate-400 mt-1">พิมพ์โค้ดหรือคำสั่งที่ถูกต้องลงในช่องสี่เหลี่ยมสีฟ้า ${q.h ? '· ใบ้: <b class="text-sky-400">' + esc(q.h) + '</b>' : ''}</p>
+      </div>
+      <div class="code">${lines}</div>
+      <p id="blank-hint-text" class="text-xs text-amber-400 mt-2 min-h-[18px]"></p>
+    `;
+
+    $('#q-actions').innerHTML = `
+      <div class="flex gap-2">
+        <button type="button" id="btn-hint" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-400 text-xs font-semibold border border-slate-700 transition">
+          💡 ขอคำใบ้ (-30)
+        </button>
+      </div>
+      <button type="button" id="btn-check-blank" class="px-5 py-2 rounded-xl font-bold font-display text-sm bg-sky-500 hover:bg-sky-400 text-slate-950 shadow-lg shadow-sky-500/20 transition">
+        ตรวจคำตอบ [Enter]
+      </button>
+    `;
+
+    const inp = $('#blank-in');
+    if (inp) inp.focus();
+
+    let tries = 0, hinted = false, done = false;
+    const target = squash(targetAnswer);
+
+    const check = () => {
+      if (done) return;
+      const v = inp.value;
+      if (!v.trim()) return;
+
+      if (squash(v) === target) {
+        done = true;
+        inp.classList.add('ok');
+        inp.disabled = true;
+        const pts = Math.max(0, (tries ? 60 : 100) - (hinted ? 30 : 0));
+        finishQ(q, pts, true, 'คำตอบที่ถูกต้อง: <code>' + esc(targetAnswer) + '</code>');
+      } else {
+        tries++;
+        inp.classList.add('no');
+        playBuzzer();
+        setTimeout(() => inp.classList.remove('no'), 400);
+
+        if (tries >= 2) {
+          done = true;
+          inp.value = targetAnswer;
+          inp.classList.add('no');
+          inp.disabled = true;
+          finishQ(q, 0, false, 'คำตอบที่ถูกต้องคือ: <code>' + esc(targetAnswer) + '</code>');
+        } else {
+          $('#blank-hint-text').innerHTML = 'ยังไม่ถูกต้อง ลองใหม่อีกครั้ง (ได้ 60 คะแนน) · ความยาว ' + targetAnswer.length + ' ตัวอักษร';
+          inp.select();
+        }
+      }
+    };
+
+    $('#btn-check-blank').addEventListener('click', check);
+    $('#btn-hint').addEventListener('click', () => {
+      if (hinted || done) return;
+      hinted = true;
+      playClick();
+      $('#blank-hint-text').innerHTML = 'ใบ้พยางค์แรก: <b>' + esc(targetAnswer.slice(0, Math.ceil(targetAnswer.length / 3))) + '</b>... (' + targetAnswer.length + ' ตัวอักษร)';
+      inp.focus();
+    });
+
+    body._enter = check;
+  }
+
+  function renderBugLine(q, body) {
+    $('#q-tag').textContent = 'ล่าบั๊กในโค้ด';
+    body.innerHTML = `
+      <p class="text-base font-medium text-white mb-3">${esc(q.q)}</p>
+      ${codeBlock(q.code, 'clickable')}
+      <p class="text-xs text-slate-400">แตะที่บรรทัดของโค้ดที่ทำให้เกิดข้อผิดพลาด</p>
+    `;
+
+    let tries = 0, done = false;
+    const box = body.querySelector('.code');
+    box.addEventListener('click', e => {
+      const d = e.target.closest('div[data-i]');
+      if (!d || done) return;
+      const i = +d.dataset.i;
+
+      if (i === q.bug) {
+        done = true;
+        d.classList.add('good');
+        box.classList.remove('clickable');
+        finishQ(q, tries ? 50 : 100, true, q.x);
+      } else {
+        tries++;
+        d.classList.add('bad');
+        playBuzzer();
+        if (tries >= 2) {
+          done = true;
+          box.querySelector('[data-i="' + q.bug + '"]').classList.add('good');
+          box.classList.remove('clickable');
+          finishQ(q, 0, false, q.x);
+        } else {
+          toast('ไม่ใช่บรรทัดนี้ เหลืออีก 1 โอกาส');
+        }
+      }
+    });
+  }
+
+  function renderType(q, body) {
+    $('#q-tag').textContent = 'บอสใหญ่ · พิมพ์โค้ด';
+    body.innerHTML = `
+      <div class="mb-3">
+        <h4 class="font-bold text-lg text-white font-display">${esc(q.t)}</h4>
+        <p class="text-xs text-slate-400 mt-1">คีย์เวิร์ดสำคัญ: <span class="text-sky-300 font-mono">${esc(q.h)}</span></p>
+      </div>
+      <textarea class="editor" id="boss-editor" spellcheck="false" autocapitalize="off" placeholder="พิมพ์โปรแกรม OpenCV ฉบับเต็มที่นี่... (กดปุ่ม Tab เพื่อย่อหน้า)"></textarea>
+      <div id="boss-res" class="mt-4"></div>
+    `;
+
+    $('#q-actions').innerHTML = `
+      <span class="text-xs text-slate-500 hidden sm:inline">Ctrl + Enter = ส่งตรวจ</span>
+      <button type="button" id="btn-check-boss" class="px-5 py-2 rounded-xl font-bold font-display text-sm bg-pink-500 hover:bg-pink-400 text-slate-950 shadow-lg shadow-pink-500/20 transition">
+        ⚔️ ส่งโปรแกรมโจมตีบอส
+      </button>
+    `;
+
+    const ed = $('#boss-editor');
+    if (ed) ed.focus();
+
+    ed.addEventListener('keydown', e => {
+      if (e.key === 'Tab') {
+        e.preventDefault();
+        const s = ed.selectionStart;
+        ed.setRangeText('    ', s, ed.selectionEnd, 'end');
+      }
+    });
+
+    let done = false;
+    const check = () => {
+      if (done) return;
+      const v = ed.value;
+      if (v.trim().length < 20) {
+        toast('กรุณาพิมพ์โค้ดก่อนส่งตรวจ');
+        return;
+      }
+      done = true;
+      ed.disabled = true;
+
+      const userSq = squash(v);
+      const keyHits = q.keys.map(k => userSq.includes(squash(k)));
+      const keyCov = keyHits.filter(Boolean).length / q.keys.length;
+
+      const userLines = new Set(v.split('\n').map(normLine).filter(Boolean));
+      const model = q.code.split('\n');
+      const modelNorm = model.map(normLine);
+      const lineHits = modelNorm.map(l => l ? userLines.has(l) : null);
+      const cnt = lineHits.filter(x => x !== null).length;
+      const hit = lineHits.filter(Boolean).length;
+      const lineCov = hit / cnt;
+
+      const score = Math.round((0.55 * keyCov + 0.45 * lineCov) * 100);
+      const ok = score >= 70;
+
+      $('#boss-res').innerHTML = `
+        <div class="grid grid-cols-3 gap-2 bg-slate-950 p-3 rounded-xl border border-slate-800 text-center text-xs font-mono mb-3">
+          <div>คีย์เวิร์ด: <b class="text-sky-400">${keyHits.filter(Boolean).length}/${q.keys.length}</b></div>
+          <div>บรรทัดตรง: <b class="text-emerald-400">${hit}/${cnt}</b></div>
+          <div>คะแนนรวม: <b class="text-amber-400">${score}/100</b></div>
+        </div>
+        <div class="text-xs font-bold text-slate-400 mb-1 font-display">เฉลยตัวอย่างโปรแกรม:</div>
+        <div class="code">${model.map((l, i) => '<div class="' + (lineHits[i] === null ? '' : (lineHits[i] ? 'text-emerald-400' : 'text-rose-400')) + '">' + (hl(l) || '&nbsp;') + '</div>').join('')}</div>
+      `;
+
+      finishQ(q, score, ok, ok ? '⚔️ โจมตีสำเร็จ! โค้ดมีความสมบูรณ์สูงมาก' : 'ต้องได้คะแนน 70+ จึงจะผ่านด่านบอส ลองศึกษาโค้ดเฉลยแล้วฝึกพิมพ์ใหม่อีกครั้ง');
+      $('#boss-res').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    $('#btn-check-boss').addEventListener('click', check);
+    body._ctrlEnter = check;
+  }
+
+  /* Keyboard Shortcuts */
+  document.addEventListener('keydown', e => {
+    if (!$('#s-play').classList.contains('on')) return;
+    const body = $('#q-body');
+    if (e.key === 'Enter') {
+      if (e.ctrlKey && body._ctrlEnter) {
+        e.preventDefault();
+        body._ctrlEnter();
+        return;
+      }
+      const nx = $('.btn-next');
+      if (nx) {
+        e.preventDefault();
+        nx.click();
+        return;
+      }
+      if (body._enter && document.activeElement && document.activeElement.id === 'blank-in') {
+        e.preventDefault();
+        body._enter();
+      }
+      return;
+    }
+    if (/^[1-4]$/.test(e.key) && body._key && !$('.btn-next') && !(document.activeElement && /INPUT|TEXTAREA/.test(document.activeElement.tagName))) {
+      body._key(+e.key);
+    }
+  });
+
+  // Initialize
+  renderHome();
+  </script>
+</body>
+</html>
