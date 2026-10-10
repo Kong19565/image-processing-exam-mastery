@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="th" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>จำลองสอบจับเวลาจริง — Image Processing Exam Mastery Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Sarabun', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              900: '#1e3a8a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Sarabun', sans-serif; }
+    code, pre { font-family: 'JetBrains Mono', monospace; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    
+    /* Typography & Spacing matching embedded-systems-exam-mastery */
+    .prose-dark h1 { font-size: 1.45rem; color: #f8fafc; font-weight: 700; border-bottom: 2px solid #3b82f6; padding-bottom: 0.5rem; margin-top: 1.5rem; margin-bottom: 1rem; }
+    @media (min-width: 640px) { .prose-dark h1 { font-size: 1.75rem; } }
+    .prose-dark h2 { font-size: 1.25rem; color: #60a5fa; font-weight: 600; border-bottom: 1px solid #334155; padding-bottom: 0.35rem; margin-top: 1.5rem; margin-bottom: 0.75rem; }
+    @media (min-width: 640px) { .prose-dark h2 { font-size: 1.35rem; } }
+    .prose-dark h3 { font-size: 1.05rem; color: #e2e8f0; font-weight: 600; background: #1e293b; padding: 0.5rem 0.75rem; border-left: 4px solid #3b82f6; border-radius: 0.25rem; margin-top: 1.25rem; margin-bottom: 0.5rem; scroll-margin-top: 6rem; }
+    @media (min-width: 640px) { .prose-dark h3 { font-size: 1.15rem; } }
+    .prose-dark p { margin-bottom: 0.75rem; line-height: 1.6; color: #cbd5e1; font-size: 0.92rem; }
+    
+    /* Mobile-First Responsive Table */
+    .table-container-responsive {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin: 1.25rem 0;
+      border-radius: 0.75rem;
+      border: 1px solid #334155;
+      background-color: #0b1120;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    }
+    .table-container-responsive::-webkit-scrollbar {
+      height: 6px;
+    }
+    .table-container-responsive::-webkit-scrollbar-track {
+      background: #0f172a;
+    }
+    .table-container-responsive::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 3px;
+    }
+    .mobile-data-table {
+      min-width: 600px !important;
+      width: 100% !important;
+      border-collapse: collapse !important;
+      margin: 0 !important;
+      font-size: 0.85rem !important;
+    }
+    .mobile-data-table th, .mobile-data-table td {
+      border: 1px solid #334155 !important;
+      padding: 0.65rem 0.85rem !important;
+      text-align: left !important;
+      vertical-align: top !important;
+      line-height: 1.5 !important;
+    }
+    .mobile-data-table th {
+      background-color: #1e293b !important;
+      color: #f8fafc !important;
+      font-weight: 700 !important;
+      white-space: nowrap !important;
+    }
+    .mobile-data-table td {
+      background-color: #0f172a !important;
+      color: #cbd5e1 !important;
+    }
+    .mobile-data-table tr:nth-child(even) td {
+      background-color: #080d1a !important;
+    }
+    .mobile-data-table tr:hover td {
+      background-color: #1e293b !important;
+    }
+
+    .prose-dark pre { background-color: #090d16; color: #e2e8f0; border: 1px solid #1e293b; border-radius: 0.5rem; padding: 0.75rem 1rem; font-size: 0.825rem; line-height: 1.45; overflow-x: auto; margin: 0.75rem 0; }
+    .prose-dark code { background-color: #1e293b; color: #93c5fd; padding: 0.15rem 0.35rem; border-radius: 0.25rem; font-size: 0.825rem; }
+    .prose-dark pre code { background-color: transparent; padding: 0; color: inherit; font-size: inherit; }
+    .prose-dark ul, .prose-dark ol { padding-left: 1.25rem; margin-bottom: 0.75rem; color: #cbd5e1; font-size: 0.92rem; }
+    .prose-dark li { margin-bottom: 0.25rem; }
+    .prose-dark hr { border: none; border-top: 1px dashed #334155; margin: 1.5rem 0; }
+    .prose-dark strong, .prose-dark b { color: #f8fafc; font-weight: 700; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-blue-600 selection:text-white">
+
+  <!-- Top Sticky Navigation Bar -->
+  <header class="sticky top-0 z-50 bg-slate-900/98 backdrop-blur-md border-b border-slate-800 shadow-xl">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+      <!-- Main Row -->
+      <div class="flex items-center justify-between h-13 sm:h-16 py-2 gap-2">
+        <a href="index.html" class="flex items-center space-x-2 font-bold text-sm sm:text-base md:text-lg text-white hover:text-blue-400 transition-colors flex-shrink-0">
+          <span class="text-xl sm:text-2xl">🖼️</span>
+          <span class="tracking-tight">Image <span class="text-blue-500 font-extrabold">Mastery</span></span>
+        </a>
+        
+        <!-- Desktop Nav Items -->
+        <nav class="hidden lg:flex items-center space-x-1">
+<a href="index.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">🏠 หน้าหลัก</a>
+<a href="questions-bank.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">🎯 คลัง 72 ข้อ</a>
+<a href="exam-simulator.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap bg-blue-600 text-white font-semibold shadow-md">⏱️ จำลองสอบ</a>
+<a href="simulators.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">🧪 ห้องทดลอง</a>
+<a href="lab-pretest.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">💻 แล็บ Pre-Test</a>
+<a href="lectures.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">📚 สรุป 12 บท</a>
+<a href="downloads.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">📦 ดาวน์โหลด</a>
+        </nav>
+
+        <!-- Right Side: Download button & Hamburger button -->
+        <div class="flex items-center space-x-2 flex-shrink-0">
+          <a href="downloads.html" class="inline-flex items-center px-2.5 py-1.5 sm:px-3 sm:py-1.5 rounded-lg text-xs font-semibold bg-emerald-600 hover:bg-emerald-500 text-white shadow transition-all">
+            📥 <span class="hidden sm:inline ml-1">ดาวน์โหลด </span>ZIP
+          </a>
+          <button id="mobileMenuBtn" type="button" aria-label="Toggle Menu" class="lg:hidden p-1.5 sm:p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition focus:outline-none" onclick="toggleMobileMenu()">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Mobile Quick Horizontal Scroller -->
+      <div class="lg:hidden flex space-x-1.5 py-1.5 overflow-x-auto no-scrollbar border-t border-slate-800/80 -mx-3 px-3">
+<a href="index.html" class="px-2.5 py-1 rounded-full text-xs transition-all whitespace-nowrap flex-shrink-0 bg-slate-800/90 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700/50">🏠 หน้าหลัก</a>
+<a href="questions-bank.html" class="px-2.5 py-1 rounded-full text-xs transition-all whitespace-nowrap flex-shrink-0 bg-slate-800/90 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700/50">🎯 คลัง 72 ข้อ</a>
+<a href="exam-simulator.html" class="px-2.5 py-1 rounded-full text-xs transition-all whitespace-nowrap flex-shrink-0 bg-blue-600 text-white font-semibold shadow">⏱️ จำลองสอบ</a>
+<a href="simulators.html" class="px-2.5 py-1 rounded-full text-xs transition-all whitespace-nowrap flex-shrink-0 bg-slate-800/90 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700/50">🧪 ห้องทดลอง</a>
+<a href="lab-pretest.html" class="px-2.5 py-1 rounded-full text-xs transition-all whitespace-nowrap flex-shrink-0 bg-slate-800/90 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700/50">💻 แล็บ Pre-Test</a>
+<a href="lectures.html" class="px-2.5 py-1 rounded-full text-xs transition-all whitespace-nowrap flex-shrink-0 bg-slate-800/90 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700/50">📚 สรุป 12 บท</a>
+<a href="downloads.html" class="px-2.5 py-1 rounded-full text-xs transition-all whitespace-nowrap flex-shrink-0 bg-slate-800/90 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700/50">📦 ดาวน์โหลด</a>
+      </div>
+
+      <!-- Mobile Dropdown Menu -->
+      <div id="mobileDropdown" class="hidden lg:hidden py-3 border-t border-slate-800 space-y-1.5">
+<a href="index.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">🏠 หน้าหลัก</a>
+<a href="questions-bank.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">🎯 คลัง 72 ข้อ</a>
+<a href="exam-simulator.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap bg-blue-600 text-white font-semibold shadow-md">⏱️ จำลองสอบ</a>
+<a href="simulators.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">🧪 ห้องทดลอง</a>
+<a href="lab-pretest.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">💻 แล็บ Pre-Test</a>
+<a href="lectures.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">📚 สรุป 12 บท</a>
+<a href="downloads.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">📦 ดาวน์โหลด</a>
+      </div>
+    </div>
+  </header>
+
+
+  <main class="flex-grow max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-5 sm:py-6 w-full">
+    <div class="space-y-6">
+
+      <!-- Setup Card -->
+      <div id="exam-setup-card" class="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-5 sm:p-8 shadow-xl">
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-white flex items-center gap-2">
+          <span>⏱️</span> ระบบจำลองสอบจับเวลาจริง (Timed Mock Exam Simulator)
+        </h1>
+        <p class="text-slate-400 text-sm mt-2 max-w-2xl leading-relaxed">
+          จำลองสภาวะการสอบจริง สุ่มข้อสอบจากคลัง 72 ข้อ สลับลำดับตัวเลือก พร้อมระบบจับเวลานับถอยหลัง ปักหมุดข้อที่สงสัย และส่งตรวจตัดเกรด A ถึง F พร้อมกราฟวิเคราะห์จุดอ่อนรายบทเรียน
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6 pt-6 border-t border-slate-800">
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 mb-2">จำนวนข้อสอบที่ต้องการ:</label>
+            <select id="exam-cfg-count" class="w-full bg-slate-800 border border-slate-700 text-white rounded-lg p-2.5 text-sm outline-none">
+              <option value="20">20 ข้อ (สปีดเทสต์เร่งด่วน ~ 25 นาที)</option>
+              <option value="35" selected>35 ข้อ (ชุดมาตรฐาน ~ 45 นาที)</option>
+              <option value="50">50 ข้อ (ชุดทดสอบเต็มรูปแบบ ~ 60 นาที)</option>
+              <option value="72">72 ข้อ (ครบทุกข้อในคลัง ~ 90 นาที)</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 mb-2">เวลาที่กำหนด (นาที):</label>
+            <select id="exam-cfg-time" class="w-full bg-slate-800 border border-slate-700 text-white rounded-lg p-2.5 text-sm outline-none">
+              <option value="25">25 นาที</option>
+              <option value="45" selected>45 นาที</option>
+              <option value="60">60 นาที</option>
+              <option value="90">90 นาที</option>
+            </select>
+          </div>
+
+          <div class="flex items-end">
+            <button onclick="startMockExam()" class="w-full p-2.5 rounded-lg font-bold bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-900/50 transition-all flex items-center justify-center gap-2 text-sm">
+              🚀 เริ่มทำข้อสอบทันที
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Active Exam Screen -->
+      <div id="exam-active-panel" class="hidden space-y-6">
+        <!-- Sticky Timer Bar -->
+        <div class="sticky top-16 z-40 bg-slate-900/98 border border-slate-800 rounded-xl p-3 sm:p-4 shadow-xl backdrop-blur-md flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <span class="text-xs text-slate-400">ข้อปัจจุบัน:</span>
+            <span id="exam-progress-text" class="text-sm sm:text-base font-bold text-white">ข้อ 1 / 35</span>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <div id="exam-timer-display" class="font-mono text-xl sm:text-2xl font-black text-emerald-400 tracking-wider">45:00</div>
+            <button id="exam-flag-btn" onclick="toggleCurrentFlag()" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs border border-slate-700">
+              🚩 ปักหมุด
+            </button>
+          </div>
+
+          <button onclick="confirmSubmitExam()" class="px-3.5 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs shadow">
+            📥 ส่งข้อสอบ
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <!-- Question Card -->
+          <div class="lg:col-span-2 space-y-4">
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 sm:p-6 shadow-xl">
+              <div class="flex justify-between items-center text-xs text-slate-400 pb-3 border-b border-slate-800">
+                <span id="exam-q-lecture" class="font-semibold text-blue-400">Lecture 1</span>
+                <span id="exam-q-index">คำถามที่ 1</span>
+              </div>
+              <p id="exam-q-text" class="text-base sm:text-lg font-bold text-slate-100 my-4 leading-relaxed"></p>
+              <div id="exam-options-container" class="space-y-2"></div>
+            </div>
+
+            <div class="flex justify-between">
+              <button id="btn-exam-prev" onclick="navigateExamQuestion(-1)" class="px-4 py-2 rounded-lg bg-slate-800 text-slate-300 text-sm font-semibold hover:bg-slate-700 border border-slate-700">
+                ⬅️ ข้อก่อนหน้า
+              </button>
+              <button id="btn-exam-next" onclick="navigateExamQuestion(1)" class="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-semibold hover:bg-blue-500 shadow">
+                ข้อถัดไป ➡️
+              </button>
+            </div>
+          </div>
+
+          <!-- Navigation Palette -->
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-xl space-y-3">
+            <h3 class="text-sm font-bold text-white border-b border-slate-800 pb-2">🗺️ แผนผังข้อสอบ</h3>
+            <div id="exam-palette-container" class="grid grid-cols-5 gap-2 max-h-72 overflow-y-auto p-1"></div>
+            <div class="text-xs text-slate-400 pt-2 border-t border-slate-800 space-y-1">
+              <div><span class="inline-block w-3 h-3 bg-blue-600 rounded mr-1"></span> ตอบแล้ว</div>
+              <div><span class="inline-block w-3 h-3 bg-slate-800 border border-slate-700 rounded mr-1"></span> ยังไม่ตอบ</div>
+              <div><span class="inline-block w-3 h-3 border border-amber-500 rounded mr-1"></span> ปักหมุดทบทวน</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Results Screen -->
+      <div id="exam-results-panel" class="hidden space-y-6">
+        <div class="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-6 sm:p-8 text-center shadow-xl space-y-3">
+          <h2 class="text-xl sm:text-2xl font-bold text-white">🎉 สรุปผลการจำลองสอบ (Exam Performance Report)</h2>
+          <div id="result-score-text" class="text-5xl sm:text-6xl font-black text-blue-400">0 / 35</div>
+          <div class="text-slate-300 text-sm">คิดเป็น <span id="result-pct-text" class="font-bold text-emerald-400">0%</span></div>
+          <div>
+            <span id="result-grade-badge" class="inline-block px-5 py-2 rounded-xl text-xl font-black bg-emerald-600 text-white shadow-lg">Grade A</span>
+          </div>
+        </div>
+
+        <!-- Topic Breakdown -->
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 sm:p-6 shadow-xl space-y-3">
+          <h3 class="text-base font-bold text-white border-b border-slate-800 pb-2">📊 วิเคราะห์ความแม่นยำรายบทเรียน (Topic Mastery)</h3>
+          <div id="topic-breakdown-container" class="space-y-3"></div>
+        </div>
+
+        <!-- Detailed Review -->
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 sm:p-6 shadow-xl space-y-4">
+          <h3 class="text-base font-bold text-white border-b border-slate-800 pb-2">🔍 ตรวจสอบคำตอบและเฉลยละเอียดทุกข้อ</h3>
+          <div id="exam-review-container" class="space-y-4"></div>
+        </div>
+
+        <div class="text-center pt-4">
+          <button onclick="resetToExamSetup()" class="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold shadow-lg">
+            🔄 ทำข้อสอบจำลองรอบใหม่
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    const QUESTIONS = [{"id": "Q_L01_01", "lecture_id": "L1", "lecture_title": "Lecture 1: Introduction to Image Processing", "question": "กระบวนการแปลงสัญญาณภาพจากโลกความเป็นจริง (Continuous) ให้กลายเป็นภาพดิจิทัล (Digital Image) ประกอบด้วย 2 ขั้นตอนหลักใด และสิ่งใดเป็นตัวกำหนดขอบเขตขนาดของพิกเซล?", "options": ["Sampling กำหนดพิกัดเชิงพื้นที่ (Spatial resolution) และ Quantization กำหนดระดับความเข้มสี (Intensity resolution)", "Quantization กำหนดพิกัดเชิงพื้นที่ และ Sampling กำหนดระดับความเข้มสี", "Filtering กำหนดขนาดภาพ และ Convolution กำหนดความสว่าง", "Interpolation กำหนดขนาดพิกเซล และ Thresholding กำหนดจำนวนสี"], "answer": 0, "explanation": "การเปลี่ยนภาพต่อเนื่องเป็นดิจิทัลต้องผ่าน (1) Sampling คือการสุ่มตัวอย่างเชิงพื้นที่ (แกน x, y) ซึ่งกำหนดจำนวนพิกเซลหรือ Spatial Resolution และ (2) Quantization คือการแปลงค่าความสว่างอย่างต่อเนื่องให้เป็นระดับความเข้มสีจำนวนเต็มจำกัด (Gray levels L = 2^k) หรือ Intensity Resolution"}, {"id": "Q_L01_02", "lecture_id": "L1", "lecture_title": "Lecture 1: Introduction to Image Processing", "question": "ข้อใดจำแนกระดับขั้นของการประมวลผลภาพ (Levels of Image Processing) ได้ถูกต้องตามนิยามสากล?", "options": ["Low-level: ภาพเข้า-ภาพออก, Mid-level: ภาพเข้า-แอตทริบิวต์ออก (เช่น ขอบ, พื้นที่), High-level: ข้อมูลเข้า-การเข้าใจฉากและการตัดสินใจ", "Low-level: ภาพเข้า-ป้ายกำกับออก, Mid-level: ข้อความเข้า-ภาพออก, High-level: ภาพเข้า-ภาพออก", "Low-level: การบีบอัดภาพ, Mid-level: การพิมพ์ภาพ, High-level: การขยายภาพ", "Low-level: AI สร้างภาพ, Mid-level: การปรับสีภาพ, High-level: การแปลงสัญญาณฟูริเยร์"], "answer": 0, "explanation": "Low-level processing รับภาพเข้ามาและส่งผลลัพธ์เป็นภาพ (เช่น การปรับ contrast, ลด noise); Mid-level processing รับภาพเข้ามาและสกัดแอตทริบิวต์หรือคุณลักษณะ (เช่น segmentation, edge detection, object bounding box); ส่วน High-level นำแอตทริบิวต์ไปตีความเพื่อจำแนกและตัดสินใจ (เช่น scene understanding, autonomous navigation)"}, {"id": "Q_L01_03", "lecture_id": "L1", "lecture_title": "Lecture 1: Introduction to Image Processing", "question": "ในระบบ Generative AI เช่น Stable Diffusion โมเดลประเภท LoRA (Low-Rank Adaptation) มีคุณสมบัติเด่นอย่างไรเมื่อเทียบกับ Checkpoint (.safetensors)?", "options": ["LoRA เป็นโมเดลหลักที่บรรจุโครงข่าย UNet ทั้งหมดและทำงานได้เดี่ยวๆ", "LoRA เป็นโมเดลเสริมขนาดเล็กที่ฝึกโดยแทรก Matrix rank ต่ำเข้าไปในเลเยอร์ของโมเดลหลัก เพื่อปรับแต่งสไตล์หรือตัวละครเฉพาะ โดยต้องโหลดทับ Base Checkpoint เสมอ", "LoRA ทำหน้าที่แปลง Pixel Space ให้เป็น Latent Space เท่านั้น", "LoRA คือชุดเวกเตอร์คำเฉพาะใน Text Encoder ที่มีขนาดเพียงไม่กี่กิโลไบต์"], "answer": 1, "explanation": "LoRA (Low-Rank Adaptation) มีขนาดเล็กมาก (~50-200MB) เมื่อเทียบกับ Base Checkpoint (~2-7GB) เพราะทำการแช่แข็ง (freeze) น้ำหนักหลักไว้ แล้วฝึกเฉพาะเมทริกซ์ rank ต่ำที่มาคูณเพิ่ม จึงไม่สามารถรันเดี่ยวๆ ได้ ต้องใช้งานร่วมกับ Checkpoint หลักเสมอ ส่วนตัวที่แปลงระหว่าง Pixel Space กับ Latent Space คือ VAE"}, {"id": "Q_L01_04", "lecture_id": "L1", "lecture_title": "Lecture 1: Introduction to Image Processing", "question": "องค์ประกอบใดใน Stable Diffusion ที่ทำหน้าที่บีบอัดภาพจาก Pixel Space (มิติสูง เช่น 512x512x3) เข้าสู่ Latent Space (มิติต่ำ เช่น 64x64x4) เพื่อลดภาระการคำนวณของ UNet?", "options": ["Textual Inversion", "Variational Autoencoder (VAE)", "ControlNet Preprocessor", "CLIP Text Encoder"], "answer": 1, "explanation": "VAE (Variational Autoencoder) ประกอบด้วย Encoder ที่ทำหน้าที่บีบอัดภาพลงสู่ Latent Space ขนาดเล็กลง 8 เท่า (Downsample factor = 8) เพื่อให้โมเดล UNet คำนวณการ Denoising ได้รวดเร็วและใช้แรมการ์ดจอน้อยลง จากนั้น VAE Decoder จะแปลง Latent กลับมาเป็นภาพพิกเซลความละเอียดสูงในขั้นตอนสุดท้าย"}, {"id": "Q_L01_05", "lecture_id": "L1", "lecture_title": "Lecture 1: Introduction to Image Processing", "question": "ไฟล์ประเภท Textual Inversion (Embeddings) ในการสร้างภาพด้วย AI ทำงานอย่างไร?", "options": ["เป็นไฟล์น้ำหนักจำลองที่ฝึกโครงสร้าง UNet ขึ้นมาใหม่ทั้งหมด", "เป็นไฟล์ขนาดเล็กมากที่นิยามเวกเตอร์การแทนความหมายของคำศัพท์ใหม่ (Word Token Embedding) ใน Text Encoder เพื่อให้โมเดลเข้าใจ concept นั้นเมื่อพิมพ์คีย์เวิร์ด", "เป็นฟิลเตอร์กรองสัญญาณรบกวนก่อนนำภาพไปเซฟ", "เป็นสคริปต์คำนวณการสุ่มตัวอย่างเมทริกซ์ใน Latent space"], "answer": 1, "explanation": "Textual Inversion หรือ Embedding ไม่ได้แก้ไขค่าน้ำหนักใดๆ ในโครงข่าย UNet เลย แต่ทำหน้าที่เพียงสร้าง Vector บันทึกตำแหน่งความหมายใหม่ใน Token Embedding space ของ Text Encoder ทำให้เมื่อเราพิมพ์ชื่อ Embedding ระบบจะดึงความหมายของสไตล์หรือใบหน้านั้นมาส่งให้ UNet ทันที"}, {"id": "Q_L02_01", "lecture_id": "L2", "lecture_title": "Lecture 2: Control and Fine-tune", "question": "อะไรคือความแตกต่างที่สำคัญที่สุดระหว่าง Sampler แบบ 'Euler' ปกติ กับ 'Euler a' (Euler Ancestral)?", "options": ["Euler ปกติใช้เวลานานกว่า Euler a เป็นสองเท่า", "Euler เป็น Deterministic sampler เมื่อเพิ่ม Sampling Steps ผลลัพธ์ภาพจะลู่เข้าหาภาพเดิมที่คมชัดขึ้น ส่วน Euler a มีการเติมสัญญาณรบกวนสุ่ม (Stochastic noise) ในแต่ละรอบ ทำให้ภาพเปลี่ยนหน้าตาไปเรื่อยๆ เมื่อเปลี่ยนจำนวน Steps", "Euler ใช้สำหรับสร้างภาพการ์ตูนเท่านั้น ส่วน Euler a ใช้สำหรับภาพเสมือนจริง", "Euler ไม่รองรับการใช้งานร่วมกับ ControlNet"], "answer": 1, "explanation": "ตัว 'a' ใน Euler a ย่อมาจาก Ancestral ซึ่งเป็น Stochastic Sampler ที่จะมีการสุ่มเพิ่ม Random Noise เข้าไปในระหว่างกระบวนการถอดรหัสในทุกๆ Step ทำให้ภาพไม่ลู่เข้า (non-convergent) หากเพิ่ม Steps จาก 20 เป็น 30 ภาพจะเปลี่ยนไป ไม่เหมือน Euler ปกติที่ภาพจะค่อยๆ คมชัดขึ้นโดยคงเค้าโครงเดิม"}, {"id": "Q_L02_02", "lecture_id": "L2", "lecture_title": "Lecture 2: Control and Fine-tune", "question": "หากผู้ใช้งานตั้งค่า CFG Scale (Classifier-Free Guidance) ไว้สูงเกินไป (เช่น 15-20) ผลกระทบต่อภาพที่เกิดขึ้นคือข้อใด?", "options": ["ภาพจะเบลอและจางลงจนกลายเป็นสีเทา", "ภาพจะตรงตาม prompt อย่างสมบูรณ์แบบโดยไม่มีจุดบกพร่อง", "ภาพจะเกิดอาการไหม้ (Over-saturation, Burned contrast) สีจัดจ้านผิดธรรมชาติ และมีริ้วรอยเส้นแตกหยาบ (Artifacts)", "ภาพจะถูกสุ่มสร้างโดยไม่สนใจ Prompt ที่ป้อนเข้าไป"], "answer": 2, "explanation": "CFG Scale บังคับให้โมเดลผลักดันผลลัพธ์ไปในทิศทางของ Prompt ให้มากที่สุด หากตั้งค่าสูงเกินขอบเขตที่เหมาะสม (ค่าปกติอยู่ที่ 6-8) เวกเตอร์จะถูกขยายจนหลุดช่วง Dynamic Range ส่งผลให้ Contrast จัดเกินไปจนภาพไหม้ สีแตก และเกิดขยะภาพรุนแรง"}, {"id": "Q_L02_03", "lecture_id": "L2", "lecture_title": "Lecture 2: Control and Fine-tune", "question": "ในโหมด Image-to-Image (img2img) พารามิเตอร์ 'Denoising Strength' มีความหมายอย่างไร?", "options": ["ความเร็วในการประมวลผลของการ์ดจอ", "สัดส่วนของสัญญาณรบกวนที่เพิ่มเข้าไปในภาพตั้งต้น (0.0 หมายถึงคงภาพเดิมไว้ 100% ส่วน 1.0 หมายถึงทิ้งภาพเดิมทั้งหมดและสร้างภาพใหม่แบบสุ่ม)", "จำนวนรอบของการทำ Upscaling", "ระดับการปรับความสว่างของภาพสุดท้าย"], "answer": 1, "explanation": "Denoising Strength กำหนดว่าจะยอมให้โมเดลทำลายข้อมูลในภาพตั้งต้นเดิมมากน้อยเพียงใด หากตั้งค่าต่ำ (เช่น 0.2-0.3) โมเดลจะเปลี่ยนเฉพาะรายละเอียดเล็กน้อยและคงโครงสร้างเดิมไว้เกือบหมด หากตั้งค่าสูง (เช่น 0.8-1.0) โครงสร้างเดิมจะถูกลบล้างและกลายเป็นการสร้างภาพใหม่เกือบสมบูรณ์"}, {"id": "Q_L02_04", "lecture_id": "L2", "lecture_title": "Lecture 2: Control and Fine-tune", "question": "หากต้องการนำภาพถ่ายคนที่มีการจัดท่าทางซับซ้อน มาสร้างเป็นตัวละคร 3D ในท่าทางเดิมเป๊ะๆ ควรเลือกใช้ ControlNet Preprocessor ใดเหมาะสมที่สุด?", "options": ["ControlNet Depth", "ControlNet OpenPose", "ControlNet Canny", "ControlNet Tile"], "answer": 1, "explanation": "ControlNet OpenPose สกัดเฉพาะโครงกระดูก (Keypoints 18 จุดของร่างกาย รวมถึงมือและใบหน้า) โดยตัดพื้นหลังและเสื้อผ้าเดิมออกทั้งหมด ทำให้ควบคุมท่าทาง (Pose) ของตัวละครใหม่ได้อย่างอิสระโดยไม่ถูกรบกวนจากสไตล์เดิม"}, {"id": "Q_L02_05", "lecture_id": "L2", "lecture_title": "Lecture 2: Control and Fine-tune", "question": "การใช้งาน 'X/Y/Z Plot' ใน WebUI มีวัตถุประสงค์หลักเพื่ออะไร?", "options": ["การคำนวณตำแหน่ง 3D ของวัตถุในเกม", "การสร้างตารางเปรียบเทียบ Grid ของพารามิเตอร์ต่างๆ พร้อมกันอย่างเป็นระบบ (เช่น แกน X เปลี่ยน Sampler, แกน Y เปลี่ยน Steps, แกน Z เปลี่ยน CFG Scale) เพื่อหาจุดที่เหมาะสมที่สุด", "การบันทึกภาพลงในระบบคลาวด์อัตโนมัติ", "การเพิ่มความละเอียดของภาพให้เป็น 4K"], "answer": 1, "explanation": "X/Y/Z Plot เป็นเครื่องมือเชิงการทดลอง (Hyperparameter search) ที่ช่วยเรนเดอร์ภาพเป็นตารางกริดเปรียบเทียบตัวแปร 2 ถึง 3 แกนพร้อมกัน ช่วยให้ผู้วิจัยเห็นความสัมพันธ์ของพารามิเตอร์ต่างๆ ได้อย่างชัดเจนในการทดลองครั้งเดียว"}, {"id": "Q_L03_01", "lecture_id": "L3", "lecture_title": "Lecture 3: Human Visual Perception", "question": "เซลล์รับแสงชนิด Cones และ Rods บนจอประสาทตา (Retina) ของมนุษย์ มีหน้าที่และตำแหน่งการกระจายตัวแตกต่างกันอย่างไร?", "options": ["Cones รับภาพเวลากลางคืนอยู่บริเวณรอบนอก ส่วน Rods รับสีอยู่ตรงกลาง", "Cones (~6-7 ล้านเซลล์) หนาแน่นที่สุดที่ Fovea รับผิดชอบการมองเห็นเวลากลางวัน (Photopic) และแยกแยะสี; ส่วน Rods (~100 ล้านเซลล์) อยู่บริเวณรอบนอก รับผิดชอบการมองเห็นในที่สลัว (Scotopic) มองเห็นเป็นภาพขาวดำ", "Cones และ Rods มีหน้าที่เหมือนกันทุกประการและกระจายตัวเท่ากันสม่ำเสมอทั่วทั้งเรตินา", "Rods รับรู้สี 3 สีหลัก ส่วน Cones รับรู้เฉพาะความสว่างขาวดำ"], "answer": 1, "explanation": "Cones (เซลล์รูปกรวย) มีความไวแสงต่ำจึงทำงานในสภาวะแสงสว่าง (Photopic vision) มี 3 ชนิดที่ตอบสนองต่อช่วงคลื่นแสง แดง เขียว น้ำเงิน กระจุกตัวหนาแน่นที่สุดตรง Fovea Centralis ทำให้เป็นจุดที่สายตามองเห็นคมชัดที่สุด ส่วน Rods (เซลล์รูปแท่ง) ไวแสงสูงมาก ทำงานเวลากลางคืน (Scotopic vision) ไม่แยกสี และอยู่บริเวณรอบนอก (Periphery)"}, {"id": "Q_L03_02", "lecture_id": "L3", "lecture_title": "Lecture 3: Human Visual Perception", "question": "ปรากฏการณ์ 'Mach Bands' ที่มนุษย์มองเห็นเป็นแถบแสงสว่างเกินจริงหรือมืดเกินจริงบริเวณรอยต่อที่มีการเปลี่ยนระดับความเข้มแสง เกิดจากสาเหตุใด?", "options": ["ความผิดปกติของเลนส์ตาที่หักเหแสงไม่เท่ากัน", "กลไกการยับยั้งเชิงข้างของระบบประสาทตา (Lateral Inhibition) ในเซลล์ประสาทเรตินา", "การเกิดสัญญาณรบกวนความถี่สูงในจอภาพคอมพิวเตอร์", "การสะท้อนของแสงบนกระจกตา (Cornea)"], "answer": 1, "explanation": "Mach Bands เป็นปรากฏการณ์ทางชีววิทยาที่เกิดจาก Lateral Inhibition กล่าวคือ เมื่อเซลล์รับแสงถูกกระตุ้น มันจะส่งสัญญาณยับยั้งเซลล์ประสาทข้างเคียง ทำให้เซลล์ที่อยู่ติดกับขอบด้านสว่างได้รับการยับยั้งน้อยลงจนเห็นสว่างกว่าปกติ (Overshoot) และด้านมืดถูกยับยั้งมากขึ้นจนเห็นมืดกว่าปกติ (Undershoot)"}, {"id": "Q_L03_03", "lecture_id": "L3", "lecture_title": "Lecture 3: Human Visual Perception", "question": "ปรากฏการณ์ 'Simultaneous Contrast' บ่งบอกถึงข้อเท็จจริงใดเกี่ยวกับการรับรู้ความสว่างของมนุษย์?", "options": ["ความสว่างที่ตามนุษย์รับรู้ไม่ได้ขึ้นอยู่กับค่าความเข้มแสงจริงเพียงอย่างเดียว แต่ถูกอิทธิพลของความสว่างของพื้นหลังโดยรอบครอบงำ (แผ่นสีเทาเดียวกันบนพื้นหลังดำจะดูสว่างกว่าบนพื้นหลังขาว)", "ตามนุษย์สามารถวัดระดับค่าพิกเซลเป็นตัวเลข [0, 255] ได้อย่างแม่นยำเสมอ", "มนุษย์มองเห็นสีเขียวได้ชัดเจนที่สุดในเวลากลางคืน", "เมื่อมองวัตถุสองชิ้นพร้อมกัน จะเห็นวัตถุชิ้นที่สองเบลอเสมอ"], "answer": 0, "explanation": "Simultaneous Contrast แสดงให้เห็นว่า Subjective Brightness (ความสว่างที่เรารับรู้) เป็นสัมพัทธ์ เมื่อพื้นที่สีเทาเดียวกันถูกล้อมรอบด้วยพื้นหลังสีดำ เซลล์ประสาทจะไม่ถูกยับยั้งทำให้เห็นสว่างขึ้น แต่เมื่ออยู่บนพื้นหลังสีขาว จะถูกแสงรอบข้างยับยั้งทำให้เรามองเห็นเป็นสีเทาเข้มขึ้น"}, {"id": "Q_L03_04", "lecture_id": "L3", "lecture_title": "Lecture 3: Human Visual Perception", "question": "ตามกฎของเวเบอร์ (Weber's Law) อัตราส่วน ΔIc / I (Weber Ratio) มีความหมายทางกายภาพอย่างไรในระบบการมองเห็น?", "options": ["อัตราการหักเหแสงผ่านเลนส์ตา", "ความสามารถในการแยกแยะความแตกต่างของระดับความสว่างที่น้อยที่สุด (Just Noticeable Difference: JND) เทียบกับความสว่างพื้นหลัง", "ความยาวโฟกัสของลูกตามนุษย์", "อัตราส่วนระหว่างจำนวนเซลล์ Cones ต่อ Rods"], "answer": 1, "explanation": "Weber's Ratio (ΔIc / I) บ่งบอกถึงความไวในการแยกแยะความสว่าง โดย ΔIc คือการเปลี่ยนแปลงความเข้มแสงน้อยที่สุดที่มนุษย์สามารถสังเกตเห็นได้บนพื้นหลังความเข้ม I หากค่า Weber Ratio ต่ำ แสดงว่าระบบสายตามีความสามารถในการแยกแยะความต่างของแสง (Discrimination capability) ได้ดี"}, {"id": "Q_L03_05", "lecture_id": "L3", "lecture_title": "Lecture 3: Human Visual Perception", "question": "บริเวณ 'Blind Spot' (จุดบอด) บนจอประสาทตาของมนุษย์ เกิดขึ้นจากโครงสร้างทางกายวิภาคใด?", "options": ["บริเวณที่มีแต่เซลล์ Cones อัดแน่นกันมากเกินไป", "บริเวณ Fovea Centralis ที่ไม่มีเซลล์ Rods", "บริเวณจุดทางออกของเส้นประสาทตา (Optic Nerve) และหลอดเลือด ซึ่งไม่มีเซลล์รับแสง (Photoreceptors) อยู่เลย", "ขอบของม่านตา (Iris) ที่บังแสง"], "answer": 2, "explanation": "Optic Disc หรือ Blind Spot คือบริเวณที่รวมตัวของใยประสาทตาเพื่อส่งสัญญาณไปยังสมอง จุดนี้ไม่มีเซลล์รับแสงทั้ง Cones และ Rods อยู่เลย ภาพที่ตกกระทบบริเวณนี้จึงไม่ถูกแปลงเป็นสัญญาณประสาท แต่สมองจะทำการ interpolate ข้อมูลรอบข้างมาเติมเต็มให้โดยที่เราไม่รู้สึกตัว"}, {"id": "Q_L04_01", "lecture_id": "L4", "lecture_title": "Lecture 4: Point Operation", "question": "สมการการแปลงระดับความเข้มสีแบบ Power-Law (Gamma Transformation): s = c * r^γ มีผลต่อภาพอย่างไรเมื่อกำหนดให้ γ < 1 และ γ > 1 ตามลำดับ?", "options": ["γ < 1 ภาพจะมืดลง; γ > 1 ภาพจะสว่างขึ้น", "γ < 1 ขยายช่วงความเข้มย่านมืด (ภาพสว่างขึ้น); γ > 1 บีบอัดย่านมืดและขยายย่านสว่าง (ภาพมืดลงและเพิ่มความคมชัดในส่วนสว่าง)", "ทั้งสองค่าให้ผลลัพธ์เหมือนกันคือการกลับสีเป็น Negative", "γ < 1 ขจัดสัญญาณรบกวน; γ > 1 เพิ่มสัญญาณรบกวน"], "answer": 1, "explanation": "เมื่อ γ < 1 เส้นโค้งความสัมพันธ์จะโป่งขึ้นด้านบน ทำให้พิกเซลค่าต่ำ (มืด) ถูกยกค่าให้สูงขึ้น ภาพโดยรวมจึงสว่างขึ้นและเห็นรายละเอียดในเงามืดชัดเจน ส่วนเมื่อ γ > 1 เส้นโค้งจะเว้าลงด้านล่าง ทำให้พิกเซลค่าต่ำถูกกดให้มืดยิ่งขึ้น ภาพโดยรวมจึงมืดลง นิยมใช้แก้ไขปัญหาภาพที่สว่างจ้าเกินไป (Washed out) หรือ Gamma Correction ของจอภาพ"}, {"id": "Q_L04_02", "lecture_id": "L4", "lecture_title": "Lecture 4: Point Operation", "question": "เหตุใดฟังก์ชันการแปลงแบบลอการิทึม s = c * log(1 + r) จึงต้องบวก 1 เข้ากับค่าพิกเซล r เสมอ?", "options": ["เพื่อป้องกันกรณี r = 0 ซึ่งจะทำให้ log(0) เกิดความผิดพลาดทางคณิตศาสตร์ (Undefined / -Infinity)", "เพื่อให้ขนาดของภาพเพิ่มขึ้นเป็นสองเท่า", "เพื่อแปลงภาพให้กลายเป็นภาพสี RGB", "เพื่อชดเชยค่าความคลาดเคลื่อนของเซนเซอร์"], "answer": 0, "explanation": "เนื่องจากพิกเซลสีดำสนิทมีค่า r = 0 และฟังก์ชัน log(0) ไม่นิยามในระบบจำนวนจริง (ลู่เข้าสู่ลบอนันต์) การใช้ log(1 + r) จะรับประกันว่าเมื่อ r = 0 จะได้ log(1) = 0 ทำให้จุดสีดำยังคงเป็น 0 อย่างถูกต้อง"}, {"id": "Q_L04_03", "lecture_id": "L4", "lecture_title": "Lecture 4: Point Operation", "question": "ในการทำ Bit-Plane Slicing กับภาพขาวดำ 8-bit พิกเซลแต่ละตัวจะถูกแยกเป็น 8 ระนาบ ข้อใดกล่าวถึงคุณสมบัติของ Bit Plane 0 และ Bit Plane 7 ได้ถูกต้อง?", "options": ["Bit Plane 0 บรรจุโครงสร้างภาพส่วนใหญ่; Bit Plane 7 บรรจุแต่สัญญาณรบกวน", "Bit Plane 7 (MSB) บรรจุข้อมูลสายตาและโครงสร้างส่วนใหญ่ของภาพ; ส่วน Bit Plane 0 (LSB) บรรจุรายละเอียดปลีกย่อยหรือสัญญาณรบกวนสุ่มที่ตามองไม่เห็น นิยมใช้ซ่อนข้อมูล (Steganography)", "ทุก Bit Plane มีความสำคัญต่อการมองเห็นของตามนุษย์เท่ากันทั้งหมด", "Bit Plane 0 ใช้เก็บค่าเฉลี่ย; Bit Plane 7 ใช้เก็บค่าความแปรปรวน"], "answer": 1, "explanation": "Bit 7 คือ Most Significant Bit (MSB) มีค่าน้ำหนัก 2^7 = 128 ซึ่งคิดเป็นกว่า 50% ของความสว่างทั้งหมด จึงบรรจุโครงร่างหลักของภาพไว้เกือบสมบูรณ์ ขณะที่ Bit 0 คือ Least Significant Bit (LSB) มีค่าน้ำหนักเพียง 2^0 = 1 หากเปลี่ยนแปลงค่านี้ ตามนุษย์จะไม่สามารถสังเกตเห็นความต่างได้เลย จึงนิยมนำมาใช้ซ่อนข้อความลับ"}, {"id": "Q_L04_04", "lecture_id": "L4", "lecture_title": "Lecture 4: Point Operation", "question": "ขั้นตอนการทำ Histogram Equalization (HE) อาศัยฟังก์ชันทางสถิติใดเป็น Transformation Function ในการแมปค่าระดับสี?", "options": ["Probability Density Function (PDF) ของภาพ", "Cumulative Distribution Function (CDF) ของฮิสโทแกรมที่ปรับสเกลด้วย (L - 1)", "Fourier Transform ของฮิสโทแกรม", "Derivative ของฮิสโทแกรม"], "answer": 1, "explanation": "สูตรการทำ Histogram Equalization คือ sk = (L - 1) * Σ pr(rj) จาก j=0 ถึง k ซึ่งผลรวมสะสมของความน่าจะเป็นนี้ก็คือ Cumulative Distribution Function (CDF) นั่นเอง โดย CDF มีคุณสมบัติเป็นฟังก์ชันเพิ่มทางเดียว (Monotonically non-decreasing) ช่วยรักษาระเบียบของระดับสีเดิมและกระจายค่าให้สม่ำเสมอ"}, {"id": "Q_L04_05", "lecture_id": "L4", "lecture_title": "Lecture 4: Point Operation", "question": "เหตุใดผลลัพธ์ของ Histogram Equalization บนภาพดิจิทัล (Discrete Image) ในความเป็นจริง จึงไม่สามารถให้ฮิสโทแกรมที่แบนราบสมบูรณ์ (Perfectly Flat Uniform Histogram) ได้?", "options": ["เพราะอัลกอริทึมของ OpenCV มีบั๊ก", "เพราะภาพดิจิทัลมีระดับความเข้มสีเป็นจำนวนเต็มไม่ต่อเนื่อง (Discrete) และพิกเซลที่มีระดับสีเดียวกันเดิมทั้งหมด จะต้องถูกแมปไปยังระดับสีใหม่ค่าเดียวกันเสมอ ไม่สามารถแยกกลุ่มพิกเซลเดิมออกจากกันได้", "เพราะการถ่ายภาพมีสัญญาณรบกวนเกาส์เซียนแทรกอยู่เสมอ", "เพราะค่าความสว่างของภาพมีค่าสูงสุดจำกัดอยู่ที่ 255"], "answer": 1, "explanation": "ในทางคณิตศาสตร์แบบต่อเนื่อง (Continuous) การแปลงด้วย CDF จะให้การแจกแจงแบบ Uniform ที่แบนราบ 100% เสมอ แต่ในภาพดิจิทัล ระดับสีเป็นจำนวนเต็มไม่ต่อเนื่อง เมื่อพิกเซลที่มีค่า r เดิมค่าหนึ่งถูกแปลง มันจะถูกย้ายไปที่ค่า s เดียวกันทั้งก้อน ทำให้เกิดช่องว่าง (gaps) หรือการกระจุกตัวของความถี่ ฮิสโทแกรมจึงไม่สามารถแบนราบเรียบสนิทได้"}, {"id": "Q_L04_06", "lecture_id": "L4", "lecture_title": "Lecture 4: Point Operation", "question": "หากคำนวณการปรับความสว่างในภาษา Python บน NumPy อาเรย์ชนิด uint8 โดยตรง: `img_out = img + 50` ผลลัพธ์ที่อาจเกิดขึ้นคืออะไร?", "options": ["ภาพจะถูกจำกัดค่าความสว่างสูงสุดไว้ที่ 255 โดยอัตโนมัติ", "พิกเซลที่มีค่าเดิมเกิน 205 จะเกิด Overflow วนกลับไปเป็นค่าต่ำ (Wrap-around เช่น 220 + 50 = 14) ทำให้บริเวณที่ควรจะสว่างกลายเป็นจุดมืดด่าง", "โปรแกรมจะหยุดทำงานและแจ้งเตือน ZeroDivisionError", "ขนาดภาพจะขยายใหญ่ขึ้นเป็น 16-bit"], "answer": 1, "explanation": "NumPy uint8 มีช่วงข้อมูล 0-255 หากไม่ใช้คำสั่ง cv2.add() ที่มีการ saturate ป้องกัน หรือไม่แปลงเป็น float ก่อน การบวกเลขใน NumPy จะทำแบบ Modulo 256 ทำให้เกิด Arithmetic Overflow ตัวเลขที่เกิน 255 จะวนกลับมาเริ่มต้นที่ 0 กลายเป็นจุดมืดผิดเพี้ยนร้ายแรง"}, {"id": "Q_L04_07", "lecture_id": "L4", "lecture_title": "Lecture 4: Point Operation", "question": "การทำ Contrast Stretching แตกต่างจาก Thresholding อย่างไรในแง่ของฟังก์ชันการแปลง?", "options": ["Contrast Stretching เป็นฟังก์ชันต่อเนื่องเชิงเส้นหลายช่วง (Piecewise-linear) ที่ขยาย Dynamic Range โดยยังคงรักษาระดับสีเทาต่อเนื่องไว้ ส่วน Thresholding เป็นฟังก์ชันขั้นบันได (Step function) ที่ลดรูประดับสีให้เหลือเพียง 2 ค่า (0 และ 255)", "Contrast Stretching ใช้เฉพาะกับภาพสี ส่วน Thresholding ใช้กับภาพขาวดำ", "Thresholding ให้ภาพที่มีสีเทามากกว่า Contrast Stretching", "ทั้งสองวิธีมีสูตรและผลลัพธ์เหมือนกันทุกประการ"], "answer": 0, "explanation": "Contrast Stretching นำช่วงความสว่างเดิม [rmin, rmax] มายืดขยายให้เต็มช่วง [0, L-1] โดยผู้ใช้ยังคงเห็นเฉดสีเทาที่มีรายละเอียดครบถ้วน ส่วน Thresholding เป็นกรณีสุดโต่งของการตัดตอน (Binarization) โดยหากค่าต่ำกว่า T ให้เป็น 0 และหากมากกว่าหรือเท่ากับ T ให้เป็น 255 ทำให้ภาพเหลือเพียงสองสีเท่านั้น"}, {"id": "Q_L05_01", "lecture_id": "L5", "lecture_title": "Lecture 5: Spatial Filtering", "question": "อะไรคือความแตกต่างทางคณิตศาสตร์ระหว่าง Correlation และ Convolution ใน 2D Spatial Domain?", "options": ["Correlation ใช้สำหรับภาพสี ส่วน Convolution ใช้สำหรับภาพขาวดำ", "ในการทำ Convolution จะต้องทำการหมุน Kernel กลับด้าน 180 องศา (Flip ทั้งแนวนอนและแนวตั้ง) ก่อนนำไปคูณและรวมผล ส่วน Correlation จะนำ Kernel ไปวางทาบแล้วคำนวณโดยตรง", "Correlation มีการหารด้วยขนาดของ Kernel เสมอ แต่ Convolution ไม่มีการหาร", "Convolution ทำได้เฉพาะในโดเมนความถี่เท่านั้น ไม่สามารถทำใน Spatial domain ได้"], "answer": 1, "explanation": "สูตร Convolution: (w * f)(x, y) = Σ Σ w(s, t) * f(x - s, y - t) ซึ่งเครื่องหมายลบที่พิกัดเทียบเท่ากับการหมุน Kernel ไป 180 องศา หาก Kernel มีคุณสมบัติสมมาตรทั้งแนวตั้งและแนวนอน (เช่น Gaussian หรือ Laplacian) ผลลัพธ์ของ Correlation และ Convolution จะมีค่าเท่ากันทุกประการ"}, {"id": "Q_L05_02", "lecture_id": "L5", "lecture_title": "Lecture 5: Spatial Filtering", "question": "หากภาพถูกรบกวนด้วยสัญญาณรบกวนแบบ Salt-and-Pepper (จุดสีขาวสุด 255 และสีดำสุด 0 กระจายอยู่) ตัวกรองเชิงพื้นที่ใดให้ผลการลดสัญญาณรบกวนที่ดีที่สุดโดยไม่ทำให้ขอบภาพเบลอ?", "options": ["Box Averaging Filter (3x3)", "Gaussian Filter (5x5)", "Median Filter (3x3)", "Laplacian Filter (3x3)"], "answer": 2, "explanation": "Median Filter เป็น Non-linear Order-Statistic Filter ที่นำพิกเซลทั้งหมดในหน้าต่างมาเรียงลำดับแล้วเลือกค่ามัธยฐาน เนื่องจากค่าจุดรบกวน 0 หรือ 255 จะตกอยู่ที่ปลายสุดของลำดับเสมอ จึงถูกตัดทิ้งออกไปโดยอัตโนมัติ ต่างจาก Box หรือ Gaussian filter ที่จะนำค่า 0 และ 255 ไปเฉลี่ยรวม ส่งผลให้จุดรบกวนเบลอกระจายเป็นดวงด่างและเส้นขอบสูญเสียความคมชัด"}, {"id": "Q_L05_03", "lecture_id": "L5", "lecture_title": "Lecture 5: Spatial Filtering", "question": "ตัวดำเนินการ Laplacian (∇²f) เป็นตัวดำเนินการอนุพันธ์อันดับสอง ซึ่งมีคุณสมบัติ Isotropic (ไม่ขึ้นกับทิศทาง) หากหน้ากาก Laplacian 3x3 มีค่าจุดกึ่งกลางเป็น -4: `[[0, 1, 0], [1, -4, 1], [0, 1, 0]]` สูตรการ Sharpening ภาพเดิม f(x, y) ที่ถูกต้องคือข้อใด?", "options": ["g(x, y) = f(x, y) + ∇²f(x, y)", "g(x, y) = f(x, y) - ∇²f(x, y)", "g(x, y) = f(x, y) * ∇²f(x, y)", "g(x, y) = ∇²f(x, y) / f(x, y)"], "answer": 1, "explanation": "เมื่อค่าสัมประสิทธิ์ที่จุดกึ่งกลางของหน้ากาก Laplacian มีเครื่องหมายเป็น 'ลบ' (-4 หรือ -8) อนุพันธ์อันดับสองที่ขอบภาพจะมีเครื่องหมายตรงข้ามกับความเข้มเดิม การชดเชยเพื่อเน้นขอบภาพ (Sharpening) จึงต้อง 'ลบ' ค่า Laplacian ออกจากภาพเดิม: g(x, y) = f(x, y) - ∇²f(x, y) แต่หากใช้หน้ากากที่จุดกึ่งกลางเป็นบวก (+4 หรือ +8) จะต้องใช้สูตรเครื่องหมายบวก"}, {"id": "Q_L05_04", "lecture_id": "L5", "lecture_title": "Lecture 5: Spatial Filtering", "question": "กระบวนการ Unsharp Masking และ High-boost Filtering มีลำดับขั้นตอนการคำนวณอย่างไร?", "options": ["1. เบลอภาพเดิม f_blur = Lowpass(f)  2. หาหน้ากากส่วนต่าง g_mask = f - f_blur  3. เพิ่มความคมชัด g = f + k * g_mask", "1. หาอนุพันธ์ f'  2. คูณด้วยสเกลาร์  3. แปลงเป็นขาวดำ", "1. ทำ Thresholding  2. กรอง Median  3. หาผลรวม", "1. ขยายภาพ 2 เท่า  2. ลดขนาดภาพลง  3. นำมาลบกัน"], "answer": 0, "explanation": "Unsharp Masking ดึงสัญญาณความถี่สูง (g_mask) ออกมาโดยนำภาพตั้งต้นลบด้วยภาพที่ผ่านการเบลอ จากนั้นนำหน้ากากความคมชัดนี้ไปบวกกลับเข้ากับภาพเดิม: g = f + k * g_mask หากเลือก k = 1 เรียกว่า Unsharp Masking หาก k > 1 เรียกว่า High-boost Filtering ซึ่งจะให้ความคมชัดจัดจ้านยิ่งขึ้น"}, {"id": "Q_L05_05", "lecture_id": "L5", "lecture_title": "Lecture 5: Spatial Filtering", "question": "เหตุใดในการตรวจจับวัตถุตามสี (Color Segmentation เช่น แผ่นป้ายจราจร) จึงนิยมแปลงภาพจาก RGB เป็น HSV/HSI ก่อนดำเนินการ?", "options": ["เพราะภาพ HSV มีขนาดไฟล์เล็กกว่า RGB ถึงสามเท่า", "เพราะระบบสี HSV แยกข้อมูลเนื้อสี (Hue) ออกจากความสว่าง (Value/Intensity) และความอิ่มตัวสี (Saturation) อย่างเด็ดขาด ทำให้ค่าสี Hue มีความทนทานต่อการเปลี่ยนแปลงของสภาพแสง เงา และความสว่างแดด", "เพราะฟังก์ชัน OpenCV ไม่รองรับการตัดช่วงสีบนระบบ RGB", "เพราะโมเดล HSV สามารถรันบน GPU ได้เร็วกว่า"], "answer": 1, "explanation": "ในระบบสี RGB ค่าของทั้ง 3 ช่องสี (R, G, B) จะเปลี่ยนแปลงไปพร้อมกันเมื่อแสงสว่างเปลี่ยน ทำให้การกำหนดช่วง Thresholding คงที่ทำได้ยากมาก แต่ในระบบ HSV ช่อง Hue (H) ระบุชนิดของเนื้อสีตามมุมองศาบนวงล้อสี ซึ่งจะไม่ได้รับผลกระทบจากแสงมืดหรือสว่าง (ความสว่างถูกแยกไปอยู่ที่ช่อง V) จึงตรวจจับสีได้เสถียรและแม่นยำสูง"}, {"id": "Q_L05_06", "lecture_id": "L5", "lecture_title": "Lecture 5: Spatial Filtering", "question": "เมื่อทำการคอนโวลูชันที่ขอบภาพ จำเป็นต้องมีการจัดการขอบเขต (Border Padding) วิธีการแบบ 'Replicate' (cv2.BORDER_REPLICATE) มีการทำงานอย่างไร?", "options": ["เติมค่าศูนย์ (0) ล้อมรอบขอบภาพทั้งหมด", "สะท้อนค่าพิกเซลเสมือนกระจกเงาข้ามเส้นขอบ", "ขยายพิกเซลที่อยู่แถว/คอลัมน์ริมสุดออกไปด้านนอกตามจำนวนความกว้างของขอบ", "ตัดพิกเซลขอบภาพทิ้งทำให้ภาพผลลัพธ์มีขนาดเล็กลง"], "answer": 2, "explanation": "BORDER_REPLICATE จะคัดลอกค่าของพิกเซลที่อยู่ขอบริมสุดซ้ำออกไปด้านนอกเรื่อยๆ เช่น aaaaa|abcdefgh|hhhhh วิธีนี้ช่วยป้องกันการเกิดแถบสีดำมืดรอบขอบภาพ ซึ่งมักเกิดขึ้นเมื่อใช้ Zero Padding (BORDER_CONSTANT ค่า 0)"}, {"id": "Q_L06_01", "lecture_id": "L6", "lecture_title": "Lecture 6: Frequency Domain Analysis", "question": "ค่าสัมประสิทธิ์ F(0, 0) ของ 2D Discrete Fourier Transform (หรือเรียกว่า DC Component) มีความหมายทางกายภาพสัมพันธ์กับภาพดั้งเดิม f(x, y) อย่างไร?", "options": ["มีค่าเท่ากับศูนย์เสมอ", "มีค่าเป็นสัดส่วนโดยตรงกับค่าความสว่างเฉลี่ยของภาพทั้งหมด (F(0, 0) = M * N * ค่าเฉลี่ยความเข้มสี)", "เป็นตัวระบุจำนวนเส้นขอบในภาพ", "เป็นตัวแทนของสัญญาณรบกวนความถี่สูงสุด"], "answer": 1, "explanation": "จากสูตร 2D DFT เมื่อแทนพิกัดความถี่ u = 0 และ v = 0 ค่า e^0 จะเท่ากับ 1 ส่งผลให้ F(0, 0) = Σ Σ f(x, y) ซึ่งก็คือผลรวมของค่าความเข้มสีของทุกพิกเซลในภาพ นั่นคือ F(0, 0) = M * N * f_avg หรือค่าความสว่างเฉลี่ยของภาพคูณด้วยจำนวนพิกเซลทั้งหมด"}, {"id": "Q_L06_02", "lecture_id": "L6", "lecture_title": "Lecture 6: Frequency Domain Analysis", "question": "เหตุใดในการแสดงภาพ Fourier Spectrum (|F(u, v)|) จึงต้องทำการเลื่อนจุดศูนย์กลาง (Centering) ด้วยการคูณ (-1)^(x+y) หรือใช้ฟังก์ชัน fftshift()?", "options": ["เพื่อให้ขนาดของข้อมูลลดลงครึ่งหนึ่ง", "เพื่อให้ความถี่ศูนย์ (DC Component) และความถี่ต่ำย้ายจากมุมบนซ้าย (0, 0) มาอยู่ที่กึ่งกลางภาพ (M/2, N/2) ทำให้ง่ายต่อการตีความและการออกแบบฟิลเตอร์ทรงสมมาตร", "เพื่อแปลงตัวเลขจำนวนเชิงซ้อนให้เป็นจำนวนจริง", "เพื่อตัดสัญญาณรบกวนเฟสทิ้ง"], "answer": 1, "explanation": "ตามนิยามทางคณิตศาสตร์ดั้งเดิม จุดกำเนิดความถี่ (0, 0) จะอยู่ที่มุมซ้ายบน และความถี่สูงจะวิ่งไปชนขอบทั้งสี่ด้าน การคูณด้วย (-1)^(x+y) ก่อนทำ DFT จะเลื่อนสเปกตรัมให้อยู่กึ่งกลาง ทำให้ความถี่ต่ำเกาะกลุ่มตรงกลาง และความถี่สูงกระจายตัวออกรอบนอกตามแนวรัศมี สอดคล้องกับพิกัดระยะทางเชิงรัศมี D(u, v)"}, {"id": "Q_L06_03", "lecture_id": "L6", "lecture_title": "Lecture 6: Frequency Domain Analysis", "question": "อะไรคือสาเหตุที่ Ideal Lowpass Filter (ILPF) ก่อให้เกิดปรากฏการณ์ 'Ringing Effect' (ระลอกคลื่นวงแหวน) บนภาพใน Spatial Domain อย่างรุนแรง?", "options": ["เพราะรัศมี Cutoff D0 มีค่าน้อยเกินไป", "เพราะฟังก์ชันถ่ายโอน H(u, v) ของ ILPF มีรอยตัดขาดแบบฉับพลัน (Discontinuity) ซึ่งเมื่อทำ Inverse Fourier Transform กลับสู่ Spatial Domain จะได้ฟังก์ชัน Sinc (J1(r)/r) ที่มีหางคลื่นแกว่งกวัด (Gibbs Phenomenon)", "เพราะการคำนวณในคอมพิวเตอร์เกิดข้อผิดพลาดในการปัดเศษทศนิยม", "เพราะสเปกตรัมของภาพไม่มีค่าเฟส"], "answer": 1, "explanation": "การตัดความถี่แบบขั้นบันไดฉับพลัน (Hard cutoff) ของ ILPF ในโดเมนความถี่ เทียบเท่ากับการคอนโวลูชันด้วยฟังก์ชัน Sinc ในโดเมนเชิงพื้นที่ ซึ่งฟังก์ชัน Sinc จะมีสันคลื่นหลักตรงกลางและมีคลื่นกระเพื่อม (Side lobes) แผ่ออกไปรอบข้าง ทำให้เกิดแถบวงแหวนซ้อนๆ กันรอบเส้นขอบภาพ"}, {"id": "Q_L06_04", "lecture_id": "L6", "lecture_title": "Lecture 6: Frequency Domain Analysis", "question": "เมื่อเปรียบเทียบตัวกรองความถี่ต่ำ 3 ชนิด: Ideal (ILPF), Butterworth (BLPF), และ Gaussian (GLPF) ที่มีรัศมี Cutoff D0 เท่ากัน ตัวกรองใดรับประกันว่าจะ 'ไม่มี Ringing Effect เกิดขึ้น 100%' อย่างแน่นอน?", "options": ["Ideal Lowpass Filter (ILPF)", "Butterworth Lowpass Filter ที่อันดับ n = 10", "Gaussian Lowpass Filter (GLPF)", "ไม่มีตัวกรองใดที่ไร้ Ringing effect"], "answer": 2, "explanation": "Inverse Fourier Transform ของฟังก์ชัน Gaussian ก็ยังคงเป็นฟังก์ชัน Gaussian เสมอ ซึ่งฟังก์ชัน Gaussian มีคุณสมบัติเรียบเนียนสมบูรณ์และไม่มีการกระเพื่อมคลื่น (no ripples or side lobes) เลยแม้แต่น้อย จึงรับประกันว่า GLPF จะไม่ก่อให้เกิด Ringing Effect บนภาพอย่างเด็ดขาด"}, {"id": "Q_L06_05", "lecture_id": "L6", "lecture_title": "Lecture 6: Frequency Domain Analysis", "question": "เหตุใดก่อนทำ Frequency Domain Filtering จึงต้องทำการขยายขนาดภาพด้วย Zero-Padding ให้มีขนาดอย่างน้อย P >= 2M และ Q >= 2N?", "options": ["เพื่อเพิ่มความเร็วในการคำนวณ FFT ให้เป็นเลขยกกำลังสอง", "เพื่อป้องกันปัญหาการพันซ้อนทับกันของสัญญาณรอบข้าง (Wrap-around Error) จากทฤษฎี Circular Convolution ของ DFT", "เพื่อขยายภาพให้มีความละเอียดสูงขึ้นสองเท่า", "เพื่อให้สเปกตรัมมีเฉพาะค่าบวกเท่านั้น"], "answer": 1, "explanation": "การคูณกันในโดเมนความถี่เทียบเท่ากับการทำ 'Circular Convolution' ในโดเมนเชิงพื้นที่ หากขนาดของสัญญาณไม่ได้รับการขยายด้วยศูนย์ให้มีความยาวอย่างน้อยเท่ากับขนาดภาพบวกขนาดฟิลเตอร์ลบหนึ่ง (หรือประมาณ 2 เท่า) ข้อมูลขอบภาพด้านหนึ่งจะเลื่อนทะลุพันกลับมารบกวนขอบภาพอีกด้านหนึ่ง เกิดเป็นเงาซ้อนผิดพลาด (Wrap-around artifact)"}, {"id": "Q_L06_06", "lecture_id": "L6", "lecture_title": "Lecture 6: Frequency Domain Analysis", "question": "สัญญาณรบกวนชนิด 'Periodic Noise' (สัญญาณรบกวนแบบคาบซ้ำๆ เช่น ลายเส้นขวางเป็นจังหวะ) จะปรากฏลักษณะอย่างไรบน Magnitude Spectrum ในโดเมนความถี่?", "options": ["กระจายตัวสม่ำเสมอเป็นฝ้าขาวทั่วทั้งสเปกตรัม", "ปรากฏเป็นจุดสว่างเข้มโดดเดี่ยวเป็นคู่สมมาตร (Symmetric Spikes/Bright Bursts) ห่างจากจุดศูนย์กลาง ซึ่งสามารถกำจัดได้ด้วย Notch Reject Filter", "ปรากฏเป็นวงกลมสีดำสนิทตรงจุดศูนย์กลาง", "ไม่สามารถตรวจพบได้ในโดเมนความถี่"], "answer": 1, "explanation": "สัญญาณรบกวนแบบคาบ (เช่น คลื่นไซน์ความถี่คงที่ที่แทรกเข้ามา) จะมีพลังงานกระจุกตัวอยู่ที่ความถี่เฉพาะเจาะจงคู่หนึ่ง (uk, vk) และ (-uk, -vk) จึงปรากฏเป็นจุดดาวสว่างจ้าเป็นคู่รอบจุดศูนย์กลาง การใช้ Notch Filter บล็อกเฉพาะพิกัดความถี่คู่นี้จึงสามารถลบลายคลื่นออกได้หมดจดโดยไม่ทำลายโครงสร้างส่วนอื่นของภาพ"}, {"id": "Q_L07_01", "lecture_id": "L7", "lecture_title": "Lecture 7: Image Restoration", "question": "ความแตกต่างสำคัญระหว่าง Image Enhancement กับ Image Restoration คือข้อใด?", "options": ["Enhancement เป็นกระบวนการเชิงจิตวิสัย (Subjective Process) ที่มุ่งปรับภาพให้ถูกใจสายตามนุษย์ ส่วน Restoration เป็นกระบวนการเชิงวัตถุวิสัย (Objective Process) ที่ใช้แบบจำลองคณิตศาสตร์ย้อนกลับกระบวนการเสื่อมถอยเดิม", "Enhancement ใช้กับภาพสี ส่วน Restoration ใช้กับภาพขาวดำ", "Enhancement ใช้ในโดเมนความถี่ ส่วน Restoration ใช้ในโดเมนเชิงพื้นที่เท่านั้น", "ทั้งสองคำมีความหมายเดียวกันและสลับใช้แทนกันได้เสมอ"], "answer": 0, "explanation": "Image Enhancement ไม่มีเกณฑ์วัดถูกผิดทางกายภาพ เน้นการปรับแต่งให้ภาพดูสวยงามหรือเด่นชัดสำหรับมนุษย์ (เช่น เพิ่ม Contrast, ทำ Histogram Equalization) ในขณะที่ Image Restoration มีแบบจำลองทางกายภาพของความเสื่อมถอย g = f*h + η และมุ่งสร้างภาพ f ดั้งเดิมที่แท้จริงกลับคืนมาโดยใช้เกณฑ์ทางคณิตศาสตร์ที่วัดผลได้ (เช่น MMSE)"}, {"id": "Q_L07_02", "lecture_id": "L7", "lecture_title": "Lecture 7: Image Restoration", "question": "ตัวกรอง Contraharmonic Mean Filter มีสูตร: f_hat = Σ g^(Q+1) / Σ g^Q ข้อใดระบุเงื่อนไขของค่า Order Q ในการกำจัดสัญญาณรบกวนได้ถูกต้อง?", "options": ["Q > 0 สำหรับ Pepper noise (จุดดำ) และ Q < -1 สำหรับ Salt noise (จุดขาว)", "Q > 0 สำหรับ Salt noise และ Q < -1 สำหรับ Pepper noise", "Q = 0 สำหรับกำจัด Gaussian noise เท่านั้น และ Q = 1 กำจัด Impulse noise", "Q ต้องเป็นจำนวนลบเสมอจึงจะทำงานได้"], "answer": 0, "explanation": "เมื่อ Q > 0 พิกเซลที่มีค่าความสว่างสูงจะมีค่าน้ำหนักมหาศาล จึงกลบจุดมืด (Pepper noise) ทิ้งไปได้สำเร็จ; ในทางกลับกัน เมื่อ Q < -1 (เช่น Q = -1.5) พิกเซลที่มีค่าน้อยจะมีน้ำหนักมากกว่า จึงกลบจุดสว่างจ้า (Salt noise) ทิ้งไปได้สำเร็จ ทั้งนี้ถ้า Q = 0 จะลดรูปเป็น Arithmetic Mean และถ้า Q = -1 จะกลายเป็น Harmonic Mean"}, {"id": "Q_L07_03", "lecture_id": "L7", "lecture_title": "Lecture 7: Image Restoration", "question": "เหตุใดการใช้วิธี 'Direct Inverse Filtering': F_hat(u, v) = G(u, v) / H(u, v) จึงมักล้มเหลวอย่างสิ้นเชิงและให้ภาพที่มีแต่สัญญาณรบกวนรุนแรง?", "options": ["เพราะภาพผลลัพธ์จะกลายเป็นภาพเนกาทิฟเสมอ", "เพราะในทางปฏิบัติมีสัญญาณรบกวน N(u,v) อยู่ด้วย และสมการจริงคือ F_hat = F + N/H ซึ่งที่ย่านความถี่สูง H(u,v) มักมีค่าเข้าใกล้ศูนย์ ทำให้ N/H ถูกขยายมหาศาลจนกลบข้อมูลภาพทั้งหมด", "เพราะฟังก์ชัน H(u, v) ไม่สามารถหาค่าอินเวิร์สได้", "เพราะตัวกรองผกผันทำให้ขนาดของภาพหดเล็กลง"], "answer": 1, "explanation": "ระบบเบลอหรือการเสื่อมถอยตามธรรมชาติ (PSF) จะทำหน้าที่เหมือน Lowpass Filter ส่งผลให้ H(u, v) ที่ความถี่สูงมีค่าเข้าใกล้ศูนย์ เมื่อนำ H(u, v) ไปเป็นตัวหาร แม้จะมีสัญญาณรบกวน N(u, v) เพียงเล็กน้อย พจน์ N(u, v)/H(u, v) จะพุ่งสูงขึ้นอย่างมหาศาล ส่งผลให้ภาพที่กู้คืนมาพังทลายและเต็มไปด้วยสัญญาณรบกวนความถี่สูง"}, {"id": "Q_L07_04", "lecture_id": "L7", "lecture_title": "Lecture 7: Image Restoration", "question": "ตัวกรอง Wiener Filter (Minimum Mean Square Error Filter) สามารถแก้ปัญหาความไม่เสถียรของ Inverse Filter ได้อย่างไร?", "options": ["ตัดความถี่สูงทั้งหมดทิ้งด้วย Ideal Lowpass Filter", "เพิ่มพจน์อัตราส่วนกำลังงานของสัญญาณรบกวนต่อสัญญาณภาพ (S_η/S_f หรือค่าคงที่ K) เข้าไปในตัวส่วน ทำให้ตัวหารไม่เท่ากับศูนย์แม้ว่า H(u, v) จะมีค่าเป็นศูนย์ก็ตาม", "แปลงภาพให้เป็นเวกเตอร์ 1 มิติก่อนคำนวณ", "ทำการคูณภาพซ้ำ 100 รอบด้วย Gradient Descent"], "answer": 1, "explanation": "สูตรของ Wiener Filter: F_hat = [ (1/H) * (|H|² / (|H|² + K)) ] * G เมื่อ H(u, v) มีขนาดใหญ่ พจน์ปรับแต่งจะเข้าใกล้ 1 (ทำหน้าที่เป็น Inverse Filter ที่ดี) แต่เมื่อ H(u, v) มีค่าเข้าใกล้ศูนย์ ตัวส่วนจะมีค่า K คอยพยุงไว้ ทำให้ค่าตัวกรองลู่เข้าสู่ศูนย์แทนที่จะพุ่งสู่อนันต์ จึงป้องกันการขยายสัญญาณรบกวนได้อย่างยอดเยี่ยม"}, {"id": "Q_L07_05", "lecture_id": "L7", "lecture_title": "Lecture 7: Image Restoration", "question": "การหาฟังก์ชันการเสื่อมถอย (Point Spread Function: PSF หรือ H(u, v)) สามารถทำได้ด้วย 3 วิธีหลักใด?", "options": ["การสังเกต (Observation), การทดลอง (Experimentation), และการสร้างแบบจำลองทางคณิตศาสตร์ (Mathematical Modeling)", "การเดาสุ่ม, การทำ Threshold, และการซูมภาพ", "การหมุนภาพ, การกลับสี, และการตัดขอบ", "การวัดอุณหภูมิ, การชั่งน้ำหนัก, และการวัดกระแสไฟ"], "answer": 0, "explanation": "1. Observation: สังเกตบริเวณพื้นหลังที่ควรเรียบแล้ววัดค่าการกระจายของขอบ; 2. Experimentation: จำลองการถ่ายภาพจุดแสงเล็กๆ (Impulse) ภายใต้อุปกรณ์จริงเพื่อบันทึกการเบลอเป็น PSF โดยตรง; 3. Modeling: สร้างสมการฟิสิกส์ของการเคลื่อนที่ เช่น การเคลื่อนที่สม่ำเสมอ (Motion Blur) หรือการรบกวนของชั้นบรรยากาศ (Atmospheric Turbulence)"}, {"id": "Q_L07_06", "lecture_id": "L7", "lecture_title": "Lecture 7: Image Restoration", "question": "หากต้องการกำจัดสัญญาณรบกวนในภาพที่มีทั้ง Gaussian noise และจุดสว่างรบกวนประปราย ตัวกรอง Alpha-trimmed Mean Filter มีหลักการทำงานอย่างไร?", "options": ["ตัดพิกเซลค่าน้อยสุด d/2 ค่า และค่ามากสุด d/2 ค่าในหน้าต่างทิ้ง แล้วหาค่าเฉลี่ยเลขคณิตจากพิกเซลที่เหลือ mn - d พิกเซล", "คูณพิกเซลทั้งหมดด้วยค่า alpha", "แปลงเป็นภาพขาวดำด้วยเกณฑ์ alpha", "เลือกเฉพาะพิกเซลที่หารด้วย alpha ลงตัว"], "answer": 0, "explanation": "Alpha-trimmed mean filter ผสมผสานจุดเด่นของ Median filter และ Mean filter โดยนำพิกเซลในหน้าต่างมาเรียงลำดับ แล้วตัดค่าสุดโต่งหัวท้ายทิ้งไป d จุด (กำจัด impulse noise) จากนั้นนำพิกเซลที่เหลือมาเฉลี่ยเลขคณิต (ลด Gaussian noise) หาก d = 0 จะกลายเป็น Arithmetic Mean และหาก d = mn - 1 จะกลายเป็น Median Filter"}, {"id": "Q_L08_01", "lecture_id": "L8", "lecture_title": "Lecture 8: MediaPipe Workshop", "question": "ก่อนส่งภาพเฟรมจาก OpenCV เข้าสู่กระบวนการประมวลผลของ MediaPipe Solution เหตุใดจึงจำเป็นต้องแปลงสีด้วย `cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)` เสมอ?", "options": ["เพื่อลดขนาดความละเอียดของภาพลงครึ่งหนึ่ง", "เพราะ OpenCV อ่านและจัดเรียงช่องสัญญาณสีแบบ BGR เป็นค่าเริ่มต้น ในขณะที่โมเดลของ MediaPipe ได้รับการฝึกสอนและคาดหวังลำดับช่องสีแบบ RGB หากไม่แปลงผลการตรวจจับจะเพี้ยนหรือไม่ทำงาน", "เพื่อให้ภาพเป็นขาวดำ", "เพื่อลบช่อง Alpha ออกจากภาพ"], "answer": 1, "explanation": "OpenCV ใช้รูปแบบสี BGR (Blue-Green-Red) เป็นมาตรฐานประวัติศาสตร์ ในขณะที่มาตรฐาน Deep Learning และ MediaPipe ส่วนใหญ่ใช้ RGB (Red-Green-Blue) การส่งภาพ BGR โดยตรงจะทำให้ค่าสีแดงกับน้ำเงินสลับกัน ส่งผลให้โมเดลประเมินคุณลักษณะของผิวหนังและวัตถุผิดพลาดอย่างรุนแรง"}, {"id": "Q_L08_02", "lecture_id": "L8", "lecture_title": "Lecture 8: MediaPipe Workshop", "question": "โซลูชัน 'MediaPipe Hands' สามารถตรวจจับจุดสังเกต 3 มิติ (Landmarks) บนมือมนุษย์ได้ทั้งหมดกี่จุดต่อหนึ่งข้าง?", "options": ["18 จุด", "21 จุด", "33 จุด", "468 จุด"], "answer": 1, "explanation": "MediaPipe Hands ให้จุดสังเกต 21 จุด 3 มิติต่อมือหนึ่งข้าง (ตั้งแต่ข้อมือ Landmark 0 จนถึงปลายนิ้วทั้งห้า Landmark 4, 8, 12, 16, 20) ส่วน 33 จุดเป็นของ MediaPipe Pose และ 468 จุดเป็นของ MediaPipe Face Mesh"}, {"id": "Q_L08_03", "lecture_id": "L8", "lecture_title": "Lecture 8: MediaPipe Workshop", "question": "พิกัดจุดสังเกต (x, y, z) ที่ได้จาก `results.pose_landmarks` หรือ `multi_hand_landmarks` มีระบบพิกัดอ้างอิงเป็นอย่างไร?", "options": ["เป็นพิกเซลจริงบนหน้าจอตั้งแต่ (0, 0) ถึง (1920, 1080)", "เป็นพิกัด Normalized อยู่ในช่วง [0.0, 1.0] สัมพันธ์กับความกว้าง (Width) และความสูง (Height) ของภาพ ต้องคูณด้วย W และ H ก่อนจึงจะได้พิกัดพิกเซลจริง", "เป็นค่ามุมองศาในระบบเรเดียน", "เป็นระยะทางหน่วยเซนติเมตรจริงจากกล้อง"], "answer": 1, "explanation": "MediaPipe ส่งคืนพิกัด x และ y ในรูปแบบ Normalized ระหว่าง 0.0 ถึง 1.0 เพื่อความเป็นอิสระจากความละเอียดของกล้อง (Resolution invariant) หากต้องการพล็อตหรือคำนวณบนภาพ OpenCV จะต้องคูณ x ด้วย image_width และคูณ y ด้วย image_height เสมอ"}, {"id": "Q_L08_04", "lecture_id": "L8", "lecture_title": "Lecture 8: MediaPipe Workshop", "question": "การตั้งค่า `image.flags.writeable = False` ก่อนส่งภาพเข้าโมเดล MediaPipe process() มีวัตถุประสงค์เพื่ออะไร?", "options": ["เพื่อล็อกไม่ให้ไฟล์ถูกบันทึกทับลงในดิสก์", "เพื่อปรับปรุงประสิทธิภาพความเร็วและประหยัดหน่วยความจำ โดยส่งผ่านข้อมูลแบบ Pass-by-reference โดยไม่มีการคัดลอกข้อมูลซ้ำ (Memory Copy)", "เพื่อป้องกันการโจมตีทางไซเบอร์", "เพื่อเปิดใช้งานโหมด GPU"], "answer": 1, "explanation": "การตั้งธง writeable เป็น False เป็นเทคนิคการเขียนโปรแกรมประสิทธิภาพสูงใน Python/NumPy เพื่อแจ้งให้โมเดลทราบว่าข้อมูลภาพนี้อ่านอย่างเดียว (Read-only) ระบบจึงสามารถส่งพอยน์เตอร์เข้าไปประมวลผลได้โดยตรงโดยไม่ต้องเสียเวลาโคลนอาเรย์ภาพขึ้นมาใหม่ในหน่วยความจำ"}, {"id": "Q_L09_01", "lecture_id": "L9", "lecture_title": "Lecture 9: Edge and Corner Detection", "question": "เวกเตอร์เกรเดียนต์ ∇f = [gx, gy]^T ของภาพ มีทิศทางมุม θ = arctan(gy / gx) มีความสัมพันธ์เชิงเรขาคณิตอย่างไรกับแนวเส้นขอบ (Edge Direction)?", "options": ["มีทิศทางขนานไปกับแนวเส้นขอบเสมอ", "มีทิศทางตั้งฉาก (Perpendicular / Orthogonal) กับแนวเส้นขอบ และชี้ไปในทิศทางที่มีการเพิ่มขึ้นของความสว่างเร็วที่สุด", "ชี้เข้าหาจุดศูนย์กลางของภาพเสมอ", "มีทิศทางสุ่มไม่แน่นอน"], "answer": 1, "explanation": "เกรเดียนต์คือเวกเตอร์ที่ชี้ไปในทิศทางที่ค่าฟังก์ชันมีความชันเพิ่มขึ้นเร็วที่สุด (Maximum rate of increase) ซึ่งในภาพสองมิติ ทิศทางการเปลี่ยนแปลงความเข้มสีที่เร็วที่สุดจะอยู่ในแนว 'ตั้งฉาก' กับแนวเส้นขอบเสมอ ในขณะที่ทิศทางที่ขนานกับเส้นขอบจะมีการเปลี่ยนแปลงความเข้มสีน้อยที่สุด"}, {"id": "Q_L09_02", "lecture_id": "L9", "lecture_title": "Lecture 9: Edge and Corner Detection", "question": "เหตุใดตัวดำเนินการ Sobel จึงได้รับความนิยมและให้ผลลัพธ์การตรวจจับขอบที่ดีกว่า Prewitt หรือ Roberts?", "options": ["เพราะ Sobel คำนวณได้เร็วกว่า Roberts ถึงสิบเท่า", "เพราะหน้ากาก Sobel 3x3 มีการถ่วงน้ำหนักตรงกลางเป็น 2 (เช่น Gx = [[-1,0,1],[-2,0,2],[-1,0,1]]) ซึ่งเทียบเท่ากับการทำ Gaussian Smoothing เล็กน้อยในแนวตั้งฉากควบคู่ไปกับการหาอนุพันธ์ ช่วยลดผลกระทบจากสัญญาณรบกวนได้ดีขึ้น", "เพราะ Sobel ส่งคืนเฉพาะสีแดงเท่านั้น", "เพราะ Sobel ไม่ต้องคำนวณอนุพันธ์"], "answer": 1, "explanation": "Sobel Operator สามารถแยกตัวประกอบได้เป็นการคูณกันของตัวกรองเฉลี่ยถ่วงน้ำหนัก [1, 2, 1]^T กับตัวกรองอนุพันธ์ [-1, 0, 1] ทำให้นอกจากจะหาความชันของขอบแล้ว ยังมีคุณสมบัติกรองสัญญาณรบกวนแบบเกาส์เซียนในตัว จึงทนทานต่อ noise ได้ดีกว่า Prewitt (ที่ใช้น้ำหนัก 1 เท่ากัน) และดีกว่า Roberts มาก"}, {"id": "Q_L09_03", "lecture_id": "L9", "lecture_title": "Lecture 9: Edge and Corner Detection", "question": "ขั้นตอน 'Non-Maximum Suppression' (NMS) ในอัลกอริทึม Canny Edge Detection ทำหน้าที่อะไร?", "options": ["เบลอภาพด้วย Gaussian Filter", "ตรวจสอบพิกเซลตามแนวทิศทางเกรเดียนต์ และคงไว้เฉพาะพิกเซลที่มีขนาดเกรเดียนต์สูงสุดในแนวตั้งฉากกับขอบ ตัดพิกเซลข้างเคียงทิ้งเพื่อทำให้เส้นขอบมีความบางเพียง 1 พิกเซล (Edge thinning)", "แปลงเส้นขอบให้เป็นเส้นตรงด้วย Hough Transform", "เชื่อมต่อเส้นขอบที่ขาดออกจากกัน"], "answer": 1, "explanation": "หลังจากหา Gradient Magnitude แล้ว สันขอบมักจะมีความหนาหลายพิกเซล ขั้นตอน NMS จะทำการจัดกลุ่มทิศทางเกรเดียนต์ออกเป็น 4 ทิศ (0°, 45°, 90°, 135°) แล้วเปรียบเทียบค่าของพิกเซลปัจจุบันกับเพื่อนบ้าน 2 จุดในทิศทางเกรเดียนต์ หากค่าปัจจุบันไม่ใช่ค่าสูงสุดในระนาบนั้น จะถูกกดค่าเป็น 0 ทันที ทำให้เส้นขอบมีความคมบางเฉียบ 1 พิกเซล"}, {"id": "Q_L09_04", "lecture_id": "L9", "lecture_title": "Lecture 9: Edge and Corner Detection", "question": "ขั้นตอน 'Hysteresis Thresholding' ใน Canny Edge Detection ใช้เกณฑ์สองระดับ (T_high และ T_low) ในการตัดสินใจอย่างไร?", "options": ["ยอมรับพิกเซลที่มีค่า >= T_high เป็น Strong Edge ทันที และคงค่า Weak Edge (ช่วงระหว่าง T_low ถึง T_high) ไว้เฉพาะจุดที่มีการเชื่อมต่อกับ Strong Edge เท่านั้น ส่วนจุดอื่นทิ้งทั้งหมด", "นำค่าเฉลี่ยของ T_high และ T_low มาเป็นเกณฑ์เดี่ยว", "ตัดพิกเซลที่เกิน T_high ทิ้งและเก็บเฉพาะค่าที่ต่ำกว่า T_low", "กลับสีภาพเป็นเนกาทิฟหากเกิน T_high"], "answer": 0, "explanation": "Double Thresholding แบ่งพิกเซลเป็น 3 กลุ่ม: Strong, Weak, และ Non-edge การใช้ Hysteresis จะทำการไล่ตามแนวเส้นขอบ (Edge tracking) หาก Weak edge เม็ดใดมีเส้นเชื่อมต่อไปสัมผัสกับ Strong edge จะถือว่าเป็นเส้นขอบจริงและถูกเก็บไว้ แต่หากเป็น Weak edge ที่ลอยอยู่อย่างโดดเดี่ยวจะถือว่าเป็นสัญญาณรบกวนและถูกตัดทิ้ง วิธีนี้ช่วยให้เส้นขอบยาวต่อเนื่องโดยไม่ดึง noise เข้ามา"}, {"id": "Q_L09_05", "lecture_id": "L9", "lecture_title": "Lecture 9: Edge and Corner Detection", "question": "ในการตรวจจับมุมด้วย Harris Corner Detector เราวิเคราะห์ค่าลักษณะเฉพาะ (Eigenvalues: λ1, λ2) ของ Auto-correlation Matrix M อย่างไร?", "options": ["ถ้า λ1, λ2 มีค่าน้อยทั้งคู่ = Flat; ถ้าตัวใดตัวหนึ่งมีค่ามากกว่าอีกตัวมาก = Edge; ถ้า λ1 และ λ2 มีค่ามากทั้งคู่ = Corner", "ถ้า λ1 มีค่ามากตัวเดียว = Corner", "ถ้า λ1 + λ2 = 0 เสมอ = Corner", "Eigenvalues ไม่เกี่ยวข้องกับการตรวจจับมุม"], "answer": 0, "explanation": "เมทริกซ์ M บ่งบอกถึงการกระจายของเกรเดียนต์ในหน้าต่างตรวจจับ หากหน้าต่างอยู่ในบริเวณเรียบ เกรเดียนต์จะน้อยทั้งสองแนว (λ1, λ2 เล็ก); หากทับอยู่บนเส้นขอบ จะมีความชันสูงในทิศทางเดียว (λ1 ใหญ่, λ2 เล็ก หรือสลับกัน); แต่หากทับอยู่ที่จุดมุม จะมีการเปลี่ยนแปลงความเข้มแสงสูงในทุกทิศทาง ทำให้ทั้ง λ1 และ λ2 มีค่าสูงทั้งคู่"}, {"id": "Q_L09_06", "lecture_id": "L9", "lecture_title": "Lecture 9: Edge and Corner Detection", "question": "ฟังก์ชัน Harris Response คำนวณจากสูตร: R = det(M) - k * (trace(M))² เหตุใด Harris จึงเสนอสูตรนี้แทนที่จะคำนวณหาค่า Eigenvalues λ1, λ2 โดยตรง?", "options": ["เพราะสูตรนี้ให้ค่าความถูกต้องสูงกว่าการหา Eigenvalues จริง", "เพื่อหลีกเลี่ยงการคำนวณหารากที่สองของสมการกำลังสองในการหาค่า Eigenvalues ซึ่งกินเวลาและทรัพยากรการคำนวณสูง โดยอาศัยคุณสมบัติ det(M) = λ1*λ2 และ trace(M) = λ1 + λ2 แทน", "เพราะฟังก์ชัน cv2.cornerHarris ไม่รองรับเลขจำนวนจริง", "เพื่อแปลงค่าพิกเซลให้เป็นจำนวนเต็ม"], "answer": 1, "explanation": "การคำนวณ Eigenvalues ของเมทริกซ์ในทุกๆ พิกเซลของภาพเป็นกระบวนการที่สิ้นเปลืองการคำนวณสูงมาก (ต้องถอดสแควร์รูท) Harris และ Stephens จึงใช้เอกลักษณ์พีชคณิตเชิงเส้น: det(M) = λ1*λ2 และ trace(M) = λ1 + λ2 ซึ่งคำนวณได้ทันทีจากการคูณและบวกสมาชิกในเมทริกซ์ M ช่วยเพิ่มความเร็วในการประมวลผลขึ้นมหาศาล"}, {"id": "Q_L10_01", "lecture_id": "L10", "lecture_title": "Lecture 10: Morphological Processing", "question": "การดำเนินการทางสัณฐานวิทยา 'Erosion' (A ⊖ B) และ 'Dilation' (A ⊕ B) บนภาพไบนารี ให้ผลลัพธ์เชิงเรขาคณิตอย่างไร?", "options": ["Erosion ทำให้วัตถุขยายตัว; Dilation ทำให้วัตถุหดตัว", "Erosion กัดกร่อนขอบวัตถุให้เล็กลง ตัดติ่งแหลม และลบสัญญาณรบกวนเม็ดเล็ก; ส่วน Dilation ขยายขนาดขอบวัตถุให้โตขึ้น อุดรูโหว่ขนาดเล็ก และเชื่อมส่วนที่ขาดออกจากกัน", "ทั้งสองคำสั่งให้ผลเหมือนกันคือการกลับสีภาพ", "Erosion ใช้สำหรับภาพสี ส่วน Dilation ใช้กับภาพขาวดำ"], "answer": 1, "explanation": "นิยามทางคณิตศาสตร์: Erosion จะให้ผลเป็น 1 ก็ต่อเมื่อทุกจุดของ Structuring Element B ทับซ้อนอยู่ภายในเซต A ทั้งหมด (จึงทำให้ขอบวัตถุหดลง); ส่วน Dilation จะให้ผลเป็น 1 หากมีจุดใดจุดหนึ่งของ B ทับซ้อนกับ A (จึงทำให้ขอบวัตถุบวมขยายออก)"}, {"id": "Q_L10_02", "lecture_id": "L10", "lecture_title": "Lecture 10: Morphological Processing", "question": "ความแตกต่างในเชิงการประยุกต์ใช้งานระหว่าง Morphological Opening (A ∘ B) และ Closing (A • B) คือข้อใด?", "options": ["Opening (Erode แล้ว Dilate) ลบจุดรบกวนขนาดเล็กภายนอกวัตถุโดยไม่เปลี่ยนขนาดรวม; ส่วน Closing (Dilate แล้ว Erode) อุดรูโหว่ขนาดเล็กภายในวัตถุและเชื่อมรอยต่อที่แตกหัก", "Opening ทำหน้าที่ขยายภาพ; Closing ทำหน้าที่ตัดขอบภาพ", "Closing ต้องทำก่อน Opening เสมอในทุกโจทย์", "Opening ใช้หาจุดมุม; Closing ใช้หาเส้นตรง"], "answer": 0, "explanation": "Opening คือการทำ Erosion ก่อนเพื่อกำจัดส่วนยื่นแหลมหรือจุด noise ขนาดเล็กภายนอกวัตถุทิ้ง แล้วจึงทำ Dilation คืนขนาดให้วัตถุหลักเดิม; ในทางกลับกัน Closing คือการทำ Dilation ก่อนเพื่อให้อนุภาคที่อยู่ใกล้กันเชื่อมต่อกันและอุดรูพรุนด้านใน จากนั้นทำ Erosion เพื่อหดขนาดภาพรวมกลับสู่ขนาดเดิม"}, {"id": "Q_L10_03", "lecture_id": "L10", "lecture_title": "Lecture 10: Morphological Processing", "question": "สูตรการสกัดเส้นขอบภายนอกของวัตถุด้วยวิธีทางสัณฐานวิทยา (Morphological Boundary Extraction) คือข้อใด?", "options": ["β(A) = A - (A ⊖ B)  (นำภาพเดิมลบด้วยภาพที่ผ่านการกร่อน Erosion ด้วย Structuring Element B)", "β(A) = A + (A ⊕ B)", "β(A) = (A ∘ B) - A", "β(A) = (A • B) + (A ⊖ B)"], "answer": 0, "explanation": "เมื่อนำภาพไบนารี A ไปผ่านการกร่อน (Erosion) ขอบรอบนอกสุดความหนาประมาณ 1 พิกเซลจะหายไป ดังนั้น เมื่อนำภาพดั้งเดิม A มาลบ (Set difference) ด้วยภาพที่ถูกกร่อน A ⊖ B เนื้อในของวัตถุจะหักล้างกันหมด เหลือทิ้งไว้เพียงเส้นขอบรอบนอกความหนา 1 พิกเซลอย่างแม่นยำ"}, {"id": "Q_L10_04", "lecture_id": "L10", "lecture_title": "Lecture 10: Morphological Processing", "question": "ตัวดำเนินการ 'Hit-or-Miss Transform' (A ⊛ B) อาศัยคู่ของ Structuring Element (B1, B2) โดยมีสูตร: (A ⊖ B1) ∩ (A^c ⊖ B2) มีประโยชน์หลักอย่างไร?", "options": ["ใช้สำหรับการเบลอภาพอย่างรวดเร็ว", "ใช้สำหรับตรวจจับรูปร่างหรือโครงสร้างเฉพาะเจาะจง (Shape/Template Matching) ในภาพไบนารี เช่น ตรวจหาจุดมุม จุดสิ้นสุดของเส้น หรือรอยต่อ", "ใช้สำหรับแปลงภาพสีให้เป็น Grayscale", "ใช้คำนวณค่าเฉลี่ยความสว่าง"], "answer": 1, "explanation": "Hit-or-Miss เป็นเครื่องมือพื้นฐานในการตรวจจับรูปทรง โดย B1 จะตรวจสอบตำแหน่งที่ 'ต้องเป็นวัตถุ' (Foreground - Hit) และ B2 จะตรวจสอบตำแหน่งรอบข้างที่ 'ต้องเป็นพื้นหลัง' (Background - Miss) เมื่อนำผลลัพธ์มา Intersect กัน จะเหลือเฉพาะพิกเซลที่มีรูปทรงเรขาคณิตตรงตามแพทเทิร์นเป๊ะๆ"}, {"id": "Q_L10_05", "lecture_id": "L10", "lecture_title": "Lecture 10: Morphological Processing", "question": "ในการประเมินประสิทธิภาพของการแบ่งส่วนภาพ (Segmentation) ด้วย Confusion Matrix หากโมเดลทำนายได้: TP = 80, FP = 20, FN = 10, TN = 890 ค่า 'Precision' และ 'Recall' มีค่าเท่ากับเท่าใด?", "options": ["Precision = 0.80 (80%), Recall = 0.889 (88.9%)", "Precision = 0.889 (88.9%), Recall = 0.80 (80%)", "Precision = 0.90 (90%), Recall = 0.90 (90%)", "Precision = 0.50 (50%), Recall = 0.50 (50%)"], "answer": 0, "explanation": "สูตรคำนวณ:\n• Precision = TP / (TP + FP) = 80 / (80 + 20) = 80 / 100 = 0.80 (80.0%)\n• Recall = TP / (TP + FN) = 80 / (80 + 10) = 80 / 90 ≈ 0.8889 (88.9%)"}, {"id": "Q_L10_06", "lecture_id": "L10", "lecture_title": "Lecture 10: Morphological Processing", "question": "ค่าดัชนีวัดความคล้ายคลึง Intersection over Union (IoU หรือ Jaccard Index) มีสูตรคำนวณจากตาราง Confusion Matrix อย่างไร?", "options": ["IoU = (TP + TN) / (TP + TN + FP + FN)", "IoU = TP / (TP + FP + FN)", "IoU = 2 * TP / (2*TP + FP + FN)", "IoU = TP / TN"], "answer": 1, "explanation": "IoU คือพื้นที่ส่วนที่ทับซ้อนกัน (Intersection = TP) หารด้วยพื้นที่ทั้งหมดรวมกัน (Union = TP + FP + FN) สังเกตว่าตัวส่วนจะ 'ไม่มี' ค่า True Negative (TN) เข้ามาเกี่ยวข้อง ต่างจากค่า Accuracy ที่รวม TN ด้วย"}, {"id": "Q_L11_01", "lecture_id": "L11", "lecture_title": "Lecture 11: Image Segmentation", "question": "นิยามที่ถูกต้องของการแบ่งส่วนภาพ (Image Segmentation) ตามหลักคณิตศาสตร์คือข้อใด?", "options": ["การแบ่งภาพ R ออกเป็นบริเวณย่อย R1, R2, ..., Rn โดยที่ยูเนียนของทุกบริเวณได้ภาพเต็ม R, ทุกบริเวณไม่ทับซ้อนกัน (Ri ∩ Rj = ∅), ภายในบริเวณเดียวกันมีคุณสมบัติสอดคล้อง (P(Ri)=TRUE) และต่างบริเวณมีคุณสมบัติต่างกัน (P(Ri U Rj)=FALSE)", "การปรับความคมชัดของภาพให้มีความละเอียดระดับ 4K", "การบีบอัดขนาดไฟล์ภาพเพื่อลดพื้นที่จัดเก็บ", "การคูณเมทริกซ์ภาพด้วยค่าคงที่"], "answer": 0, "explanation": "นิยามมาตรฐานของ Segmentation กำหนดว่าทุกส่วนย่อยต้องครอบคลุมทั้งภาพ (Completeness), แยกขาดจากกันโดยไม่ซ้อนทับ (Disjointness), สมาชิกภายในกลุ่มเดียวกันต้องมีความเป็นเนื้อเดียวกันตามเงื่อนไข (Uniformity), และเมื่อนำสองกลุ่มที่อยู่ติดกันมารวมกันจะต้องขัดกับเงื่อนไขความเป็นเนื้อเดียวกัน (Distinctness)"}, {"id": "Q_L11_02", "lecture_id": "L11", "lecture_title": "Lecture 11: Image Segmentation", "question": "เกณฑ์ทางคณิตศาสตร์ที่วิธี Otsu's Thresholding ใช้ในการค้นหาค่าขีดแบ่ง T* ที่เหมาะสมที่สุดโดยอัตโนมัติคืออะไร?", "options": ["การหาค่า T ที่ทำให้ความแปรปรวนระหว่างกลุ่ม (Between-Class Variance: σ_B²) มีค่าสูงสุด ซึ่งเทียบเท่ากับการลดความแปรปรวนภายในกลุ่ม (Within-Class Variance) ให้ต่ำที่สุด", "การหาจุดกึ่งกลางของค่าพิกเซลสูงสุดและต่ำสุด", "การหาจุดตัดที่ทำให้ค่าเฉลี่ยทั้งสองกลุ่มเท่ากัน", "การหาค่า T ที่ทำให้ฮิสโทแกรมมีความสมมาตร"], "answer": 0, "explanation": "Otsu เสนอให้หาค่า t ที่ทำให้ σ_B²(t) = ω0(t) * ω1(t) * (μ0(t) - μ1(t))² มีค่าสูงสุด เนื่องจากผลรวมของความแปรปรวนทั้งหมด (Total Variance σ_T²) มีค่าคงที่ ดังนั้นการทำให้ความแปรปรวนระหว่างคลาสสูงสุด จะส่งผลให้ความแปรปรวนภายในแต่ละคลาสต่ำที่สุดโดยปริยาย ทำให้ทั้งสองกลุ่มแยกออกจากกันได้ชัดเจนที่สุด"}, {"id": "Q_L11_03", "lecture_id": "L11", "lecture_title": "Lecture 11: Image Segmentation", "question": "อัลกอริทึม 'Region Split and Merge' อาศัยโครงสร้างข้อมูล (Data Structure) ใดในการจัดแบ่งบล็อกพื้นที่ภาพ?", "options": ["Binary Search Tree", "Quadtree (ต้นไม้แบบสี่แขนง)", "Hash Table", "Linked List"], "answer": 1, "explanation": "Region Split and Merge ใช้โครงสร้างข้อมูล Quadtree โดยเริ่มต้นจากภาพทั้งผืนเป็นรูท หากบล็อกใดไม่ผ่านเกณฑ์ความเป็นเนื้อเดียวกัน จะทำการ 'Split' ผ่าออกเป็น 4 บล็อกย่อยสี่เหลี่ยมจัตุรัส และเมื่อบล็อกข้างเคียงที่มีคุณสมบัติสอดคล้องกันจะทำการ 'Merge' ยุบรวมเข้าด้วยกัน"}, {"id": "Q_L11_04", "lecture_id": "L11", "lecture_title": "Lecture 11: Image Segmentation", "question": "อัลกอริทึม K-Means Clustering ในงานแบ่งส่วนภาพ มีขั้นตอนการวนซ้ำอย่างไร?", "options": ["1. สุ่ม K เซนทรอยด์  2. กำหนดแต่ละพิกเซลไปยังเซนทรอยด์ที่ใกล้ที่สุด  3. คำนวณตำแหน่งเซนทรอยด์ใหม่จากค่าเฉลี่ยของสมาชิกในกลุ่ม  4. ทำซ้ำจนตำแหน่งเซนทรอยด์ไม่เปลี่ยนแปลง", "1. คำนวณอนุพันธ์  2. เรียงลำดับพิกเซล  3. สุ่มตัดข้อมูลออกครึ่งหนึ่ง", "1. แปลงภาพเป็นฟูริเยร์  2. ตัดความถี่ต่ำทิ้ง  3. แปลงกลับ", "1. หาค่ามัธยฐาน  2. ทำ Dilation  3. นับจำนวนวัตถุ"], "answer": 0, "explanation": "K-Means เป็นอัลกอริทึมแบบ Unsupervised ที่วนลูป 2 สเต็ปหลัก: (1) Assignment step - วัดระยะทาง (เช่น ยูคลิด) และจัดพิกเซลเข้ากลุ่มที่ใกล้ที่สุด และ (2) Update step - หาค่าเฉลี่ยใหม่ของสมาชิกในกลุ่มเพื่ออัปเดตจุดเซนทรอยด์ ทำซ้ำจนกระทั่งผลลัพธ์ลู่เข้าสู่จุดสมดุล"}, {"id": "Q_L11_05", "lecture_id": "L11", "lecture_title": "Lecture 11: Image Segmentation", "question": "การทำ Hierarchical Clustering แบบ 'Agglomerative' แตกต่างจากแบบ 'Divisive' อย่างไร?", "options": ["Agglomerative เป็นแนวทางแบบ Bottom-up (เริ่มต้นจากแต่ละพิกเซลเป็นคลัสเตอร์เดี่ยว แล้วค่อยๆ รวมคู่ที่ใกล้ที่สุดเข้าด้วยกัน); ส่วน Divisive เป็นแนวทางแบบ Top-down (เริ่มต้นจากข้อมูลทั้งหมดเป็นกลุ่มเดียว แล้วค่อยๆ แตกย่อยออก)", "Agglomerative ใช้สำหรับภาพสี ส่วน Divisive ใช้กับภาพขาวดำ", "Agglomerative คำนวณเร็วกว่า Divisive เสมอในทุกเงื่อนไข", "ทั้งสองวิธีมีทิศทางการรวมข้อมูลจากบนลงล่างเหมือนกัน"], "answer": 0, "explanation": "Agglomerative (การรวมตัว) เริ่มต้นจากระดับล่างสุดที่ทุกตัวเป็นอิสระ แล้วทำการผสาน (Merge) ทีละขั้นจนกลายเป็นต้นไม้ Dendrogram ใหญ่ต้นเดียว ในทางกลับกัน Divisive (การแบ่งแยก) เริ่มจากก้อนข้อมูลใหญ่ก้อนเดียว แล้วผ่าแบ่งย่อย (Split) ลงมาเรื่อยๆ จนถึงระดับสมาชิกเดี่ยว"}, {"id": "Q_L11_06", "lecture_id": "L11", "lecture_title": "Lecture 11: Image Segmentation", "question": "ปัญหาสำคัญที่สุดที่มักพบเมื่อใช้อัลกอริทึม Watershed Segmentation โดยตรงบนภาพเกรเดียนต์ดิบๆ คืออะไร และมีวิธีแก้ไขอย่างไร?", "options": ["ภาพจะกลายเป็นสีขาวล้วน แก้ไขโดยการเพิ่มแสง", "เกิดปัญหาการแบ่งส่วนย่อยเกินไปอย่างรุนแรง (Severe Oversegmentation) อันเนื่องมาจากสัญญาณรบกวนและ Local minima เล็กๆ; แก้ไขได้โดยใช้ Marker-Controlled Watershed (กำหนดจุดมาร์กเกอร์ล่วงหน้า)", "โปรแกรมจะทำงานช้ามากจนค้าง; แก้ไขโดยการปิดเครื่อง", "เส้นขอบจะเลือนหายไป; แก้ไขโดยการคูณด้วย 255"], "answer": 1, "explanation": "เกรเดียนต์ของภาพธรรมชาติมักมีสัญญาณรบกวนความถี่สูง ซึ่งสร้างหลุมร่องน้ำขนาดเล็ก (Local minima) จำนวนนับพันนับหมื่นจุด ส่งผลให้เกิดแอ่งน้ำย่อยและการสร้างเขื่อนกั้นจนภาพแตกเป็นชิ้นเล็กชิ้นน้อย (Oversegmentation) การแก้ปัญหามาตรฐานคือการใช้ Marker-Controlled Watershed ซึ่งกำหนดแหล่งกำเนิดน้ำเฉพาะตำแหน่งที่มั่นใจว่าเป็นวัตถุและพื้นหลังเท่านั้น"}, {"id": "Q_L12_01", "lecture_id": "L12", "lecture_title": "Lecture 12: Texture Description", "question": "คุณลักษณะทางสถิติอันดับหนึ่ง (First-Order Histogram Statistics) เช่น Mean, Variance, Skewness, และ Entropy มีข้อจำกัดสำคัญที่สุดอย่างไรในการวิเคราะห์ Texture?", "options": ["คำนวณได้ช้าเกินไป", "พิจารณาเฉพาะความถี่การกระจายตัวของระดับสีโดยไม่คำนึงถึงความสัมพันธ์เชิงพื้นที่ (Spatial Relationship) หรือทิศทางของพิกเซลข้างเคียง ภาพสองภาพที่มีการกระจายสีเท่ากันแต่ลวดลายต่างกันอย่างสิ้นเชิงจะได้ค่าสถิติเท่ากัน", "ไม่สามารถใช้กับภาพขาวดำได้", "ให้ค่าตัวเลขที่ติดลบเสมอ"], "answer": 1, "explanation": "First-Order Statistics สกัดข้อมูลจากฮิสโทแกรม 1 มิติเพียงอย่างเดียว ทำให้ไม่ทราบเลยว่าพิกเซลสีดำและสีขาวอยู่ติดกันเป็นลายตารางหมากรุก หรือแยกกันอยู่คนละซีกของภาพ หากฮิสโทแกรมเหมือนกัน ค่าสถิติอันดับหนึ่งจะเท่ากันทั้งหมด จึงจำเป็นต้องใช้ Second-Order Statistics อย่าง GLCM มาช่วยบอกตำแหน่งและทิศทางสัมพันธ์"}, {"id": "Q_L12_02", "lecture_id": "L12", "lecture_title": "Lecture 12: Texture Description", "question": "เมทริกซ์ความร่วมเกิดของระดับเทา (Gray-Level Co-occurrence Matrix: GLCM) P(i, j | d, θ) มีนิยามการนับสมาชิกในตารางอย่างไร?", "options": ["นับจำนวนพิกเซลที่มีระดับสีเท่ากับ i ในแถวที่ j", "นับจำนวนครั้งที่คู่ของพิกเซลที่มีระดับสี i และ j ปรากฏอยู่ห่างกันเป็นระยะทาง d ในทิศทางมุม θ (เช่น 0°, 45°, 90°, 135°)", "หาผลคูณของความสว่างในแนวทแยงมุม", "นับจำนวนสีทั้งหมดในภาพ"], "answer": 1, "explanation": "GLCM เป็นเมทริกซ์ขนาด L x L (เมื่อ L คือจำนวนระดับสีเทา) สมาชิกในตำแหน่ง (i, j) คือจำนวนคู่พิกเซลที่จุดเริ่มต้นมีค่าสี i และจุดปลายที่อยู่ห่างไป d พิกเซลในมุม θ มีค่าสี j ช่วยให้เราทราบถึงการเรียงตัวของลวดลายและทิศทางของเนื้อสัมผัสได้อย่างแม่นยำ"}, {"id": "Q_L12_03", "lecture_id": "L12", "lecture_title": "Lecture 12: Texture Description", "question": "คุณลักษณะของ Haralick: 'Contrast' และ 'Homogeneity' (Inverse Difference Moment) มีความสัมพันธ์และพฤติกรรมต่อลักษณะพื้นผิวของภาพอย่างไร?", "options": ["มีค่าแปรผันตามกันเสมอ หาก Contrast สูง Homogeneity จะสูงด้วย", "มีพฤติกรรมตรงกันข้ามกัน: Contrast = Σ (i - j)² * p(i, j) จะมีค่าสูงเมื่อภาพมีลวดลายหยาบและสีต่างกันมาก; ส่วน Homogeneity = Σ p(i, j) / (1 + (i - j)²) จะมีค่าสูงเมื่อภาพมีความเรียบเนียนสม่ำเสมอและสมาชิกเกาะกลุ่มตามแนวทแยงมุม i = j", "Contrast ใช้เฉพาะภาพสี ส่วน Homogeneity ใช้เฉพาะภาพขาวดำ", "ทั้งสองค่ามีค่าคงที่เท่ากับ 1 เสมอ"], "answer": 1, "explanation": "Contrast ถ่วงน้ำหนักด้วยผลต่างกำลังสอง (i - j)² ยิ่งพิกเซลข้างเคียงมีสีต่างกันมาก ค่ายิ่งพุ่งสูงขึ้น; ในขณะที่ Homogeneity นำ (i - j)² ไปเป็นตัวหาร ยิ่งพิกเซลข้างเคียงมีสีเหมือนกัน (i ≈ j ตัวหารใกล้ 1) ค่ายิ่งเข้าใกล้ค่าสูงสุด ดังนั้น พื้นผิวที่เรียบเนียนจะให้ Homogeneity สูงมากแต่ Contrast ต่ำ"}, {"id": "Q_L12_04", "lecture_id": "L12", "lecture_title": "Lecture 12: Texture Description", "question": "คุณลักษณะ Haralick: 'Energy' (Angular Second Moment - ASM) มีสูตร: Σ Σ p(i, j)² จะมีค่าสูงสุดเมื่อภาพมีลักษณะเนื้อสัมผัสแบบใด?", "options": ["เมื่อภาพมีความสับสนวุ่นวายและมีสัญญาณรบกวนเต็มไปหมด", "เมื่อภาพมีลวดลายสม่ำเสมอซ้ำซากสูง หรือมีสีเดียวเกือบทั้งหมด ทำให้ค่าความน่าจะเป็นใน GLCM กระจุกตัวอยู่เพียงไม่กี่ตำแหน่ง", "เมื่อภาพเป็นภาพสีที่มีความหลากหลายของสีสูงสุด", "เมื่อภาพผ่านการทำ Negative"], "answer": 1, "explanation": "Energy หรือ ASM คือผลรวมของค่ายกกำลังสองของความน่าจะเป็น เนื่องจาก Σ p(i,j) = 1 การยกกำลังสองจะมีค่าสูงสุดเข้าใกล้ 1 ก็ต่อเมื่อค่าความน่าจะเป็นไปกระจุกตัวอยู่หนาแน่นเพียงช่องเดียวหรือสองช่อง (เช่น ลวดลายซ้ำซากสม่ำเสมอมาก) หากเป็นภาพที่มีความสุ่มไร้ระเบียบ ค่าความน่าจะเป็นจะกระจายตัวบางๆ ทำให้ผลรวมยกกำลังสองมีค่าน้อยมาก"}, {"id": "Q_L12_05", "lecture_id": "L12", "lecture_title": "Lecture 12: Texture Description", "question": "อัลกอริทึม Local Binary Patterns (LBP) พื้นฐานขนาด 3x3 มีขั้นตอนการคำนวณรหัสทศนิยมของแต่ละพิกเซลอย่างไร?", "options": ["นำพิกเซลเพื่อนบ้านทั้ง 8 จุดมาเปรียบเทียบกับพิกเซลศูนย์กลาง: ถ้าเพื่อนบ้าน >= จุดศูนย์กลาง ให้บิตเป็น 1 มิฉะนั้นเป็น 0 จากนั้นนำเลขฐานสอง 8 บิตมาคูณถ่วงน้ำหนัก 2^0 ถึง 2^7 แล้วรวมเป็นรหัสทศนิยม (0-255)", "หาค่าเฉลี่ยของพิกเซลทั้ง 9 จุดแล้วคูณด้วย 255", "คำนวณเกรเดียนต์ในแนวแกน X และ Y แล้วหาขนาด", "ทำ Thresholding ภาพทั้งภาพด้วยค่าคงที่ 128"], "answer": 0, "explanation": "LBP อาศัยการสร้าง Circular binary string โดยพิจารณาความสัมพันธ์เฉพาะที่: แต่ละตำแหน่งรอบจุดศูนย์กลางจะถูก Binarize เทียบกับจุดศูนย์กลาง ได้ลำดับบิต 8 บิต เช่น 11001010 เมื่อนำมาคูณน้ำหนักเลขฐานสอง (1, 2, 4, 8, 16, 32, 64, 128) จะได้เลขจำนวนเต็ม 0-255 ที่ใช้เป็นตัวแทนของ Local Texture Pattern"}, {"id": "Q_LAB_01", "lecture_id": "LAB", "lecture_title": "Lab Practical: Exam Strategy", "question": "ในข้อสอบแล็บข้อ 1 (Intensity Transformation เพื่อเปิดเผยวัตถุที่ซ่อนอยู่ในท้องฟ้า) หากโจทย์สั่งให้ 'ลด Contrast' และ 'เพิ่ม Brightness' เราควรกำหนดพารามิเตอร์เชิงเส้น s = a * r + b อย่างไร?", "options": ["a > 1 (เช่น a = 2.0) และ b < 0 (เช่น b = -50)", "0 < a < 1 (เช่น a = 0.5 หรือ 0.6) และ b > 0 (เช่น b = 80 ถึง 100) พร้อมใช้ np.clip(s, 0, 255)", "a = 1 และ b = 0", "a = -1 และ b = 255"], "answer": 1, "explanation": "ความชัน a ควบคุม Contrast: เมื่อ 0 < a < 1 ช่วงการกระจายตัวของระดับสีจะแคบลง (ลดความเปรียบต่าง); ค่าคงที่ b ควบคุม Brightness: เมื่อ b > 0 จะเป็นการยกฐานความสว่างขึ้นเพื่อดึงรายละเอียดที่จมอยู่ในย่านมืด/สว่างจัดออกมา และต้องใช้ np.clip() เสมอเพื่อป้องกัน uint8 overflow"}, {"id": "Q_LAB_02", "lecture_id": "LAB", "lecture_title": "Lab Practical: Exam Strategy", "question": "ในข้อสอบแล็บข้อ 2 (Barcode Detection บน Boarding Pass ที่อาจหมุน 180° หรือเลื่อนตำแหน่ง) ทำไมการใช้ Horizontal Gradient (Sobel X หรือ Scharr X) ควบคู่กับ Rectangular Closing ในแนวนอน จึงทนทานต่อการหมุน 180° โดยอัตโนมัติ?", "options": ["เพราะภาพบาร์โค้ดไม่มีสี", "เพราะเส้นบาร์โค้ดเป็นแถบแนวตั้งขนานกัน เมื่อหมุน 180 องศา เส้นแนวตั้งก็ยังคงวางตัวในแนวตั้งเช่นเดิม ทำให้เกิดการเปลี่ยนแปลงความเข้มแสงในแนวนอน (Horizontal gradient) สูงเหมือนเดิมทุกประการ", "เพราะฟังก์ชัน OpenCV ทำการหมุนภาพกลับให้อัตโนมัติ", "เพราะบาร์โค้ดมีขนาดเท่ากับตั๋วเดินทางเสมอ"], "answer": 1, "explanation": "เส้นตรงในแนวตั้ง เมื่อหมุน 180 องศา (หรือกลับด้านซ้าย-ขวา) คุณสมบัติเชิงเรขาคณิตของมันก็ยังคงเป็นเส้นแนวตั้งเดิม การใช้ Sobel X เพื่อหาเกรเดียนต์แนวนอนจึงยังคงให้การตอบสนองสูงสุดเสมอ ทำให้ Algorithm มีคุณสมบัติ Invariant ต่อการหมุน 180° และการเลื่อนตำแหน่ง (Translation) โดยไม่ต้องเขียนโค้ดตรวจสอบทิศทางการหมุนล่วงหน้าเลย"}, {"id": "Q_LAB_03", "lecture_id": "LAB", "lecture_title": "Lab Practical: Exam Strategy", "question": "ในข้อสอบแล็บข้อ 3 (Green Sign Detection) เมื่อตัดช่วงสีเขียวด้วย `cv2.inRange()` ใน HSV แล้ว มักจะพบปัญหาตัวหนังสือสีขาวและสัญลักษณ์ภายในป้ายกลายเป็น 'รูโหว่สีดำ' ขั้นตอนใดแก้ปัญหานี้ให้ได้มาสก์ป้ายทึบขาวทั้งแผ่นตามที่โจทย์ต้องการ?", "options": ["การทำ Morphological Closing ด้วย Structuring Element ขนาดใหญ่ (เช่น สี่เหลี่ยม 17x17 หรือ 25x25) หรือใช้อัลกอริทึม Hole Filling / วาดทับด้วย Bounding Box", "การลดขนาดภาพลงครึ่งหนึ่ง", "การแปลงภาพกลับเป็น BGR", "การทำ Canny Edge Detection"], "answer": 0, "explanation": "ตัวอักษรสีขาวในป้ายไม่ได้อยู่ในช่วงสีเขียว จึงกลายเป็นสีดำ (0) เกิดเป็นรูพรุนในหน้ากากป้าย การใช้ Morphological Closing ด้วยเคอร์เนลขนาดใหญ่จะขยายสีขาวมาปิดเชื่อมรูโหว่ทั้งหมดเข้าด้วยกัน หรือเมื่อหา Contour ของป้ายเจอแล้ว ใช้คำสั่ง `cv2.drawContours(mask, [c], -1, 255, thickness=-1)` ระบายสีขาวทึบเต็มพื้นที่ป้าย จะได้มาสก์ทึบ 255 ตามเกณฑ์ 100%"}, {"id": "Q_LAB_04", "lecture_id": "LAB", "lecture_title": "Lab Practical: Exam Strategy", "question": "ในข้อสอบแล็บข้อ 4 (Noise Removal บนภาพ Dio) หากพยายามใช้ Gaussian Blur ใน Spatial Domain เพื่อกำจัดลายทาง Periodic Noise ผลลัพธ์จะเป็นอย่างไรเมื่อเทียบกับการใช้ Notch Reject Filter ใน Fourier Domain?", "options": ["Gaussian Blur จะกำจัดลายทางได้คมชัดกว่า Notch Filter มาก", "Gaussian Blur จะทำให้ทั้งภาพเบลอมัวเละ รายละเอียดลายเส้นของตัวละครสูญหายทั้งหมด และยังคงหลงเหลือลายทางจางๆ อยู่; ในขณะที่ Notch Filter ตัดเฉพาะความถี่ของ noise ทิ้ง ทำให้ภาพคงความคมชัดของลายเส้นไว้ได้สมบูรณ์", "ให้ผลลัพธ์เหมือนกันทุกประการ", "Gaussian Blur จะทำให้ภาพกลายเป็นสีแดง"], "answer": 1, "explanation": "สัญญาณรบกวนแบบคาบมีพลังงานซ้อนทับอยู่ในช่วงความถี่เดียวกับรายละเอียดภาพใน Spatial domain การเบลอภาพด้วย Gaussian จะตัดความถี่สูงทั้งหมดทิ้ง ส่งผลให้ขอบภาพ ตา คิ้ว และเส้นผมของตัวละครเบลอมัวไปหมด แต่ใน Fourier domain สัญญาณรบกวนจะแยกตัวออกมาเป็นจุดสว่างเฉพาะจุด (Spikes) การใช้ Notch filter จึงสามารถ 'ผ่าตัด' เอาเฉพาะจุดนั้นออกได้โดยไม่แตะต้องความถี่อื่นเลย ภาพจึงคมชัดเหมือนต้นฉบับ"}, {"id": "Q_LAB_05", "lecture_id": "LAB", "lecture_title": "Lab Practical: Exam Strategy", "question": "ข้อกำหนดสำคัญในการเขียนโค้ดส่งสอบปฏิบัติการตามคำสั่งในข้อสอบ คือข้อใด?", "options": ["ต้องตั้งชื่อไฟล์ผลลัพธ์ตรงตามที่โจทย์ระบุ (เช่น Result1.png, Result2-1.png), ต้องเขียน Comment ภาษาไทยอธิบายขั้นตอนการทำงานลงใน Source Code ทุกขั้นตอน และค่าของ Binary Mask ต้องเป็น 0 และ 255 อย่างเคร่งครัด", "สามารถใช้ชื่อไฟล์อะไรก็ได้ที่สะดวก", "ห้ามเขียน Comment ใดๆ ลงในโค้ด", "ต้องส่งไฟล์เป็นภาษา C++ เท่านั้น"], "answer": 0, "explanation": "คำสั่งในข้อสอบระบุชัดเจน: 'โดยต้องทำการเขียน Comment อธิบายการทำงานของโปรแกรมเป็นภาษาไทยลงใน Source Code ในแต่ละขั้นตอน' และต้องบันทึกไฟล์ภาพผลลัพธ์ตามชื่อที่กำหนด เช่น 'Result1.png', 'Result2-1.png' หากตั้งชื่อไฟล์ผิดหรือไม่มี Comment ภาษาไทยจะถูกหักคะแนนส่วนกระบวนการทำงาน"}];
+    let mockQuestions = [];
+    let mockUserAnswers = [];
+    let mockFlagged = [];
+    let mockCurrentIndex = 0;
+    let mockTimerSeconds = 0;
+    let mockTimerInterval = null;
+
+    function startMockExam() {
+      const count = parseInt(document.getElementById('exam-cfg-count').value);
+      const minutes = parseInt(document.getElementById('exam-cfg-time').value);
+
+      const shuffled = [...QUESTIONS].sort(() => 0.5 - Math.random());
+      mockQuestions = shuffled.slice(0, Math.min(count, shuffled.length));
+      mockUserAnswers = new Array(mockQuestions.length).fill(null);
+      mockFlagged = new Array(mockQuestions.length).fill(false);
+      mockCurrentIndex = 0;
+      mockTimerSeconds = minutes * 60;
+
+      document.getElementById('exam-setup-card').classList.add('hidden');
+      document.getElementById('exam-results-panel').classList.add('hidden');
+      document.getElementById('exam-active-panel').classList.remove('hidden');
+
+      renderExamPalette();
+      renderCurrentExamQuestion();
+
+      if (mockTimerInterval) clearInterval(mockTimerInterval);
+      mockTimerInterval = setInterval(updateExamTimer, 1000);
+      updateExamTimerDisplay();
+    }
+
+    function updateExamTimer() {
+      mockTimerSeconds--;
+      updateExamTimerDisplay();
+      if (mockTimerSeconds <= 0) {
+        clearInterval(mockTimerInterval);
+        alert('⏰ หมดเวลาทำข้อสอบแล้ว! ระบบจะทำการตรวจข้อสอบอัตโนมัติ');
+        submitMockExam();
+      }
+    }
+
+    function updateExamTimerDisplay() {
+      const m = Math.floor(mockTimerSeconds / 60);
+      const s = mockTimerSeconds % 60;
+      const el = document.getElementById('exam-timer-display');
+      el.innerText = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+      if (mockTimerSeconds <= 300) el.classList.add('text-rose-400');
+    }
+
+    function renderExamPalette() {
+      const p = document.getElementById('exam-palette-container');
+      p.innerHTML = '';
+      for (let i = 0; i < mockQuestions.length; i++) {
+        const btn = document.createElement('button');
+        btn.className = 'w-9 h-9 rounded text-xs font-bold transition-all flex items-center justify-center ';
+        if (i === mockCurrentIndex) btn.className += 'ring-2 ring-blue-400 ';
+        if (mockUserAnswers[i] !== null) btn.className += 'bg-blue-600 text-white ';
+        else btn.className += 'bg-slate-800 text-slate-300 border border-slate-700 ';
+        if (mockFlagged[i]) btn.className += 'border-amber-400 text-amber-300 ';
+        btn.innerText = (i + 1);
+        btn.onclick = () => { mockCurrentIndex = i; renderCurrentExamQuestion(); };
+        p.appendChild(btn);
+      }
+    }
+
+    function renderCurrentExamQuestion() {
+      const q = mockQuestions[mockCurrentIndex];
+      document.getElementById('exam-progress-text').innerText = `ข้อ ${mockCurrentIndex + 1} / ${mockQuestions.length}`;
+      document.getElementById('exam-q-lecture').innerText = q.lecture_title;
+      document.getElementById('exam-q-index').innerText = `ข้อที่ ${mockCurrentIndex + 1} (${q.id})`;
+      document.getElementById('exam-q-text').innerText = q.question;
+
+      const flagBtn = document.getElementById('exam-flag-btn');
+      flagBtn.innerText = mockFlagged[mockCurrentIndex] ? '★ ปักหมุดแล้ว' : '🚩 ปักหมุด';
+
+      const optCont = document.getElementById('exam-options-container');
+      optCont.innerHTML = '';
+      const letters = ['A', 'B', 'C', 'D'];
+
+      q.options.forEach((opt, idx) => {
+        const sel = (mockUserAnswers[mockCurrentIndex] === idx);
+        const div = document.createElement('div');
+        div.className = `p-3 rounded-lg border text-sm cursor-pointer transition-all flex items-start gap-2.5 ${sel ? 'bg-blue-600/20 border-blue-500 text-white' : 'bg-slate-800/60 border-slate-700/60 text-slate-300 hover:bg-slate-800'}`;
+        div.onclick = () => { mockUserAnswers[mockCurrentIndex] = idx; renderCurrentExamQuestion(); };
+        div.innerHTML = `
+          <span class="inline-flex items-center justify-center w-5 h-5 rounded-full ${sel ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'} font-bold text-xs flex-shrink-0 mt-0.5">${letters[idx]}</span>
+          <span>${opt}</span>
+        `;
+        optCont.appendChild(div);
+      });
+
+      document.getElementById('btn-exam-prev').disabled = (mockCurrentIndex === 0);
+      document.getElementById('btn-exam-next').innerText = (mockCurrentIndex === mockQuestions.length - 1) ? 'ข้อแรก 🔄' : 'ข้อถัดไป ➡️';
+      renderExamPalette();
+    }
+
+    function toggleCurrentFlag() {
+      mockFlagged[mockCurrentIndex] = !mockFlagged[mockCurrentIndex];
+      renderCurrentExamQuestion();
+    }
+
+    function navigateExamQuestion(dir) {
+      let next = mockCurrentIndex + dir;
+      if (next >= mockQuestions.length) next = 0;
+      if (next < 0) next = 0;
+      mockCurrentIndex = next;
+      renderCurrentExamQuestion();
+    }
+
+    function confirmSubmitExam() {
+      const un = mockUserAnswers.filter(a => a === null).length;
+      let msg = 'ต้องการส่งข้อสอบเพื่อตรวจผลคะแนนหรือไม่?';
+      if (un > 0) msg = `⚠️ ยังมีข้อที่ยังไม่ได้ตอบอีก ${un} ข้อ! ยืนยันที่จะส่งข้อสอบหรือไม่?`;
+      if (confirm(msg)) submitMockExam();
+    }
+
+    function submitMockExam() {
+      if (mockTimerInterval) clearInterval(mockTimerInterval);
+      let score = 0;
+      const topicStats = {};
+
+      mockQuestions.forEach((q, idx) => {
+        const isCor = (mockUserAnswers[idx] === q.answer);
+        if (isCor) score++;
+        const lid = q.lecture_id;
+        if (!topicStats[lid]) topicStats[lid] = { title: q.lecture_title, total: 0, correct: 0 };
+        topicStats[lid].total++;
+        if (isCor) topicStats[lid].correct++;
+      });
+
+      const total = mockQuestions.length;
+      const pct = (score / total) * 100;
+      document.getElementById('result-score-text').innerText = `${score} / ${total}`;
+      document.getElementById('result-pct-text').innerText = pct.toFixed(1) + '%';
+
+      let grade = 'F';
+      let badgeBg = 'bg-rose-600';
+      if (pct >= 85) { grade = 'Grade A (ยอดเยี่ยม)'; badgeBg = 'bg-emerald-600'; }
+      else if (pct >= 80) { grade = 'Grade B+ (ดีมาก)'; badgeBg = 'bg-emerald-500'; }
+      else if (pct >= 75) { grade = 'Grade B (ดี)'; badgeBg = 'bg-blue-600'; }
+      else if (pct >= 70) { grade = 'Grade C+ (ค่อนข้างดี)'; badgeBg = 'bg-blue-500'; }
+      else if (pct >= 60) { grade = 'Grade C (ผ่านเกณฑ์)'; badgeBg = 'bg-amber-600'; }
+      else if (pct >= 50) { grade = 'Grade D+ (พอใช้)'; badgeBg = 'bg-orange-600'; }
+      else if (pct >= 40) { grade = 'Grade D (ต้องปรับปรุง)'; badgeBg = 'bg-rose-500'; }
+
+      const gb = document.getElementById('result-grade-badge');
+      gb.innerText = grade;
+      gb.className = `inline-block px-5 py-2 rounded-xl text-xl font-black text-white shadow-lg ${badgeBg}`;
+
+      const tc = document.getElementById('topic-breakdown-container');
+      tc.innerHTML = '';
+      for (const [lid, stat] of Object.entries(topicStats)) {
+        const sp = (stat.correct / stat.total) * 100;
+        const div = document.createElement('div');
+        div.innerHTML = `
+          <div class="flex justify-between text-xs mb-1">
+            <span class="font-bold text-slate-300">${stat.title}</span>
+            <span class="font-bold ${sp >= 70 ? 'text-emerald-400' : 'text-rose-400'}">${stat.correct} / ${stat.total} (${sp.toFixed(0)}%)</span>
+          </div>
+          <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+            <div class="h-full ${sp >= 70 ? 'bg-emerald-500' : 'bg-rose-500'}" style="width: ${sp}%"></div>
+          </div>
+        `;
+        tc.appendChild(div);
+      }
+
+      const rc = document.getElementById('exam-review-container');
+      rc.innerHTML = '';
+      const letters = ['A', 'B', 'C', 'D'];
+
+      mockQuestions.forEach((q, idx) => {
+        const isCor = (mockUserAnswers[idx] === q.answer);
+        const card = document.createElement('div');
+        card.className = `p-4 rounded-xl border text-sm space-y-2 ${isCor ? 'bg-slate-900 border-emerald-500/40' : 'bg-slate-900 border-rose-500/40'}`;
+        card.innerHTML = `
+          <div class="flex justify-between text-xs font-semibold">
+            <span class="${isCor ? 'text-emerald-400' : 'text-rose-400'}">${isCor ? '✓ ตอบถูกต้อง' : '✗ ตอบไม่ถูกต้อง'}</span>
+            <span class="text-slate-400">${q.lecture_title} | ข้อที่ ${idx + 1}</span>
+          </div>
+          <div class="font-bold text-white">${q.question}</div>
+          <div class="p-3 rounded-lg bg-emerald-950/40 border border-emerald-500/30 text-xs text-emerald-200 mt-2">
+            <b>เฉลย: ตัวเลือก ${letters[q.answer]}</b> — ${q.options[q.answer]}
+            <div class="mt-1 text-slate-300"><b>เหตุผล:</b> ${q.explanation}</div>
+          </div>
+        `;
+        rc.appendChild(card);
+      });
+
+      document.getElementById('exam-active-panel').classList.add('hidden');
+      document.getElementById('exam-results-panel').classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function resetToExamSetup() {
+      document.getElementById('exam-results-panel').classList.add('hidden');
+      document.getElementById('exam-setup-card').classList.remove('hidden');
+    }
+  </script>
+
+  <footer class="mt-auto border-t border-slate-800 bg-slate-900/60 py-6 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4">
+      <p class="mb-1 font-semibold text-slate-400">310-3311 Digital Image Processing — Academic Exam Mastery Hub 2026</p>
+      <p>จัดทำเพื่อการเตรียมความพร้อมสอบปลายภาค • รองรับการใช้งานเต็มรูปแบบบนมือถือ แท็บเล็ต และคอมพิวเตอร์</p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMobileMenu() {
+      const d = document.getElementById('mobileDropdown');
+      if (d) d.classList.toggle('hidden');
+    }
+  </script>
+</body>
+</html>
+

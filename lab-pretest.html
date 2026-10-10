@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="th" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>เจาะลึกข้อสอบแล็บ Pre-Test (Q1-Q4) — Image Processing Exam Mastery Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Sarabun', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              900: '#1e3a8a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Sarabun', sans-serif; }
+    code, pre { font-family: 'JetBrains Mono', monospace; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    
+    /* Typography & Spacing matching embedded-systems-exam-mastery */
+    .prose-dark h1 { font-size: 1.45rem; color: #f8fafc; font-weight: 700; border-bottom: 2px solid #3b82f6; padding-bottom: 0.5rem; margin-top: 1.5rem; margin-bottom: 1rem; }
+    @media (min-width: 640px) { .prose-dark h1 { font-size: 1.75rem; } }
+    .prose-dark h2 { font-size: 1.25rem; color: #60a5fa; font-weight: 600; border-bottom: 1px solid #334155; padding-bottom: 0.35rem; margin-top: 1.5rem; margin-bottom: 0.75rem; }
+    @media (min-width: 640px) { .prose-dark h2 { font-size: 1.35rem; } }
+    .prose-dark h3 { font-size: 1.05rem; color: #e2e8f0; font-weight: 600; background: #1e293b; padding: 0.5rem 0.75rem; border-left: 4px solid #3b82f6; border-radius: 0.25rem; margin-top: 1.25rem; margin-bottom: 0.5rem; scroll-margin-top: 6rem; }
+    @media (min-width: 640px) { .prose-dark h3 { font-size: 1.15rem; } }
+    .prose-dark p { margin-bottom: 0.75rem; line-height: 1.6; color: #cbd5e1; font-size: 0.92rem; }
+    
+    /* Mobile-First Responsive Table */
+    .table-container-responsive {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin: 1.25rem 0;
+      border-radius: 0.75rem;
+      border: 1px solid #334155;
+      background-color: #0b1120;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    }
+    .table-container-responsive::-webkit-scrollbar {
+      height: 6px;
+    }
+    .table-container-responsive::-webkit-scrollbar-track {
+      background: #0f172a;
+    }
+    .table-container-responsive::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 3px;
+    }
+    .mobile-data-table {
+      min-width: 600px !important;
+      width: 100% !important;
+      border-collapse: collapse !important;
+      margin: 0 !important;
+      font-size: 0.85rem !important;
+    }
+    .mobile-data-table th, .mobile-data-table td {
+      border: 1px solid #334155 !important;
+      padding: 0.65rem 0.85rem !important;
+      text-align: left !important;
+      vertical-align: top !important;
+      line-height: 1.5 !important;
+    }
+    .mobile-data-table th {
+      background-color: #1e293b !important;
+      color: #f8fafc !important;
+      font-weight: 700 !important;
+      white-space: nowrap !important;
+    }
+    .mobile-data-table td {
+      background-color: #0f172a !important;
+      color: #cbd5e1 !important;
+    }
+    .mobile-data-table tr:nth-child(even) td {
+      background-color: #080d1a !important;
+    }
+    .mobile-data-table tr:hover td {
+      background-color: #1e293b !important;
+    }
+
+    .prose-dark pre { background-color: #090d16; color: #e2e8f0; border: 1px solid #1e293b; border-radius: 0.5rem; padding: 0.75rem 1rem; font-size: 0.825rem; line-height: 1.45; overflow-x: auto; margin: 0.75rem 0; }
+    .prose-dark code { background-color: #1e293b; color: #93c5fd; padding: 0.15rem 0.35rem; border-radius: 0.25rem; font-size: 0.825rem; }
+    .prose-dark pre code { background-color: transparent; padding: 0; color: inherit; font-size: inherit; }
+    .prose-dark ul, .prose-dark ol { padding-left: 1.25rem; margin-bottom: 0.75rem; color: #cbd5e1; font-size: 0.92rem; }
+    .prose-dark li { margin-bottom: 0.25rem; }
+    .prose-dark hr { border: none; border-top: 1px dashed #334155; margin: 1.5rem 0; }
+    .prose-dark strong, .prose-dark b { color: #f8fafc; font-weight: 700; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-blue-600 selection:text-white">
+
+  <!-- Top Sticky Navigation Bar -->
+  <header class="sticky top-0 z-50 bg-slate-900/98 backdrop-blur-md border-b border-slate-800 shadow-xl">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+      <!-- Main Row -->
+      <div class="flex items-center justify-between h-13 sm:h-16 py-2 gap-2">
+        <a href="index.html" class="flex items-center space-x-2 font-bold text-sm sm:text-base md:text-lg text-white hover:text-blue-400 transition-colors flex-shrink-0">
+          <span class="text-xl sm:text-2xl">🖼️</span>
+          <span class="tracking-tight">Image <span class="text-blue-500 font-extrabold">Mastery</span></span>
+        </a>
+        
+        <!-- Desktop Nav Items -->
+        <nav class="hidden lg:flex items-center space-x-1">
+<a href="index.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">🏠 หน้าหลัก</a>
+<a href="questions-bank.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">🎯 คลัง 72 ข้อ</a>
+<a href="exam-simulator.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">⏱️ จำลองสอบ</a>
+<a href="simulators.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">🧪 ห้องทดลอง</a>
+<a href="lab-pretest.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap bg-blue-600 text-white font-semibold shadow-md">💻 แล็บ Pre-Test</a>
+<a href="lectures.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">📚 สรุป 12 บท</a>
+<a href="downloads.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">📦 ดาวน์โหลด</a>
+        </nav>
+
+        <!-- Right Side: Download button & Hamburger button -->
+        <div class="flex items-center space-x-2 flex-shrink-0">
+          <a href="downloads.html" class="inline-flex items-center px-2.5 py-1.5 sm:px-3 sm:py-1.5 rounded-lg text-xs font-semibold bg-emerald-600 hover:bg-emerald-500 text-white shadow transition-all">
+            📥 <span class="hidden sm:inline ml-1">ดาวน์โหลด </span>ZIP
+          </a>
+          <button id="mobileMenuBtn" type="button" aria-label="Toggle Menu" class="lg:hidden p-1.5 sm:p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition focus:outline-none" onclick="toggleMobileMenu()">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Mobile Quick Horizontal Scroller -->
+      <div class="lg:hidden flex space-x-1.5 py-1.5 overflow-x-auto no-scrollbar border-t border-slate-800/80 -mx-3 px-3">
+<a href="index.html" class="px-2.5 py-1 rounded-full text-xs transition-all whitespace-nowrap flex-shrink-0 bg-slate-800/90 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700/50">🏠 หน้าหลัก</a>
+<a href="questions-bank.html" class="px-2.5 py-1 rounded-full text-xs transition-all whitespace-nowrap flex-shrink-0 bg-slate-800/90 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700/50">🎯 คลัง 72 ข้อ</a>
+<a href="exam-simulator.html" class="px-2.5 py-1 rounded-full text-xs transition-all whitespace-nowrap flex-shrink-0 bg-slate-800/90 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700/50">⏱️ จำลองสอบ</a>
+<a href="simulators.html" class="px-2.5 py-1 rounded-full text-xs transition-all whitespace-nowrap flex-shrink-0 bg-slate-800/90 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700/50">🧪 ห้องทดลอง</a>
+<a href="lab-pretest.html" class="px-2.5 py-1 rounded-full text-xs transition-all whitespace-nowrap flex-shrink-0 bg-blue-600 text-white font-semibold shadow">💻 แล็บ Pre-Test</a>
+<a href="lectures.html" class="px-2.5 py-1 rounded-full text-xs transition-all whitespace-nowrap flex-shrink-0 bg-slate-800/90 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700/50">📚 สรุป 12 บท</a>
+<a href="downloads.html" class="px-2.5 py-1 rounded-full text-xs transition-all whitespace-nowrap flex-shrink-0 bg-slate-800/90 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700/50">📦 ดาวน์โหลด</a>
+      </div>
+
+      <!-- Mobile Dropdown Menu -->
+      <div id="mobileDropdown" class="hidden lg:hidden py-3 border-t border-slate-800 space-y-1.5">
+<a href="index.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">🏠 หน้าหลัก</a>
+<a href="questions-bank.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">🎯 คลัง 72 ข้อ</a>
+<a href="exam-simulator.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">⏱️ จำลองสอบ</a>
+<a href="simulators.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">🧪 ห้องทดลอง</a>
+<a href="lab-pretest.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap bg-blue-600 text-white font-semibold shadow-md">💻 แล็บ Pre-Test</a>
+<a href="lectures.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">📚 สรุป 12 บท</a>
+<a href="downloads.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">📦 ดาวน์โหลด</a>
+      </div>
+    </div>
+  </header>
+
+
+  <main class="flex-grow max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-5 sm:py-6 w-full">
+    <div class="space-y-6">
+
+      <!-- Header -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-5 sm:p-6 shadow-xl">
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-white flex items-center gap-2">
+          <span>💻</span> เจาะลึกข้อสอบแล็บปฏิบัติการ (Pre-Test Final Q1 - Q4)
+        </h1>
+        <p class="text-slate-400 text-sm mt-1">
+          วิเคราะห์แนวทางการแก้โจทย์ อัลกอริทึมที่ทนทานต่อการหมุน/เลื่อนตำแหน่ง และกฎระเบียบการเขียนโค้ดส่งสอบ
+        </p>
+      </div>
+
+      <!-- Golden Rules -->
+      <div class="p-4 rounded-xl bg-amber-950/30 border border-amber-500/40 text-xs sm:text-sm text-amber-200 space-y-1.5">
+        <strong class="text-amber-400 text-base">📌 กฎเหล็กของข้อสอบปฏิบัติการ:</strong>
+        <ul class="list-disc list-inside space-y-1 pt-1">
+          <li>ต้องเขียน Comment อธิบายการทำงานของโปรแกรมเป็น <strong>ภาษาไทย</strong> ในแต่ละขั้นตอนอย่างละเอียด</li>
+          <li>บันทึกไฟล์ผลลัพธ์ภาพ (.png) ตรงตามชื่อที่กำหนด เช่น <code>Result1.png</code>, <code>Result2-1.png</code></li>
+          <li>Binary Mask ต้องระบายบริเวณเป้าหมายเป็น <strong>สีขาว (255)</strong> และส่วนอื่นเป็น <strong>สีดำ (0)</strong> อย่างเคร่งครัด</li>
+        </ul>
+      </div>
+
+      <!-- Question Cards -->
+      <!-- Q1 -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
+        <h2 class="text-xl font-bold text-white flex items-center gap-2 border-b border-slate-800 pb-3">
+          <span class="text-blue-500 font-extrabold">Q1</span> ข้อ 1: Intensity Transformation (การปรับระดับความเข้มสีเพื่อเปิดเผยวัตถุที่ซ่อนอยู่)
+        </h2>
+        <p class="text-slate-300 text-sm leading-relaxed">
+          <strong>สถานการณ์โจทย์:</strong> ภาพมีวัตถุลึกลับ (เครื่องบิน) ซ่อนอยู่ในบริเวณท้องฟ้าซึ่งมีความสว่างจัดจนกลืนไปกับพื้นหลัง กำหนดให้ 'ลด Contrast' และ 'เพิ่ม Brightness' เพื่อให้วัตถุปรากฏชัดเจน พร้อมพล็อตและบันทึกกราฟฮิสโทแกรมก่อนและหลัง
+        </p>
+
+        <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+          <strong class="text-emerald-400">ผลลัพธ์ที่ต้องส่ง (ตามระเบียบข้อสอบ):</strong>
+          <ul class="list-disc list-inside mt-1.5 space-y-0.5 text-slate-300"><li><code>Result1.png (ภาพผลลัพธ์ที่เห็นวัตถุชัดเจน)</code></li><li><code>Result1-Hist-Before.png (กราฟฮิสโทแกรมก่อนประมวลผล)</code></li><li><code>Result1-Hist-After.png (กราฟฮิสโทแกรมหลังประมวลผล)</code></li><li><code>Sketch รูปกราฟ Intensity Transformation s = T(r)</code></li></ul>
+        </div>
+
+        <div class="space-y-1.5 text-xs sm:text-sm">
+          <strong class="text-blue-400">📐 แนวคิดคณิตศาสตร์ & อัลกอริทึม:</strong>
+          <p class="text-slate-300 leading-relaxed whitespace-pre-line">สมการเชิงเส้นทั่วไป: s = a * r + b
+• การลด Contrast: กำหนดความชัน 0 < a < 1 (เช่น a = 0.5 หรือ 0.6) ทำให้ช่วงระดับสีที่เกาะกลุ่มกันกระจายตัวแคบลง ความเปรียบต่างลดลง
+• การเพิ่ม Brightness: กำหนดค่าคงที่ b > 0 (เช่น b = 80 ถึง 100) เพื่อยกฐานความสว่างโดยรวมขึ้น ดึงรายละเอียดในบริเวณที่จมอยู่ในย่านสีเฉพาะให้ปรากฏออกมา
+• การป้องกัน Overflow: ต้องแปลงภาพเป็น float32 ก่อนคำนวณ แล้วใช้ np.clip(s, 0, 255).astype(np.uint8) เพื่อป้องกันค่าม้วนกลับ</p>
+        </div>
+
+        <div class="space-y-1.5 text-xs sm:text-sm">
+          <strong class="text-amber-400">📝 โครงสร้างโค้ด Python Pipeline:</strong>
+          <ol class="list-decimal list-inside space-y-1 text-slate-300 font-mono text-xs p-3 bg-slate-950 rounded-xl border border-slate-800"><li>1. โหลดภาพด้วย cv2.imread(..., cv2.IMREAD_COLOR) หรือ IMREAD_GRAYSCALE</li><li>2. วาดและบันทึกฮิสโทแกรมก่อนประมวลผลด้วย plt.hist(img.ravel(), 256, [0, 256], color='steelblue')</li><li>3. แปลงภาพเป็น np.float32 เพื่อป้องกันปัญหา uint8 overflow</li><li>4. คำนวณการแปลงเชิงเส้น: s = a * r + b (โดย a < 1 และ b > 0)</li><li>5. ตัดขอบเขตค่าด้วย np.clip(s, 0, 255) แล้วแปลงกลับเป็น np.uint8</li><li>6. บันทึกผลลัพธ์ Result1.png ด้วย cv2.imwrite()</li><li>7. วาดและบันทึกฮิสโทแกรมหลังประมวลผล Result1-Hist-After.png</li></ol>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-rose-950/30 border border-rose-500/30 text-xs text-rose-200">
+          <strong class="text-rose-400">⚠️ จุดที่มักถูกหักคะแนนบ่อยที่สุด:</strong>
+          <ul class="list-disc list-inside mt-1 space-y-0.5"><li>⚠️ อย่าลืม np.clip! หากคำนวณบน NumPy uint8 ตรงๆ ค่าที่บวกเกิน 255 จะม้วนกลับ (Wrap-around) กลายเป็นสีดำด่าง</li><li>⚠️ ต้องระวังการพล๊อตกราฟ Matplotlib: สเกลแกน X ต้องจำกัดที่ [0, 256] เสมอ</li><li>⚠️ อย่าลืมวาดรูปกราฟสเก็ตช์ s = T(r): กราฟจะเป็นเส้นตรงตัดแกน Y ที่จุด (0, b) และมีความชัน a น้อยกว่า 1</li></ul>
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
+        <h2 class="text-xl font-bold text-white flex items-center gap-2 border-b border-slate-800 pb-3">
+          <span class="text-blue-500 font-extrabold">Q2</span> ข้อ 2: Barcode Detection (การตรวจจับบาร์โค้ดที่ทนทานต่อการเลื่อนและการหมุน 180°)
+        </h2>
+        <p class="text-slate-300 text-sm leading-relaxed">
+          <strong>สถานการณ์โจทย์:</strong> เครื่องสแกน Boarding Pass อาจเจอปัญหาตั๋วเลื่อนตำแหน่ง (Translation) และการกลับด้านซ้าย-ขวา/หมุน 180° ให้สร้างโปรแกรมระบุบริเวณบาร์โค้ด แสดงผลลัพธ์เป็นภาพขาว-ดำ (บาร์โค้ด = 255, อื่นๆ = 0)
+        </p>
+
+        <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+          <strong class="text-emerald-400">ผลลัพธ์ที่ต้องส่ง (ตามระเบียบข้อสอบ):</strong>
+          <ul class="list-disc list-inside mt-1.5 space-y-0.5 text-slate-300"><li><code>Result2-1.png (มาสก์บาร์โค้ดของตั๋วแบบที่ 1)</code></li><li><code>Result2-2.png (มาสก์บาร์โค้ดของตั๋วแบบที่ 2)</code></li></ul>
+        </div>
+
+        <div class="space-y-1.5 text-xs sm:text-sm">
+          <strong class="text-blue-400">📐 แนวคิดคณิตศาสตร์ & อัลกอริทึม:</strong>
+          <p class="text-slate-300 leading-relaxed whitespace-pre-line">• คุณสมบัติทิศทาง (Directionality): เส้นบาร์โค้ดมีลักษณะเป็นแถบแนวตั้งขนานกันจำนวนมาก จึงมีเกรเดียนต์ในแนวนอน (Horizontal Gradient) สูงมาก การใช้ Sobel X หรือ Scharr X (cv2.Sobel(gray, cv2.CV_32F, 1, 0, ksize=-1)) จะตอบสนองเฉพาะเส้นแนวตั้งและกรองตัวอักษรแนวนอนทิ้ง
+• ความทนทานต่อการหมุน 180°: เส้นตรงแนวตั้ง เมื่อหมุน 180 องศา ก็ยังคงเป็นเส้นแนวตั้งเดิม ทำให้คุณสมบัติทางเกรเดียนต์ไม่เปลี่ยนแปลง (Invariant)
+• การเชื่อมกลุ่ม (Morphological Closing): ใช้ Rectangular Structuring Element ที่มีความกว้างในแนวนอนมากกว่าแนวตั้ง (เช่น ขนาด 21x7 หรือ 25x5) เพื่อเชื่อมเส้นบาร์โค้ดแต่ละเส้นที่อยู่ติดกันให้หลอมรวมเป็นก้อนสี่เหลี่ยมทึบก้อนเดียว
+• การกรองพื้นที่ (Contour Filtering): หา Contour ภายนอก แล้วคัดเลือก Contour ที่มีพื้นที่ (Area) สอดคล้อง และมีสัดส่วนกว้าง/ยาว (Aspect Ratio) เป็นรูปสี่เหลี่ยมผืนผ้า</p>
+        </div>
+
+        <div class="space-y-1.5 text-xs sm:text-sm">
+          <strong class="text-amber-400">📝 โครงสร้างโค้ด Python Pipeline:</strong>
+          <ol class="list-decimal list-inside space-y-1 text-slate-300 font-mono text-xs p-3 bg-slate-950 rounded-xl border border-slate-800"><li>1. แปลงภาพเป็น Grayscale และเกาส์เซียนเบลอเล็กน้อย (ksize=3 or 5)</li><li>2. คำนวณเกรเดียนต์แนวนอนด้วย Scharr Operator: gradX = cv2.Sobel(gray, cv2.CV_32F, dx=1, dy=0, ksize=-1)</li><li>3. แปลงค่าสัมบูรณ์และปรับสเกลเป็น 8-bit: gradX = cv2.convertScaleAbs(gradX)</li><li>4. เบลอเพื่อลดสัญญาณรบกวนความถี่สูง และทำ Thresholding (Otsu หรือ Binary)</li><li>5. ใช้ Morphological Closing ด้วย Rectangular Kernel (cv2.MORPH_RECT, (21, 7)) เพื่อผสานเส้นบาร์โค้ด</li><li>6. ทำ Dilation/Erosion เล็กน้อยเพื่ออุดรูโหว่และลบจุดประ</li><li>7. หา Contours ด้วย cv2.findContours(..., cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)</li><li>8. วาดมาสก์สีขาว (255) ทึบลงบนภาพสีดำ (0) ด้วย cv2.drawContours(mask, [target_contour], -1, 255, -1)</li></ol>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-rose-950/30 border border-rose-500/30 text-xs text-rose-200">
+          <strong class="text-rose-400">⚠️ จุดที่มักถูกหักคะแนนบ่อยที่สุด:</strong>
+          <ul class="list-disc list-inside mt-1 space-y-0.5"><li>⚠️ ห้ามใช้ Thresholding ปกติโดยไม่ผ่าน Sobel X เพราะตัวหนังสือในตั๋วจะติดมาด้วยทั้งหมด</li><li>⚠️ ระวังการกำหนดขนาด Structuring Element ถ้ากว้างน้อยเกินไป เส้นบาร์โค้ดจะไม่เชื่อมกัน แต่ถ้าสูงเกินไปอาจล้นไปรวมกับข้อความอื่น</li></ul>
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
+        <h2 class="text-xl font-bold text-white flex items-center gap-2 border-b border-slate-800 pb-3">
+          <span class="text-blue-500 font-extrabold">Q3</span> ข้อ 3: Green Sign Detection (การตรวจจับแผ่นป้ายสีเขียวที่ทนทานต่อการเลื่อนตำแหน่ง)
+        </h2>
+        <p class="text-slate-300 text-sm leading-relaxed">
+          <strong>สถานการณ์โจทย์:</strong> ตรวจจับบริเวณแผ่นป้ายบอกทางสีเขียวบนท้องถนน เพื่อนำไปใช้ระบุข้อความต่อไป ผลลัพธ์แสดงแผ่นป้ายเป็นสีขาว (255) และส่วนอื่นเป็นสีดำ (0)
+        </p>
+
+        <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+          <strong class="text-emerald-400">ผลลัพธ์ที่ต้องส่ง (ตามระเบียบข้อสอบ):</strong>
+          <ul class="list-disc list-inside mt-1.5 space-y-0.5 text-slate-300"><li><code>Result3.png (Binary Mask ของแผ่นป้ายสีเขียว)</code></li></ul>
+        </div>
+
+        <div class="space-y-1.5 text-xs sm:text-sm">
+          <strong class="text-blue-400">📐 แนวคิดคณิตศาสตร์ & อัลกอริทึม:</strong>
+          <p class="text-slate-300 leading-relaxed whitespace-pre-line">• การแยกสีในปริภูมิ HSV: ในระบบสี RGB สีเขียวจะเปลี่ยนค่าตามความสว่างของแดดและเงา แต่ในปริภูมิ HSV ค่า Hue (เนื้อสี) จะคงที่ต่อการเปลี่ยนแปลงของแสงสว่าง (Light Invariance)
+• ช่วงค่าสีเขียวใน OpenCV (H: 0-179, S: 0-255, V: 0-255): กำหนด Lower = [35, 50, 50] และ Upper = [85, 255, 255]
+• การอุดรูโหว่ตัวอักษร: แผ่นป้ายสีเขียวจะมีตัวหนังสือสีขาว/สัญลักษณ์อยู่ข้างใน ซึ่งจะทำให้เกิด 'รูโหว่' (Holes) ในหน้ากากสี จึงต้องใช้ Morphological Closing ด้วยขนาด SE ใหญ่พอ (เช่น 15x15 ถึง 25x25) หรือใช้อัลกอริทึม Hole Filling
+• การกรองรูปร่าง: ป้ายจราจรเป็นสี่เหลี่ยมผืนผ้าทึบ ใช้ cv2.boundingRect() ตรวจสอบความทึบ (Solidity = Contour Area / Bounding Box Area) จะมีค่าสูงเกือบ 1.0</p>
+        </div>
+
+        <div class="space-y-1.5 text-xs sm:text-sm">
+          <strong class="text-amber-400">📝 โครงสร้างโค้ด Python Pipeline:</strong>
+          <ol class="list-decimal list-inside space-y-1 text-slate-300 font-mono text-xs p-3 bg-slate-950 rounded-xl border border-slate-800"><li>1. โหลดภาพ BGR และแปลงเป็น HSV ด้วย cv2.cvtColor(img, cv2.COLOR_BGR2HSV)</li><li>2. สกัดพิกเซลสีเขียวด้วย cv2.inRange(hsv, lower_green, upper_green)</li><li>3. อุดรูตัวอักษรในป้ายด้วย Morphological Closing (cv2.MORPH_RECT, (17, 17))</li><li>4. กำจัด noise เล็กๆ ภายนอกด้วย Morphological Opening</li><li>5. หา Contours ภายนอก และคัดเลือก Contour ที่มีพื้นที่ใหญ่ที่สุดและมีอัตราส่วนสี่เหลี่ยมผืนผ้าที่ถูกต้อง</li><li>6. สร้างภาพผลลัพธ์สีดำล้วน แล้ววาดระบายสีขาว (255) ทับลงบนพื้นที่ของป้ายด้วย cv2.drawContours(..., -1, 255, thickness=-1)</li></ol>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-rose-950/30 border border-rose-500/30 text-xs text-rose-200">
+          <strong class="text-rose-400">⚠️ จุดที่มักถูกหักคะแนนบ่อยที่สุด:</strong>
+          <ul class="list-disc list-inside mt-1 space-y-0.5"><li>⚠️ ลืมอุดรูตัวอักษรสีขาวในป้าย! โจทย์ต้องการมาสก์แผ่นป้ายทึบทั้งแผ่น หากไม่อุดรูจะได้มาสก์ที่กลวง</li><li>⚠️ พิกัดสีเขียวในธรรมชาติอาจมีใบไม้ติดมาด้วย การคัดเลือกด้วยพื้นที่ (Area) และความทึบ (Solidity / Bounding Rect) จะช่วยคัดใบไม้ออกได้อย่างสมบูรณ์</li></ul>
+        </div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
+        <h2 class="text-xl font-bold text-white flex items-center gap-2 border-b border-slate-800 pb-3">
+          <span class="text-blue-500 font-extrabold">Q4</span> ข้อ 4: Periodic Noise Removal (การกำจัดสัญญาณรบกวนซ้ำซ้อนในโดเมนความถี่)
+        </h2>
+        <p class="text-slate-300 text-sm leading-relaxed">
+          <strong>สถานการณ์โจทย์:</strong> ภาพตัวละคร Dio ถูกรบกวนด้วยสัญญาณรบกวน 2 ชนิด: จุดรบกวนแบบเกลือพริกไทย (Salt-and-Pepper) และแถบสัญญาณรบกวนลายทางซ้ำๆ (Periodic Noise) ให้เขียนโปรแกรมคืนสภาพภาพกลับสู่ภาพต้นฉบับคมชัด
+        </p>
+
+        <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+          <strong class="text-emerald-400">ผลลัพธ์ที่ต้องส่ง (ตามระเบียบข้อสอบ):</strong>
+          <ul class="list-disc list-inside mt-1.5 space-y-0.5 text-slate-300"><li><code>Result4.png (ภาพผลลัพธ์ที่กำจัดสัญญาณรบกวนทั้งหมดออกไป)</code></li></ul>
+        </div>
+
+        <div class="space-y-1.5 text-xs sm:text-sm">
+          <strong class="text-blue-400">📐 แนวคิดคณิตศาสตร์ & อัลกอริทึม:</strong>
+          <p class="text-slate-300 leading-relaxed whitespace-pre-line">การแก้ปัญหาต้องแบ่งเป็น 2 ลำดับขั้นตามลักษณะของสัญญาณรบกวน:
+1. ขั้นที่ 1: กำจัด Impulse / Salt-and-Pepper Noise ด้วย Median Filter (ขนาด 3x3 หรือ 5x5) หรือ Selective Median Filter เพื่อเก็บรายละเอียดเส้นสายสำคัญ
+2. ขั้นที่ 2: วิเคราะห์ Periodic Noise ในโดเมนความถี่
+   - แปลงภาพด้วย 2D Discrete Fourier Transform (np.fft.fft2) แล้วเลื่อนจุดศูนย์กลางด้วย np.fft.fftshift()
+   - สัญญาณรบกวนแบบคาบจะปรากฏเป็นจุดสว่างโดดเด่นสมมาตร (Spikes / Bright Dots) ห่างจากจุดศูนย์กลาง
+   - สร้าง Gaussian Notch Reject Filter เพื่อปิดกั้นเฉพาะพิกัดความถี่คู่นั้น (uk, vk) และ (-uk, -vk):
+     Hk(u, v) = 1 - exp(-Dk(u,v)² / (2*D0²))
+   - นำสเปกตรัมคูณกับ Filter: G(u, v) = F(u, v) * H(u, v)
+   - ทำ Inverse Shift (ifftshift) และ Inverse Fourier Transform (ifft2)
+3. ขั้นที่ 3: Post-processing ด้วย Contrast Stretching และ Unsharp Masking เบาๆ เพื่อคืนความคมชัดของลายเส้น</p>
+        </div>
+
+        <div class="space-y-1.5 text-xs sm:text-sm">
+          <strong class="text-amber-400">📝 โครงสร้างโค้ด Python Pipeline:</strong>
+          <ol class="list-decimal list-inside space-y-1 text-slate-300 font-mono text-xs p-3 bg-slate-950 rounded-xl border border-slate-800"><li>1. อ่านภาพ Grayscale ด้วย cv2.imread(..., cv2.IMREAD_GRAYSCALE)</li><li>2. กรองจุด Noise ดำขาวด้วย cv2.medianBlur(img, 3)</li><li>3. แปลงเป็น float32 และคำนวณ FFT: F = np.fft.fftshift(np.fft.fft2(img_med))</li><li>4. คำนวณสเปกตรัมขนาด |F| เพื่อหาพิกัดคู่จุด Spike ของสัญญาณรบกวนคาบ</li><li>5. สร้าง Gaussian Notch Reject Filter คูณตัดความถี่ที่เป็น noise ทั้งหมด</li><li>6. แปลงกลับสู่โดเมนเชิงพื้นที่: img_restored = np.real(np.fft.ifft2(np.fft.ifftshift(G)))</li><li>7. ปรับช่วงความสว่างด้วย Contrast Stretching และทำ Unsharp Masking เล็กน้อย</li><li>8. ตัดขอบเขต np.clip(..., 0, 255).astype(np.uint8) และบันทึก Result4.png</li></ol>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-rose-950/30 border border-rose-500/30 text-xs text-rose-200">
+          <strong class="text-rose-400">⚠️ จุดที่มักถูกหักคะแนนบ่อยที่สุด:</strong>
+          <ul class="list-disc list-inside mt-1 space-y-0.5"><li>⚠️ พยายามใช้ spatial filter (เช่น Gaussian blur) กำจัดลายทาง periodic noise ผลคือภาพจะเบลอเละทั้งหมดและไม่ผ่านเกณฑ์! ต้องใช้ Notch Filter ใน Fourier Domain เท่านั้น</li><li>⚠️ จุด Spike ใน Fourier Spectrum จะมาเป็นคู่สมมาตรเสมอ (uk, vk) และ (-uk, -vk) รอบจุดกึ่งกลาง (M/2, N/2) ต้องสร้าง Notch กรองทั้งสองจุดคู่กัน</li></ul>
+        </div>
+      </div>
+
+      <!-- OpenCV Table -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 sm:p-6 shadow-xl space-y-4">
+        <h2 class="text-lg font-bold text-white border-b border-slate-800 pb-2">
+          🛠️ ตารางสรุปคำสั่ง OpenCV สำคัญและข้อควรระวัง
+        </h2>
+        <div class="table-container-responsive">
+          <table class="mobile-data-table">
+            <thead>
+              <tr><th>ฟังก์ชัน / คำสั่ง</th><th>หน้าที่การทำงาน</th><th>ข้อควรระวัง / เทคนิคในห้องสอบ</th></tr>
+            </thead>
+            <tbody>
+          <tr>
+            <td><code>cv2.imread(path, cv2.IMREAD_COLOR)</code></td>
+            <td>อ่านภาพเป็น BGR (ระวัง! ไม่ใช่ RGB)</td>
+            <td class="text-emerald-400">ใช้ cv2.cvtColor(img, cv2.COLOR_BGR2RGB) เมื่อส่งเข้า Matplotlib</td>
+          </tr>
+          <tr>
+            <td><code>cv2.imread(path, cv2.IMREAD_GRAYSCALE)</code></td>
+            <td>อ่านภาพเป็น 1 Channel ขาว-ดำ ทันที</td>
+            <td class="text-emerald-400">ขนาดอาเรย์คือ (H, W)</td>
+          </tr>
+          <tr>
+            <td><code>cv2.getStructuringElement(cv2.MORPH_RECT, (w, h))</code></td>
+            <td>สร้าง Kernel รูปร่างสี่เหลี่ยม</td>
+            <td class="text-emerald-400">ใช้สำหรับเชื่อมเส้นบาร์โค้ดแนวนอน (w > h)</td>
+          </tr>
+          <tr>
+            <td><code>cv2.morphologyEx(img, cv2.MORPH_CLOSE, kernel)</code></td>
+            <td>ทำ Closing (Dilate แล้ว Erode)</td>
+            <td class="text-emerald-400">ใช้อุดรูโหว่และเชื่อมสะพานที่ขาด</td>
+          </tr>
+          <tr>
+            <td><code>cv2.morphologyEx(img, cv2.MORPH_OPEN, kernel)</code></td>
+            <td>ทำ Opening (Erode แล้ว Dilate)</td>
+            <td class="text-emerald-400">ใช้ตัดติ่งแหลมและลบจุดรบกวนเม็ดเล็ก</td>
+          </tr>
+          <tr>
+            <td><code>cv2.Sobel(gray, cv2.CV_32F, dx, dy, ksize=-1)</code></td>
+            <td>คำนวณ Gradient (ksize=-1 คือ Scharr)</td>
+            <td class="text-emerald-400">dx=1, dy=0 ตรวจจับเส้นแนวตั้ง</td>
+          </tr>
+          <tr>
+            <td><code>cv2.findContours(..., cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)</code></td>
+            <td>หาเส้นโครงร่างภายนอกสุด</td>
+            <td class="text-emerald-400">ส่งคืน (contours, hierarchy)</td>
+          </tr>
+          <tr>
+            <td><code>cv2.drawContours(canvas, contours, -1, 255, thickness=-1)</code></td>
+            <td>วาด Contour ทึบทั้งชิ้น</td>
+            <td class="text-emerald-400">thickness=-1 คือระบายสีทึบเต็มพื้นที่</td>
+          </tr>
+          <tr>
+            <td><code>np.clip(val, 0, 255).astype(np.uint8)</code></td>
+            <td>จำกัดช่วงและแปลงเป็น 8-bit</td>
+            <td class="text-emerald-400">ต้องทำทุกครั้งหลังบวกลบคูณหารเมทริกซ์</td>
+          </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="mt-auto border-t border-slate-800 bg-slate-900/60 py-6 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4">
+      <p class="mb-1 font-semibold text-slate-400">310-3311 Digital Image Processing — Academic Exam Mastery Hub 2026</p>
+      <p>จัดทำเพื่อการเตรียมความพร้อมสอบปลายภาค • รองรับการใช้งานเต็มรูปแบบบนมือถือ แท็บเล็ต และคอมพิวเตอร์</p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMobileMenu() {
+      const d = document.getElementById('mobileDropdown');
+      if (d) d.classList.toggle('hidden');
+    }
+  </script>
+</body>
+</html>
+

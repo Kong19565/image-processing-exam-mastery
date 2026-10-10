@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="th" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>สรุปเนื้อหา 12 บทเรียน & สูตรลัด — Image Processing Exam Mastery Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Sarabun', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              900: '#1e3a8a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Sarabun', sans-serif; }
+    code, pre { font-family: 'JetBrains Mono', monospace; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    
+    /* Typography & Spacing matching embedded-systems-exam-mastery */
+    .prose-dark h1 { font-size: 1.45rem; color: #f8fafc; font-weight: 700; border-bottom: 2px solid #3b82f6; padding-bottom: 0.5rem; margin-top: 1.5rem; margin-bottom: 1rem; }
+    @media (min-width: 640px) { .prose-dark h1 { font-size: 1.75rem; } }
+    .prose-dark h2 { font-size: 1.25rem; color: #60a5fa; font-weight: 600; border-bottom: 1px solid #334155; padding-bottom: 0.35rem; margin-top: 1.5rem; margin-bottom: 0.75rem; }
+    @media (min-width: 640px) { .prose-dark h2 { font-size: 1.35rem; } }
+    .prose-dark h3 { font-size: 1.05rem; color: #e2e8f0; font-weight: 600; background: #1e293b; padding: 0.5rem 0.75rem; border-left: 4px solid #3b82f6; border-radius: 0.25rem; margin-top: 1.25rem; margin-bottom: 0.5rem; scroll-margin-top: 6rem; }
+    @media (min-width: 640px) { .prose-dark h3 { font-size: 1.15rem; } }
+    .prose-dark p { margin-bottom: 0.75rem; line-height: 1.6; color: #cbd5e1; font-size: 0.92rem; }
+    
+    /* Mobile-First Responsive Table */
+    .table-container-responsive {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin: 1.25rem 0;
+      border-radius: 0.75rem;
+      border: 1px solid #334155;
+      background-color: #0b1120;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    }
+    .table-container-responsive::-webkit-scrollbar {
+      height: 6px;
+    }
+    .table-container-responsive::-webkit-scrollbar-track {
+      background: #0f172a;
+    }
+    .table-container-responsive::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 3px;
+    }
+    .mobile-data-table {
+      min-width: 600px !important;
+      width: 100% !important;
+      border-collapse: collapse !important;
+      margin: 0 !important;
+      font-size: 0.85rem !important;
+    }
+    .mobile-data-table th, .mobile-data-table td {
+      border: 1px solid #334155 !important;
+      padding: 0.65rem 0.85rem !important;
+      text-align: left !important;
+      vertical-align: top !important;
+      line-height: 1.5 !important;
+    }
+    .mobile-data-table th {
+      background-color: #1e293b !important;
+      color: #f8fafc !important;
+      font-weight: 700 !important;
+      white-space: nowrap !important;
+    }
+    .mobile-data-table td {
+      background-color: #0f172a !important;
+      color: #cbd5e1 !important;
+    }
+    .mobile-data-table tr:nth-child(even) td {
+      background-color: #080d1a !important;
+    }
+    .mobile-data-table tr:hover td {
+      background-color: #1e293b !important;
+    }
+
+    .prose-dark pre { background-color: #090d16; color: #e2e8f0; border: 1px solid #1e293b; border-radius: 0.5rem; padding: 0.75rem 1rem; font-size: 0.825rem; line-height: 1.45; overflow-x: auto; margin: 0.75rem 0; }
+    .prose-dark code { background-color: #1e293b; color: #93c5fd; padding: 0.15rem 0.35rem; border-radius: 0.25rem; font-size: 0.825rem; }
+    .prose-dark pre code { background-color: transparent; padding: 0; color: inherit; font-size: inherit; }
+    .prose-dark ul, .prose-dark ol { padding-left: 1.25rem; margin-bottom: 0.75rem; color: #cbd5e1; font-size: 0.92rem; }
+    .prose-dark li { margin-bottom: 0.25rem; }
+    .prose-dark hr { border: none; border-top: 1px dashed #334155; margin: 1.5rem 0; }
+    .prose-dark strong, .prose-dark b { color: #f8fafc; font-weight: 700; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-blue-600 selection:text-white">
+
+  <!-- Top Sticky Navigation Bar -->
+  <header class="sticky top-0 z-50 bg-slate-900/98 backdrop-blur-md border-b border-slate-800 shadow-xl">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+      <!-- Main Row -->
+      <div class="flex items-center justify-between h-13 sm:h-16 py-2 gap-2">
+        <a href="index.html" class="flex items-center space-x-2 font-bold text-sm sm:text-base md:text-lg text-white hover:text-blue-400 transition-colors flex-shrink-0">
+          <span class="text-xl sm:text-2xl">🖼️</span>
+          <span class="tracking-tight">Image <span class="text-blue-500 font-extrabold">Mastery</span></span>
+        </a>
+        
+        <!-- Desktop Nav Items -->
+        <nav class="hidden lg:flex items-center space-x-1">
+<a href="index.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">🏠 หน้าหลัก</a>
+<a href="questions-bank.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">🎯 คลัง 72 ข้อ</a>
+<a href="exam-simulator.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">⏱️ จำลองสอบ</a>
+<a href="simulators.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">🧪 ห้องทดลอง</a>
+<a href="lab-pretest.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">💻 แล็บ Pre-Test</a>
+<a href="lectures.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap bg-blue-600 text-white font-semibold shadow-md">📚 สรุป 12 บท</a>
+<a href="downloads.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">📦 ดาวน์โหลด</a>
+        </nav>
+
+        <!-- Right Side: Download button & Hamburger button -->
+        <div class="flex items-center space-x-2 flex-shrink-0">
+          <a href="downloads.html" class="inline-flex items-center px-2.5 py-1.5 sm:px-3 sm:py-1.5 rounded-lg text-xs font-semibold bg-emerald-600 hover:bg-emerald-500 text-white shadow transition-all">
+            📥 <span class="hidden sm:inline ml-1">ดาวน์โหลด </span>ZIP
+          </a>
+          <button id="mobileMenuBtn" type="button" aria-label="Toggle Menu" class="lg:hidden p-1.5 sm:p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition focus:outline-none" onclick="toggleMobileMenu()">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Mobile Quick Horizontal Scroller -->
+      <div class="lg:hidden flex space-x-1.5 py-1.5 overflow-x-auto no-scrollbar border-t border-slate-800/80 -mx-3 px-3">
+<a href="index.html" class="px-2.5 py-1 rounded-full text-xs transition-all whitespace-nowrap flex-shrink-0 bg-slate-800/90 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700/50">🏠 หน้าหลัก</a>
+<a href="questions-bank.html" class="px-2.5 py-1 rounded-full text-xs transition-all whitespace-nowrap flex-shrink-0 bg-slate-800/90 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700/50">🎯 คลัง 72 ข้อ</a>
+<a href="exam-simulator.html" class="px-2.5 py-1 rounded-full text-xs transition-all whitespace-nowrap flex-shrink-0 bg-slate-800/90 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700/50">⏱️ จำลองสอบ</a>
+<a href="simulators.html" class="px-2.5 py-1 rounded-full text-xs transition-all whitespace-nowrap flex-shrink-0 bg-slate-800/90 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700/50">🧪 ห้องทดลอง</a>
+<a href="lab-pretest.html" class="px-2.5 py-1 rounded-full text-xs transition-all whitespace-nowrap flex-shrink-0 bg-slate-800/90 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700/50">💻 แล็บ Pre-Test</a>
+<a href="lectures.html" class="px-2.5 py-1 rounded-full text-xs transition-all whitespace-nowrap flex-shrink-0 bg-blue-600 text-white font-semibold shadow">📚 สรุป 12 บท</a>
+<a href="downloads.html" class="px-2.5 py-1 rounded-full text-xs transition-all whitespace-nowrap flex-shrink-0 bg-slate-800/90 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700/50">📦 ดาวน์โหลด</a>
+      </div>
+
+      <!-- Mobile Dropdown Menu -->
+      <div id="mobileDropdown" class="hidden lg:hidden py-3 border-t border-slate-800 space-y-1.5">
+<a href="index.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">🏠 หน้าหลัก</a>
+<a href="questions-bank.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">🎯 คลัง 72 ข้อ</a>
+<a href="exam-simulator.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">⏱️ จำลองสอบ</a>
+<a href="simulators.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">🧪 ห้องทดลอง</a>
+<a href="lab-pretest.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">💻 แล็บ Pre-Test</a>
+<a href="lectures.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap bg-blue-600 text-white font-semibold shadow-md">📚 สรุป 12 บท</a>
+<a href="downloads.html" class="px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm transition-all whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">📦 ดาวน์โหลด</a>
+      </div>
+    </div>
+  </header>
+
+
+  <main class="flex-grow max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-5 sm:py-6 w-full">
+    <div class="space-y-6">
+
+      <!-- Header -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-5 sm:p-6 shadow-xl">
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-white flex items-center gap-2">
+          <span>📚</span> สรุปเนื้อหาเข้มข้น 12 บทเรียน (Comprehensive Lecture Notes)
+        </h1>
+        <p class="text-slate-400 text-sm mt-1">
+          สรุปย่อประเด็นสำคัญ นิยามคณิตศาสตร์ และหลุมพรางข้อสอบของทุกบทเรียน
+        </p>
+      </div>
+
+      <!-- Quick Formulas Reference Grid -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 sm:p-6 shadow-xl space-y-4">
+        <h2 class="text-lg font-bold text-blue-400 border-b border-slate-800 pb-2">
+          📑 ตารางสูตรลัดอ่านทบทวนด่วน (Quick Formula Sheet)
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
+          <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+            <strong class="font-sans text-blue-400 font-bold">1. Fourier & Frequency Filters:</strong>
+            <p class="text-slate-300">2D DFT: F(u,v) = Σ Σ f(x,y)·e^(-j2π(ux/M + vy/N))<br>Centering: f(x,y)·(-1)^(x+y) ➔ F(u - M/2, v - N/2)<br>ILPF: H = 1 if D ≤ D0 else 0 (Ringing สูงสุด)<br>BLPF: H = 1 / (1 + [D/D0]^(2n))<br>GLPF: H = exp(-D² / (2D0²)) (ไร้ Ringing 100%)</p>
+          </div>
+          <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+            <strong class="font-sans text-emerald-400 font-bold">2. Image Restoration:</strong>
+            <p class="text-slate-300">Degradation: g = f * h + η<br>Contraharmonic: f = Σ g^(Q+1) / Σ g^Q<br>• Q > 0  ➔ กำจัด Pepper (จุดดำ)<br>• Q < -1 ➔ กำจัด Salt (จุดขาว)<br>Wiener Filter: F = [ (1/H) · (|H|² / (|H|² + K)) ] · G</p>
+          </div>
+          <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+            <strong class="font-sans text-purple-400 font-bold">3. Segmentation & Evaluation:</strong>
+            <p class="text-slate-300">Otsu Between-class: σ_B²(t) = ω0(t)·ω1(t)·(μ0(t) - μ1(t))²<br>เลือก t* = argmax σ_B²(t)<br>Accuracy  = (TP + TN) / (TP + TN + FP + FN)<br>Precision = TP / (TP + FP)<br>Recall    = TP / (TP + FN)<br>IoU       = TP / (TP + FP + FN) (ไม่มี TN)</p>
+          </div>
+          <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+            <strong class="font-sans text-amber-400 font-bold">4. Texture & Edge:</strong>
+            <p class="text-slate-300">Canny 5 Steps: Blur ➔ Gradient ➔ NMS ➔ DoubleThresh ➔ Hysteresis<br>Harris: R = det(M) - k·(trace(M))²<br>GLCM Contrast = Σ (i - j)² · p(i, j)<br>GLCM Homogeneity = Σ p(i, j) / (1 + (i - j)²)<br>GLCM Energy = Σ p(i, j)²</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lecture Notes -->
+      <!-- L1 -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+          <h2 class="text-lg sm:text-xl font-bold text-white">Lecture 1: Introduction to Image Processing & Generative AI</h2>
+          <span class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-blue-950 text-blue-400 border border-blue-800/60">L1</span>
+        </div>
+        <p class="text-slate-400 text-xs sm:text-sm"><strong>บทนำสู่การประมวลผลภาพดิจิทัลและโมเดล Generative AI:</strong> ภาพรวมวิชา การแทนค่าภาพดิจิทัล ลำดับขั้นการประมวลผลภาพ และสถาปัตยกรรมโมเดล AI สังเคราะห์ภาพ (Stable Diffusion)</p>
+
+        <div class="space-y-3 pt-2">
+          <strong class="text-sm text-white">🔑 แนวคิดหลักและสูตรคำนวณ:</strong>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Digital Image Representation</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">ภาพดิจิทัลคือฟังก์ชัน 2 มิติ f(x, y) ที่ถูกสุ่มตัวอย่าง (Sampling - พิกัดเชิงพื้นที่) และการแปลงเป็นค่าไม่ต่อเนื่อง (Quantization - ระดับความเข้มสี L = 2^k สำหรับ 8-bit คือ 0-255)</div>
+        </div>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Levels of Image Processing</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">1. Low-level: ภาพเข้า-ภาพออก (เช่น ปรับ Contrast, ลดสัญญาณรบกวน, Sharpening)
+2. Mid-level: ภาพเข้า-ข้อมูลแอตทริบิวต์ออก (เช่น Edge detection, Segmentation, Object recognition)
+3. High-level: ภาพเข้า-การตีความและทำความเข้าใจฉาก (Scene understanding, Autonomous driving)</div>
+        </div>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Generative AI Model Types</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">• Checkpoint (.safetensors): โมเดลหลักขนาดใหญ่ (~2-7GB) บรรจุ Weights ทั้งหมด (UNet, VAE, Text Encoder)
+• LoRA (Low-Rank Adaptation): โมเดลปรับแต่งเฉพาะจุดขนาดเล็ก (~50-200MB) ฝึกแทรกเลเยอร์ rank ต่ำ ไม่แก้โมเดลหลัก
+• Textual Inversion (Embeddings): ไฟล์ขนาดจิ๋ว (~10-100KB) สร้างเวกเตอร์คำเฉพาะตัวแทน concept ใหม่ใน Text Encoder
+• VAE (Variational Autoencoder): แปลงระหว่าง Pixel Space กับ Latent Space (บีบอัด 8x เพื่อประหยัดแรม)
+• Hypernetwork: โมเดลเครือข่ายขนาดเล็กที่มาคอยปรับน้ำหนักของ UNet ขณะสร้างภาพ</div>
+        </div>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-rose-950/30 border border-rose-500/30 text-xs text-rose-200">
+          <strong class="text-rose-400">⚠️ หลุมพรางข้อสอบที่มักออกบ่อย:</strong>
+          <ul class="list-disc list-inside mt-1 space-y-0.5"><li>⚠️ ระวังความแตกต่างระหว่าง LoRA กับ Checkpoint: LoRA ไม่สามารถทำงานเดี่ยวๆ ได้ ต้องโหลดทับบน Base Checkpoint เสมอ</li><li>⚠️ Sampling กำหนดความละเอียดเชิงพื้นที่ (Spatial Resolution: จำนวนพิกเซล) ส่วน Quantization กำหนดความละเอียดของระดับสี (Intensity Resolution: Gray levels)</li></ul>
+        </div>
+      </div>
+
+      <!-- L2 -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+          <h2 class="text-lg sm:text-xl font-bold text-white">Lecture 2: Control and Fine-tune (Stable Diffusion & ControlNet)</h2>
+          <span class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-blue-950 text-blue-400 border border-blue-800/60">L2</span>
+        </div>
+        <p class="text-slate-400 text-xs sm:text-sm"><strong>การควบคุมและปรับแต่งพารามิเตอร์การสร้างภาพและ ControlNet:</strong> การตั้งค่าพารามิเตอร์ของกระบวนการ Denoising ใน Diffusion Model และการใช้ ControlNet หลากหลาย Preprocessor เพื่อควบคุมโครงสร้างภาพ</p>
+
+        <div class="space-y-3 pt-2">
+          <strong class="text-sm text-white">🔑 แนวคิดหลักและสูตรคำนวณ:</strong>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Sampling Steps & Samplers</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">• Steps: จำนวนรอบของการ Denoising ยิ่งเยอะภาพยิ่งละเอียดแต่ช้าลง (จุดคุ้มค่าอยู่ที่ 20-30 steps)
+• Sampler Methods: อัลกอริทึมแก้สมการเชิงอนุพันธ์ (ODE/SDE) เช่น Euler (รวดเร็ว, deterministic), Euler a (ancestral, มีการสุ่ม noise ใหม่ทุก step ภาพไม่นิ่งเมื่อเพิ่ม steps), DPM++ 2M Karras (คุณภาพสูง คมชัด และลู่เข้าไว)</div>
+        </div>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• CFG Scale & Denoising Strength</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">• CFG Scale (Classifier-Free Guidance): ค่าน้ำหนักความเคร่งครัดตาม Prompt (ค่าต่ำ = ภาพอิสระสร้างสรรค์, ค่าสูง = บังคับตาม prompt แต่ถ้าสูงเกิน >12 ภาพจะไหม้ contrast จัดและแตก)
+• Denoising Strength (ใน img2img): สัดส่วนของสัญญาณรบกวนที่ใส่เข้าไปในภาพเดิม (0 = ภาพเดิมไม่เปลี่ยน, 1 = ทิ้งภาพเดิมสร้างใหม่หมด)</div>
+        </div>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• ControlNet Preprocessors</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">เครื่องมือดึงโครงสร้าง (Conditioning) จากภาพต้นฉบับ:
+• Canny: ตรวจจับขอบแบบละเอียด (ควบคุมโครงร่างวัตถุเป๊ะๆ)
+• OpenPose: ตรวจจับท่าทางโครงกระดูกมนุษย์ (กระดูก 18 จุด, มือ, หน้า)
+• Depth (Midas/DPT): แผนที่ความลึกมิติหน้า-หลัง (ควบคุมระยะชัดลึกและวัตถุบังกัน)
+• LineArt / Scribble: สกัดลายเส้นวาดมือหรือเส้นการ์ตูน
+• Tile: ควบคุมการ Upscale รายละเอียดสูงโดยไม่เปลี่ยนโครงสร้างรวม</div>
+        </div>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• X/Y/Z Plot</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">สคริปต์ทดสอบตารางเปรียบเทียบ Grid ของพารามิเตอร์ต่างๆ (เช่น แนวนอนแกน X เปลี่ยน Sampler, แนวตั้งแกน Y เปลี่ยน CFG Scale, แกน Z เปลี่ยน Steps) เพื่อหาค่าที่เหมาะสมที่สุด</div>
+        </div>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-rose-950/30 border border-rose-500/30 text-xs text-rose-200">
+          <strong class="text-rose-400">⚠️ หลุมพรางข้อสอบที่มักออกบ่อย:</strong>
+          <ul class="list-disc list-inside mt-1 space-y-0.5"><li>⚠️ Euler vs Euler a: Euler 'a' ย่อมาจาก Ancestral มีการเติม Random noise ในแต่ละรอบ ทำให้ผลลัพธ์ไม่ลู่เข้าหาภาพเดิมเมื่อเพิ่ม steps ต่างจาก Euler ธรรมดา</li><li>⚠️ ถ้าเพิ่ม CFG Scale มากเกินไป ภาพจะเกิด Artifacts สีเพี้ยนรุนแรง (Over-saturation/Burning)</li></ul>
+        </div>
+      </div>
+
+      <!-- L3 -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+          <h2 class="text-lg sm:text-xl font-bold text-white">Lecture 3: Human Visual Perception</h2>
+          <span class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-blue-950 text-blue-400 border border-blue-800/60">L3</span>
+        </div>
+        <p class="text-slate-400 text-xs sm:text-sm"><strong>ระบบการรับรู้ทางการมองเห็นของมนุษย์ (Human Visual System):</strong> กายวิภาคของดวงตามนุษย์ เซลล์รับแสง กลไกการปรับตัวต่อความสว่าง ปรากฏการณ์ภาพลวงตาทางสายตา และผลต่อการประมวลผลภาพ</p>
+
+        <div class="space-y-3 pt-2">
+          <strong class="text-sm text-white">🔑 แนวคิดหลักและสูตรคำนวณ:</strong>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Anatomy of the Human Eye</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">• Cornea (กระจกตา): ผิวโปร่งแสงส่วนหน้า รวมแสงเบื้องต้น
+• Lens (เลนส์ตา): ปรับโฟกัสระยะใกล้-ไกล
+• Retina (จอประสาทตา): แหล่งรวมเซลล์รับแสง (Photoreceptors)</div>
+        </div>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Rods vs Cones</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">• Cones (เซลล์รูปกรวย): ~6-7 ล้านเซลล์ อยู่หนาแน่นที่สุดตรง Fovea Centralis รับผิดชอบ Photopic Vision (สภาวะแสงสว่างกลางวัน) ไวต่อสี (3 ชนิด: แดง เขียว น้ำเงิน) ให้ภาพคมชัดสูง
+• Rods (เซลล์รูปแท่ง): ~100 ล้านเซลล์ กระจายอยู่บริเวณรอบนอก (Periphery) รับผิดชอบ Scotopic Vision (สภาวะแสงสลัวกลางคืน) ไม่แยกสี ไวต่อแสงมาก ให้ภาพหยาบ</div>
+        </div>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Brightness Adaptation & Discrimination</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">ตามนุษย์ปรับระดับแสงได้กว้างมาก (10^10 เท่า) แต่ในชั่วขณะหนึ่ง (Subjective Brightness) จะปรับตัวอยู่ในช่วงจำกัด
+• Weber's Ratio: ΔIc / I โดย ΔIc คือความสว่างที่เปลี่ยนแปลงน้อยที่สุดที่ตามนุษย์แยกแยะได้ (Just Noticeable Difference)</div>
+        </div>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Visual Phenomena & Illusions</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">• Mach Bands: การเห็นแถบแสงสว่างเกินจริง (Overshoot) บริเวณขอบรอยต่อที่มีการเปลี่ยนระดับความเข้มแสง เกิดจาก Lateral Inhibition ของเซลล์ประสาทในจอตา
+• Simultaneous Contrast: ความสว่างที่เรารับรู้ไม่ได้ขึ้นกับค่าความเข้มสีจริงเพียงอย่างเดียว แต่ถูกอิทธิพลของสีพื้นหลังโดยรอบ (วัตถุสีเทาบนพื้นหลังดำจะดูสว่างกว่าวัตถุสีเทาเดียวกันบนพื้นหลังขาว)
+• Optical Illusions: ภาพลวงตาเชิงเรขาคณิต (เช่น Hermann grid, Kanizsa triangle) แสดงว่าสมองเติมแต่งข้อมูลที่ขาดหาย</div>
+        </div>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-rose-950/30 border border-rose-500/30 text-xs text-rose-200">
+          <strong class="text-rose-400">⚠️ หลุมพรางข้อสอบที่มักออกบ่อย:</strong>
+          <ul class="list-disc list-inside mt-1 space-y-0.5"><li>⚠️ จำสลับ Cones กับ Rods: Cones = Color + Central (Fovea) + Bright light (Photopic); Rods = Night (Scotopic) + Periphery + Black/White</li><li>⚠️ Mach bands ไม่ได้เกิดจากสัญญาณภาพจริง แต่เกิดจากกลไกประสาทตา (Lateral Inhibition)</li></ul>
+        </div>
+      </div>
+
+      <!-- L4 -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+          <h2 class="text-lg sm:text-xl font-bold text-white">Lecture 4: Point Operations & Intensity Transformation</h2>
+          <span class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-blue-950 text-blue-400 border border-blue-800/60">L4</span>
+        </div>
+        <p class="text-slate-400 text-xs sm:text-sm"><strong>การดำเนินการระดับพิกเซล การแปลงระดับความเข้มสี และฮิสโทแกรม:</strong> การแปลงระดับความเข้มสีของพิกเซลเดี่ยว s = T(r), ฟังก์ชัน Linear, Log, Gamma, Bit-plane Slicing และการปรับปรุงภาพด้วย Histogram Equalization / Specification</p>
+
+        <div class="space-y-3 pt-2">
+          <strong class="text-sm text-white">🔑 แนวคิดหลักและสูตรคำนวณ:</strong>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Intensity Transformation Functions</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">1. Linear: s = a*r + b (a ปรับ Contrast, b ปรับ Brightness)
+2. Digital Negative: s = (L - 1) - r (กลับค่าสีขาวเป็นดำ ดำเป็นขาว สำหรับ 8-bit คือ 255 - r)
+3. Logarithmic: s = c * log(1 + r) (ขยายย่านมืด บีบอัดย่านสว่าง นิยมใช้แสดงผล Fourier Spectrum)
+4. Power-Law (Gamma): s = c * r^γ (ถ้า γ < 1 ภาพสว่างขึ้น ขยายย่านมืด; ถ้า γ > 1 ภาพมืดลง เพิ่ม Contrast ย่านสว่าง)</div>
+        </div>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Contrast Stretching vs Thresholding</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">• Contrast Stretching: การแปลงแบบ Piecewise-linear ขยายช่วง dynamic range ของภาพที่แคบให้เต็ม 0-(L-1)
+• Thresholding: การแปลงภาพ Grayscale ให้เป็นภาพ Binary (ขาว-ดำ) โดยกำหนดเกณฑ์ T: s = 255 ถ้า r >= T มิฉะนั้น s = 0</div>
+        </div>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Bit-Plane Slicing</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">การแยกพิกเซล 8-bit ออกเป็น 8 ระนาบ โดย Bit 7 (Most Significant Bit - MSB) บรรจุโครงสร้างและข้อมูลสายตาหลักส่วนใหญ่ ส่วน Bit 0 (LSB) บรรจุ noise สุ่มหรือใช้ซ่อนข้อมูลแบบ Steganography</div>
+        </div>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Histogram Equalization (HE)</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">การกระจายความถี่ของระดับสีให้สม่ำเสมอทั่วทั้งช่วง (Uniform Distribution) เพื่อเพิ่ม Global Contrast
+สูตรการคำนวณ:
+1. หาความน่าจะเป็น p_r(r_k) = n_k / (M * N)
+2. หาฟังก์ชันความหนาแน่นสะสม CDF: c_k = Σ p_r(r_j) จาก j=0 ถึง k
+3. แปลงค่าระดับสีใหม่: s_k = round((L - 1) * c_k)
+คุณสมบัติ: เป็น Monotonically Increasing Function ทำให้รักษาระดับความสัมพันธ์ของเฉดสีเดิม</div>
+        </div>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Data Types: uint8 vs float32</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">• uint8: ค่าช่วง [0, 255] หากบวกเกิน 255 ใน OpenCV จะถูก saturate (cv2.add ปัดเป็น 255) แต่ถ้าคำนวณใน NumPy ดิบๆ จะเกิด Overflow หมุนกลับเป็นค่าต่ำ (เช่น 250 + 10 = 4) ดังนั้นต้องแปลงเป็น float32/float64 ก่อนคำนวณ แล้วใช้ np.clip(..., 0, 255).astype(np.uint8)</div>
+        </div>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-rose-950/30 border border-rose-500/30 text-xs text-rose-200">
+          <strong class="text-rose-400">⚠️ หลุมพรางข้อสอบที่มักออกบ่อย:</strong>
+          <ul class="list-disc list-inside mt-1 space-y-0.5"><li>⚠️ Histogram Equalization สำหรับภาพดิจิทัล (Discrete) จะไม่สามารถให้ Flat Histogram แบบสมบูรณ์ 100% ได้ เพราะการจับกลุ่มค่า (Pixel grouping) และความไม่ต่อเนื่องของตัวเลขจำนวนเต็ม</li><li>⚠️ การแปลง Log Transform ต้องระวังค่า r=0 จึงต้องใช้ log(1 + r) เพื่อป้องกัน log(0) ซึ่งหาค่าไม่ได้</li></ul>
+        </div>
+      </div>
+
+      <!-- L5 -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+          <h2 class="text-lg sm:text-xl font-bold text-white">Lecture 5: Spatial Filtering</h2>
+          <span class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-blue-950 text-blue-400 border border-blue-800/60">L5</span>
+        </div>
+        <p class="text-slate-400 text-xs sm:text-sm"><strong>การกรองภาพในโดเมนเชิงพื้นที่ (Spatial Filtering):</strong> การประมวลผลเชิงเพื่อนบ้าน (Neighborhood Processing) การคอนโวลูชันและการคอร์ริเลชัน ฟิลเตอร์ปรับเรียบ ฟิลเตอร์ทางสถิติอันดับ ฟิลเตอร์เน้นขอบ (Laplacian, Unsharp Mask) และโมเดลสี</p>
+
+        <div class="space-y-3 pt-2">
+          <strong class="text-sm text-white">🔑 แนวคิดหลักและสูตรคำนวณ:</strong>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Convolution vs Correlation</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">• Correlation: การเลื่อน Kernel ไปคูณแล้วบวกโดยตรงบนภาพ
+• Convolution: ต้องหมุน Kernel 180 องศา (Flip ทั้งแนวนอนและแนวตั้ง) ก่อนนำไปทำ Correlation (ถ้า Kernel มีความสมมาตร เช่น Gaussian หรือ Laplacian ทั้งสองตัวจะได้ผลลัพธ์เท่ากัน)</div>
+        </div>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Smoothing Spatial Filters (Lowpass)</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">• Box Filter: เมทริกซ์ 1/9 * ones(3, 3) เฉลี่ยเท่ากันทุกทิศทาง ลด noise ได้แต่ภาพเบลอและเกิดรอยสี่เหลี่ยม
+• Weighted Average: ให้น้ำหนักพิกเซลตรงกลางมากที่สุด เช่น 1/16 * [[1,2,1],[2,4,2],[1,2,1]]
+• Gaussian Filter: สร้างจากสมการเกาส์เซียน 2D ให้ความเรียบเนียนสูงสุดตามระยะทางห่างจากศูนย์กลาง</div>
+        </div>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Order-Statistic Filters (Nonlinear)</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">• Median Filter: เรียงลำดับค่าพิกเซลในหน้าต่างแล้วเลือกค่ามัธยฐาน มีประสิทธิภาพสูงสุดในการกำจัด Salt-and-Pepper Noise (Impulse Noise) โดยไม่ทำให้ขอบภาพเบลอเหมือนค่าเฉลี่ย
+• Min Filter: เลือกค่าน้อยสุด (กำจัดจุดสว่าง Salt Noise)
+• Max Filter: เลือกค่ามากสุด (กำจัดจุดมืด Pepper Noise)</div>
+        </div>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Sharpening Filters (Highpass & 2nd Derivative)</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">• Laplacian Operator: ตัวดำเนินการอนุพันธ์อันดับ 2 ไม่ขึ้นกับทิศทาง (Isotropic)
+หน้ากากมาตรฐาน 3x3 (ผลรวมเป็น 0):
+  L1 = [[0, 1, 0], [1, -4, 1], [0, 1, 0]]
+  L2 (รวมแนวทแยง) = [[1, 1, 1], [1, -8, 1], [1, 1, 1]]
+• สูตรการ Sharpening: g(x, y) = f(x, y) - ∇²f(x, y) (เมื่อตัวกลางของ Laplacian เป็นลบ) หรือ f(x, y) + ∇²f(x, y) (เมื่อตัวกลางเป็นบวก)
+• Unsharp Masking & High-boost Filtering:
+  1. เบลอภาพเดิม: f_blur = Lowpass(f)
+  2. หาหน้ากาก: g_mask = f - f_blur
+  3. เพิ่มความคมชัด: g = f + k * g_mask (ถ้า k=1 คือ Unsharp Masking, ถ้า k > 1 คือ High-boost Filtering)</div>
+        </div>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Color Models & Processing</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">• RGB: โมเดลแม่สีแสงบวก (Additive) เหมาะกับจอแสดงผล
+• CMY/CMYK: โมเดลแม่สีลบ (Subtractive) เหมาะกับการพิมพ์
+• HSI/HSV: แยก Hue (เนื้อสี 0-360 องศา หรือ 0-179 ใน OpenCV), Saturation (ความอิ่มตัวสี 0-255), Value/Intensity (ความสว่าง 0-255) สอดคล้องกับการรับรู้ของมนุษย์ เหมาะกับงาน Color Segmentation</div>
+        </div>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-rose-950/30 border border-rose-500/30 text-xs text-rose-200">
+          <strong class="text-rose-400">⚠️ หลุมพรางข้อสอบที่มักออกบ่อย:</strong>
+          <ul class="list-disc list-inside mt-1 space-y-0.5"><li>⚠️ จำเครื่องหมายในสมการ Sharpening กับเครื่องหมายศูนย์กลางของ Laplacian: ถ้าจุดกึ่งกลางของ Kernel เป็น -4 หรือ -8 ต้อง 'ลบ' ออกจากภาพเดิม (เพราะอนุพันธ์อันดับสองที่ขอบมีค่าตรงข้าม)</li><li>⚠️ Median Filter เป็นตัวกรองแบบไม่เชิงเส้น (Non-linear filter) จึงไม่สามารถแทนด้วยการคูณ Convolution Kernel ปกติได้</li></ul>
+        </div>
+      </div>
+
+      <!-- L6 -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+          <h2 class="text-lg sm:text-xl font-bold text-white">Lecture 6: Frequency Domain Analysis (Fourier Transform)</h2>
+          <span class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-blue-950 text-blue-400 border border-blue-800/60">L6</span>
+        </div>
+        <p class="text-slate-400 text-xs sm:text-sm"><strong>การวิเคราะห์ภาพในโดเมนความถี่ (Fourier Transform):</strong> ทฤษฎีการแปลงฟูริเยร์ 2 มิติ (2D DFT) สเปกตรัมขนาดและเฟส การเลื่อนตำแหน่งศูนย์กลาง การกรองสัญญาณในโดเมนความถี่ (ILPF, BLPF, GLPF) และปรากฏการณ์ Ringing Effect</p>
+
+        <div class="space-y-3 pt-2">
+          <strong class="text-sm text-white">🔑 แนวคิดหลักและสูตรคำนวณ:</strong>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• 2D Discrete Fourier Transform (DFT)</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">F(u, v) = Σ Σ f(x, y) * e^(-j*2π*(ux/M + vy/N))
+การแปลงกลับ (IDFT): f(x, y) = (1/(MN)) * Σ Σ F(u, v) * e^(j*2π*(ux/M + vy/N))
+• ความถี่ต่ำ (Low Frequencies): อยู่ใกล้จุดศูนย์กลาง แสดงถึงบริเวณพื้นผิวเรียบและเฉดสีที่ค่อยๆ เปลี่ยน
+• ความถี่สูง (High Frequencies): อยู่ห่างจากศูนย์กลาง แสดงถึงขอบภาพ (Edges) รายละเอียดคมชัด และสัญญาณรบกวน</div>
+        </div>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Centering the Spectrum (fftshift)</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">ตามปกติค่า F(0,0) (DC Component - ค่าเฉลี่ยความสว่าง) จะอยู่ที่มุมบนซ้าย (0, 0)
+การเลื่อนจุดกำเนิดมาไว้กึ่งกลางสเปกตรัมทำได้โดยการคูณภาพใน Spatial Domain ด้วย (-1)^(x+y) ก่อนทำ DFT หรือใช้ฟังก์ชัน np.fft.fftshift() หลังทำ DFT</div>
+        </div>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Fourier Spectrum & Dynamic Range</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">• Magnitude Spectrum: |F(u, v)| = sqrt(R(u,v)² + I(u,v)²)
+• Phase Spectrum: ϕ(u, v) = arctan(I(u,v) / R(u,v))
+• Dynamic Range ของ |F| สูงมาก ค่า DC สูงกว่าความถี่อื่นเป็นหมื่นเท่า จึงต้องใช้ Log Transform เพื่อให้ตามองเห็น: S = c * log(1 + |F(u, v)|)</div>
+        </div>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Lowpass Filter Comparison</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">ระยะทางจากจุดศูนย์กลาง: D(u, v) = sqrt((u - M/2)² + (v - N/2)²)
+1. Ideal Lowpass Filter (ILPF): H(u,v) = 1 ถ้า D <= D0 มิฉะนั้น 0 (ตัดสัญญาณคมกริบ เกิด Ringing Effect / Gibbs Phenomenon รุนแรงที่สุด)
+2. Butterworth Lowpass Filter (BLPF): H(u,v) = 1 / (1 + [D/D0]^(2n)) (ความลาดเอียงขึ้นกับ Order n; ถ้า n=1 ไม่มี ringing, ถ้า n สูงขึ้นจะเริ่มมี ringing เล็กน้อย)
+3. Gaussian Lowpass Filter (GLPF): H(u,v) = exp(-D² / (2*D0²)) (ราบเรียบ ไม่มีรอยหยัก Ringing Effect เกิดขึ้นเลย 100%)</div>
+        </div>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Highpass & Notch Filters</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">• Highpass Filter: H_HP(u, v) = 1 - H_LP(u, v) (ยอมให้ความถี่สูงผ่าน กรองความถี่ต่ำออก เน้นขอบภาพ)
+• Notch Filter: กรองเฉพาะจุดความถี่เฉพาะเจาะจง (u0, v0) และจุดสมมาตร (-u0, -v0) นิยมใช้ตัดสัญญาณรบกวนคาบเวลา (Periodic Noise)</div>
+        </div>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-rose-950/30 border border-rose-500/30 text-xs text-rose-200">
+          <strong class="text-rose-400">⚠️ หลุมพรางข้อสอบที่มักออกบ่อย:</strong>
+          <ul class="list-disc list-inside mt-1 space-y-0.5"><li>⚠️ การทำ Frequency Domain Filtering จำเป็นต้องทำ Zero-padding ให้ขนาดเป็น P >= 2M และ Q >= 2N เพื่อป้องกันปัญหา Wrap-around Error (สัญญาณพันกลับมาชนกัน)</li><li>⚠️ สาเหตุที่ ILPF เกิด Ringing Effect ในโดเมนเชิงพื้นที่ เพราะ Inverse Fourier Transform ของฟังก์ชันสี่เหลี่ยม (Boxcar) คือฟังก์ชัน Sinc ซึ่งมีคลื่นแกว่งลอน (Ripples)</li></ul>
+        </div>
+      </div>
+
+      <!-- L7 -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+          <h2 class="text-lg sm:text-xl font-bold text-white">Lecture 7: Image Restoration</h2>
+          <span class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-blue-950 text-blue-400 border border-blue-800/60">L7</span>
+        </div>
+        <p class="text-slate-400 text-xs sm:text-sm"><strong>การฟื้นฟูสภาพภาพ (Image Restoration):</strong> แบบจำลองความเสื่อมถอย แบบจำลองสัญญาณรบกวน การกรองในโดเมนพื้นที่และการกรองความถี่ ตัวกรองเฉลี่ยอันดับสูง ตัวกรอง Wiener และการประมาณค่า Point Spread Function (PSF)</p>
+
+        <div class="space-y-3 pt-2">
+          <strong class="text-sm text-white">🔑 แนวคิดหลักและสูตรคำนวณ:</strong>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Degradation Model</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">g(x, y) = f(x, y) * h(x, y) + η(x, y)
+ในโดเมนความถี่: G(u, v) = F(u, v)H(u, v) + N(u, v)
+เมื่อ f คือภาพจริง, h คือฟังก์ชันความเสื่อมถอย (PSF), η คือสัญญาณรบกวน (Noise)</div>
+        </div>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Noise Models</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">• Gaussian Noise: สัญญาณรบกวนทางความร้อนของวงจรเซนเซอร์ กระจายตัวแบบ Normal Curve
+• Salt-and-Pepper (Impulse) Noise: จุดขาวสุด (Salt=255) และจุดดำสุด (Pepper=0) เกิดจากการส่งสัญญาณผิดพลาด
+• Rayleigh, Gamma, Exponential: แบบจำลองสัญญาณรบกวนในระบบ Radar, เลเซอร์ หรือภาพทางการแพทย์
+• Periodic Noise: สัญญาณรบกวนจากสนามแม่เหล็กไฟฟ้าแทรกซ้อน ปรากฏเป็นแถบคลื่นซ้ำๆ ในภาพ และเป็นจุดสว่างโดดเดี่ยว (Spikes) ใน Fourier Spectrum</div>
+        </div>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Restoration Spatial Filters</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">• Arithmetic Mean: 1/mn * Σ g(s, t) (ลด Gaussian noise)
+• Geometric Mean: [Π g(s, t)]^(1/mn) (คงรายละเอียดได้ดีกว่า Arithmetic Mean แต่ถ้ามีพิกเซลดำ 0 จะได้ผลเป็น 0 ทั้งบล็อก)
+• Harmonic Mean: mn / Σ [1/g(s, t)] (ใช้ได้ดีกับ Salt noise แต่ใช้กับ Pepper noise ไม่ได้)
+• Contraharmonic Mean: Σ g^(Q+1) / Σ g^Q
+  - ถ้า Q > 0: กำจัด Pepper Noise (จุดมืด)
+  - ถ้า Q < -1: กำจัด Salt Noise (จุดสว่าง)
+  - ถ้า Q = 0: กลายเป็น Arithmetic Mean
+  - ถ้า Q = -1: กลายเป็น Harmonic Mean</div>
+        </div>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Inverse vs Wiener Filtering</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">• Inverse Filter: F_hat(u,v) = G(u,v)/H(u,v) = F(u,v) + N(u,v)/H(u,v) (หาก H(u,v) มีค่าเข้าใกล้ศูนย์ หรือที่ความถี่สูง Noise จะถูกขยายมหาศาลจนภาพพัง ไม่เสถียรอย่างยิ่ง)
+• Wiener Filter (Minimum Mean Square Error - MMSE):
+  F_hat(u, v) = [ (1/H(u,v)) * (|H(u,v)|² / (|H(u,v)|² + S_η/S_f)) ] * G(u, v)
+  เมื่อ S_η/S_f คืออัตราส่วน Noise-to-Signal Power (มักประมาณด้วยค่าคงที่ K) แก้ปัญหาหารด้วยศูนย์ได้อย่างยอดเยี่ยม</div>
+        </div>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-rose-950/30 border border-rose-500/30 text-xs text-rose-200">
+          <strong class="text-rose-400">⚠️ หลุมพรางข้อสอบที่มักออกบ่อย:</strong>
+          <ul class="list-disc list-inside mt-1 space-y-0.5"><li>⚠️ Contraharmonic Mean: จำแม่นๆ Q > 0 กำจัด Pepper (จุดดำ), Q < -1 กำจัด Salt (จุดขาว) ห้ามจำสลับ!</li><li>⚠️ Image Enhancement เป็นเรื่องของ Subjective (ทำให้มนุษย์ดูแล้วพอใจ) ส่วน Image Restoration เป็นเรื่องของ Objective (ใช้แบบจำลองคณิตศาสตร์ย้อนกลับกระบวนการเสื่อมถอยเดิม)</li></ul>
+        </div>
+      </div>
+
+      <!-- L8 -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+          <h2 class="text-lg sm:text-xl font-bold text-white">Lecture 8: MediaPipe Workshop</h2>
+          <span class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-blue-950 text-blue-400 border border-blue-800/60">L8</span>
+        </div>
+        <p class="text-slate-400 text-xs sm:text-sm"><strong>การประยุกต์ใช้ปัญญาประดิษฐ์ตรวจจับตำแหน่งด้วย MediaPipe:</strong> เฟรมเวิร์ก MediaPipe โครงสร้าง Tasks และ Models การตรวจจับจุดสังเกต 3 มิติบนร่างกาย มือ ใบหน้า และการประมวลผลวิดีโอแบบ Real-time</p>
+
+        <div class="space-y-3 pt-2">
+          <strong class="text-sm text-white">🔑 แนวคิดหลักและสูตรคำนวณ:</strong>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• MediaPipe Architecture</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">• MediaPipe Tasks: ชุด API สำหรับเรียกใช้งานตามโจทย์ (Cross-platform APIs)
+• MediaPipe Models: โมเดล Pre-trained ที่ปรับแต่งให้รันบนอุปกรณ์ปลายทางได้เร็วเป็นพิเศษ (On-device ML)</div>
+        </div>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Core Landmark Solutions</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">• MediaPipe Hands: ตรวจจับจุดสังเกต 21 จุด 3 มิติต่อมือหนึ่งข้าง (ข้อนิ้ว ปลายนิ้ว ข้อมือ)
+• MediaPipe Pose: ตรวจจับจุดสังเกตบนร่างกายมนุษย์ 33 จุด (ไหล่ ข้อศอก สะโพก เข่า ข้อเท้า)
+• MediaPipe Face Mesh: ตรวจจับจุดสังเกตบนใบหน้าอย่างละเอียดถึง 468 หรือ 478 จุด (รวม Iris รูม่านตา)
+• MediaPipe Holistic: รวม Face + Hands + Pose ไว้ใน pipeline เดียวกัน</div>
+        </div>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Implementation Flow in Python</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">1. อ่านภาพ/วิดีโอผ่าน cv2.VideoCapture()
+2. แปลงระบบสี BGR เป็น RGB ด้วย cv2.cvtColor(frame, cv2.COLOR_BGR2RGB) (เพราะ MediaPipe ต้องการ RGB)
+3. ตั้งค่า writeable = False ก่อนส่งเข้าโมเดลเพื่อประหยัดหน่วยความจำ
+4. เรียก results = model.process(image_rgb)
+5. วาดผลลัพธ์ด้วย mp.solutions.drawing_utils.draw_landmarks()</div>
+        </div>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-rose-950/30 border border-rose-500/30 text-xs text-rose-200">
+          <strong class="text-rose-400">⚠️ หลุมพรางข้อสอบที่มักออกบ่อย:</strong>
+          <ul class="list-disc list-inside mt-1 space-y-0.5"><li>⚠️ OpenCV โหลดภาพเป็นระบบสี BGR เสมอ หากส่งเข้า MediaPipe โดยไม่แปลงเป็น RGB จะทำให้การตรวจจับล้มเหลวหรือแม่นยำต่ำลง</li><li>⚠️ พิกัด Landmarks ที่ MediaPipe ส่งออกมาเป็นค่า Normalized [0.0, 1.0] สัมพันธ์กับขนาดภาพ ต้องคูณด้วยความกว้างและความสูง (W, H) ก่อนนำไปพล็อตพิกัดพิกเซลจริง</li></ul>
+        </div>
+      </div>
+
+      <!-- L9 -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+          <h2 class="text-lg sm:text-xl font-bold text-white">Lecture 9: Edge and Corner Detection</h2>
+          <span class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-blue-950 text-blue-400 border border-blue-800/60">L9</span>
+        </div>
+        <p class="text-slate-400 text-xs sm:text-sm"><strong>การตรวจจับเส้นขอบและมุม (Edge and Corner Detection):</strong> ตัวดำเนินการเกรเดียนต์ (Sobel, Prewitt, Roberts) อนุพันธ์อันดับสอง (LoG) อัลกอริทึม Canny Edge Detection 5 ขั้นตอน และการตรวจจับมุมของ Harris</p>
+
+        <div class="space-y-3 pt-2">
+          <strong class="text-sm text-white">🔑 แนวคิดหลักและสูตรคำนวณ:</strong>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Image Gradient</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">เวกเตอร์การเปลี่ยนแปลงความเข้มสี: ∇f = [∂f/∂x, ∂f/∂y]^T
+• Magnitude: M(x, y) = sqrt(gx² + gy²) (บอกความคมชัดของขอบ)
+• Direction: θ(x, y) = arctan(gy / gx) (ทิศทางตั้งฉากกับแนวเส้นขอบ)</div>
+        </div>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Gradient Operators</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">• Roberts Cross: 2x2 mask (ตอบสนองเร็ว แต่อ่อนไหวต่อ noise สูงมาก)
+• Prewitt: 3x3 mask เฉลี่ยน้ำหนักเท่ากัน
+• Sobel: 3x3 mask ให้น้ำหนักตรงกลางเป็น 2 เพื่อช่วยลดสัญญาณรบกวนก่อนหาอนุพันธ์:
+  Gx = [[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]]
+  Gy = [[-1, -2, -1], [0, 0, 0], [1, 2, 1]]</div>
+        </div>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Canny Edge Detection (5 Steps)</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">1. Gaussian Smoothing: กรองลดสัญญาณรบกวนด้วยฟิลเตอร์เกาส์เซียน
+2. Compute Gradient: คำนวณขนาดและทิศทางเกรเดียนต์ด้วย Sobel
+3. Non-Maximum Suppression (NMS): ตัดพิกเซลที่ไม่ใช่จุดสูงสุดในแนวตั้งฉากกับขอบ (Quantize ทิศทางเป็น 0°, 45°, 90°, 135°) เพื่อให้ขอบเหลือความหนาเพียง 1 พิกเซล
+4. Double Thresholding: แบ่งขอบเป็น 3 กลุ่มด้วยค่า T_high และ T_low:
+   - Strong edge (>= T_high): ยอมรับเป็นขอบแน่นอน
+   - Weak edge (T_low <= r < T_high): รอการตรวจสอบ
+   - Non-edge (< T_low): ทิ้งทันที
+5. Edge Tracking by Hysteresis: คงค่า Weak edge ไว้เฉพาะจุดที่มีการเชื่อมต่อกับ Strong edge แบบ 8-connectivity</div>
+        </div>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Harris Corner Detection</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">พิจารณาการเปลี่ยนระดับความเข้มสีเมื่อเลื่อนหน้าต่างตรวจจับ (u, v):
+Auto-correlation Matrix / Structure Tensor:
+  M = Σ w(x, y) * [[Ix², Ix*Iy], [Ix*Iy, Iy²]]
+วิเคราะห์ค่า Eigenvalues (λ1, λ2):
+• λ1, λ2 มีค่าน้อยทั้งคู่ -> บริเวณราบเรียบ (Flat region)
+• λ1 >> λ2 หรือ λ2 >> λ1 -> เส้นขอบ (Edge)
+• λ1, λ2 มีค่ามากทั้งคู่ -> จุดมุม (Corner)
+Harris Response Function: R = det(M) - k * (trace(M))² = (λ1*λ2) - k*(λ1 + λ2)²
+โดย k คือค่าคงที่เชิงประจักษ์ (0.04 - 0.06)
+- ถ้า R > 0 (มาก): เป็น Corner
+- ถ้า R < 0: เป็น Edge
+- ถ้า |R| น้อย: เป็น Flat</div>
+        </div>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-rose-950/30 border border-rose-500/30 text-xs text-rose-200">
+          <strong class="text-rose-400">⚠️ หลุมพรางข้อสอบที่มักออกบ่อย:</strong>
+          <ul class="list-disc list-inside mt-1 space-y-0.5"><li>⚠️ จำลำดับ 5 ขั้นตอนของ Canny ให้ขึ้นใจ โดยเฉพาะขั้นตอน NMS (ทำให้เส้นขอบบาง 1 พิกเซล) และ Hysteresis Thresholding (เชื่อมโยง weak edge กับ strong edge)</li><li>⚠️ ทิศทางของ Gradient เวกเตอร์ θ จะ 'ตั้งฉาก' (Perpendicular) กับทิศทางของแนวขอบ (Edge Direction)</li></ul>
+        </div>
+      </div>
+
+      <!-- L10 -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+          <h2 class="text-lg sm:text-xl font-bold text-white">Lecture 10: Morphological Processing & Evaluation Metrics</h2>
+          <span class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-blue-950 text-blue-400 border border-blue-800/60">L10</span>
+        </div>
+        <p class="text-slate-400 text-xs sm:text-sm"><strong>การประมวลผลเชิงสัณฐานวิทยาและเมทริกซ์ความสับสน (Morphology & Metrics):</strong> การดำเนินการพื้นฐานบนภาพไบนารี (Dilation, Erosion, Opening, Closing) โครงสร้างเอลิเมนต์ (SE) ขั้นตอนวิธีทางสัณฐานวิทยา และการประเมินผลด้วย Confusion Matrix</p>
+
+        <div class="space-y-3 pt-2">
+          <strong class="text-sm text-white">🔑 แนวคิดหลักและสูตรคำนวณ:</strong>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Structuring Element (SE)</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">เมทริกซ์ขนาดเล็ก (มักเป็น 3x3 หรือ 5x5) ที่มีจุดกำเนิด (Origin) กำหนดรูปร่างที่ต้องการสำรวจ เช่น รูปสี่เหลี่ยม (cv2.MORPH_RECT), รูปกากบาท (cv2.MORPH_CROSS), หรือรูปวงรี (cv2.MORPH_ELLIPSE)</div>
+        </div>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Dilation & Erosion</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">• Dilation (การขยายตัว) A ⊕ B: พิกเซลเป็น 1 ถ้า SE ทับกับ Foreground อย่างน้อย 1 จุด -> ขยายวัตถุให้โตขึ้น อุดรูโหว่ขนาดเล็ก และเชื่อมส่วนที่ขาดออกจากกัน
+• Erosion (การกร่อน) A ⊖ B: พิกเซลเป็น 1 ก็ต่อเมื่อ SE ทับอยู่ใน Foreground ทั้งหมด -> หดวัตถุให้เล็กลง ตัดติ่งแหลม และลบสัญญาณรบกวนเม็ดเล็กๆ ออก</div>
+        </div>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Opening & Closing</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">• Opening A ∘ B = (A ⊖ B) ⊕ B (กร่อนก่อนแล้วค่อยขยาย):
+  - ลบจุดรบกวนขนาดเล็กนอกวัตถุ (False Positives)
+  - ตัดสะพานเชื่อมบางๆ โดยไม่เปลี่ยนขนาดรวมของวัตถุ
+• Closing A • B = (A ⊕ B) ⊖ B (ขยายก่อนแล้วค่อยกร่อน):
+  - เชื่อมรอยต่อที่แตกหักและอุดรูโหว่ขนาดเล็กภายในวัตถุ (False Negatives)
+  - เชื่อมเส้นที่ขาดจากกัน (เช่น เส้น Barcode)</div>
+        </div>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Morphological Algorithms</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">• Boundary Extraction: β(A) = A - (A ⊖ B) (นำภาพเดิมลบด้วยภาพที่กร่อนแล้ว จะได้เส้นขอบรอบนอกความหนา 1 พิกเซล)
+• Hit-or-Miss Transform: A ⊛ B = (A ⊖ B1) ∩ (A^c ⊖ B2) (ใช้สำหรับตรวจจับรูปทรงหรือแพทเทิร์นเฉพาะเจาะจงในภาพ)
+• Hole Filling: X_k = (X_(k-1) ⊕ B) ∩ A^c ทำซ้ำจนกระทั่งลู่เข้า</div>
+        </div>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Confusion Matrix & Evaluation Metrics</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">ตาราง 2x2 ระหว่าง Actual vs Predicted:
+• TP: คาดการณ์ 1 และจริง 1 | TN: คาดการณ์ 0 และจริง 0
+• FP (Type I Error): คาดการณ์ 1 แต่จริง 0 (ทายเกิน)
+• FN (Type II Error): คาดการณ์ 0 แต่จริง 1 (ทายตกหล่น)
+สูตรคำนวณ:
+1. Accuracy = (TP + TN) / (TP + TN + FP + FN)
+2. Precision = TP / (TP + FP) (ความแม่นยำเมื่อทายบวก)
+3. Recall (Sensitivity) = TP / (TP + FN) (ความครอบคลุมของสิ่งที่ต้องหา)
+4. Specificity = TN / (TN + FP)
+5. F1-Score = 2 * (Precision * Recall) / (Precision + Recall)
+6. IoU (Jaccard Index) = TP / (TP + FP + FN)</div>
+        </div>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-rose-950/30 border border-rose-500/30 text-xs text-rose-200">
+          <strong class="text-rose-400">⚠️ หลุมพรางข้อสอบที่มักออกบ่อย:</strong>
+          <ul class="list-disc list-inside mt-1 space-y-0.5"><li>⚠️ Opening = Erode แล้ว Dilate (ลบจุดรบกวนภายนอก); Closing = Dilate แล้ว Erode (อุดรูโหว่และเชื่อมสะพานภายใน)</li><li>⚠️ IoU (Intersection over Union) ตัวส่วนคือ (TP + FP + FN) โดย 'ไม่มี' TN มารวมด้วย ระวังอย่าจำสลับกับ Accuracy</li></ul>
+        </div>
+      </div>
+
+      <!-- L11 -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+          <h2 class="text-lg sm:text-xl font-bold text-white">Lecture 11: Image Segmentation</h2>
+          <span class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-blue-950 text-blue-400 border border-blue-800/60">L11</span>
+        </div>
+        <p class="text-slate-400 text-xs sm:text-sm"><strong>การแบ่งส่วนภาพ (Image Segmentation):</strong> การแบ่งแยกส่วนประกอบของภาพ การกำหนดค่าขีดแบ่ง (Global/Local Thresholding) วิธีของ Otsu การแบ่งส่วนแบบอิงบริเวณ (Region Growing, Split and Merge) การจัดกลุ่ม (K-means, Hierarchical) และ Watershed</p>
+
+        <div class="space-y-3 pt-2">
+          <strong class="text-sm text-white">🔑 แนวคิดหลักและสูตรคำนวณ:</strong>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Principles of Segmentation</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">การแบ่งภาพ R ออกเป็นบริเวณย่อย R1, R2, ..., Rn โดยที่:
+1. ยูเนียนกันได้ภาพทั้งหมด: U Ri = R
+2. ทุกบริเวณเป็น Disjoint: Ri ∩ Rj = ∅ (สำหรับ i ≠ j)
+3. ภายในบริเวณเดียวกันมีคุณสมบัติสอดคล้อง: P(Ri) = TRUE
+4. ต่างบริเวณมีคุณสมบัติต่างกัน: P(Ri U Rj) = FALSE</div>
+        </div>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Otsu's Thresholding Method</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">การหาค่าขีดแบ่ง T* ที่เหมาะสมที่สุดแบบอัตโนมัติ โดยการหาค่าที่ให้ความแปรปรวนระหว่างกลุ่มสูงสุด (Maximizing Between-Class Variance σ_B²):
+สูตรคำนวณ:
+  σ_B²(t) = ω0(t) * ω1(t) * (μ0(t) - μ1(t))²
+เมื่อ:
+• ω0(t) = ความน่าจะเป็นสะสมของ Class 0 (พิกเซล <= t)
+• ω1(t) = 1 - ω0(t) (พิกเซล > t)
+• μ0(t) = ค่าเฉลี่ยความเข้มสีของ Class 0
+• μ1(t) = ค่าเฉลี่ยความเข้มสีของ Class 1
+เลือก t* = argmax σ_B²(t)</div>
+        </div>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Region-based Segmentation</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">• Region Growing: เริ่มต้นจากจุดเมล็ด (Seed Points) แล้วผนวกพิกเซลเพื่อนบ้านที่มีคุณสมบัติความต่างสีน้อยกว่าเกณฑ์ที่กำหนด ทำซ้ำจนไม่มีพิกเซลเข้าเกณฑ์
+• Region Split and Merge: อาศัยโครงสร้างข้อมูล Quadtree:
+  - Split: หากบล็อกใดไม่สอดคล้องเงื่อนไขความเป็นเนื้อเดียวกัน ให้ผ่าแบ่งเป็น 4 บล็อกย่อย
+  - Merge: หากบล็อกติดกัน 2 บล็อกรวมกันแล้วยังคงเป็นเนื้อเดียวกัน ให้ยุบรวมเข้าด้วยกัน</div>
+        </div>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Clustering Algorithms</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">• K-Means: กำหนด K เซนทรอยด์ -> กำหนดแต่ละจุดพิกเซลไปยังเซนทรอยด์ที่ใกล้ที่สุด -> คำนวณตำแหน่งเซนทรอยด์ใหม่จากค่าเฉลี่ย -> วนซ้ำจนลู่เข้า
+• Hierarchical Clustering: มี 2 รูปแบบ:
+  - Agglomerative (Bottom-up): เริ่มจากทุกจุดเป็น 1 คลัสเตอร์ แล้วค่อยๆ ยุบคู่ที่ใกล้ที่สุดเข้าด้วยกัน
+  - Divisive (Top-down): เริ่มจากภาพทั้งหมดเป็น 1 คลัสเตอร์ใหญ่ แล้วค่อยๆ แตกย่อยออก</div>
+        </div>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Watershed Segmentation</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">มองภาพ Grayscale เสมือนภูมิประเทศที่มีภูเขา (ขอบภาพที่มีเกรเดียนต์สูง) และหุบเขา (Catchment basins - บริเวณเนื้อวัตถุ) จำลองการปล่อยน้ำท่วมขึ้นมา สร้างเขื่อน (Watershed lines) ตรงจุดที่น้ำจากสองแอ่งจะล้นมาชนกัน
+• ปัญหาหลัก: มักเกิดการแบ่งส่วนย่อยเกินไป (Oversegmentation) เนื่องจาก noise ในเกรเดียนต์
+• วิธีแก้: ใช้ Marker-Controlled Watershed โดยกำหนดจุดมาร์กเกอร์ภายในวัตถุและพื้นหลังล่วงหน้า</div>
+        </div>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-rose-950/30 border border-rose-500/30 text-xs text-rose-200">
+          <strong class="text-rose-400">⚠️ หลุมพรางข้อสอบที่มักออกบ่อย:</strong>
+          <ul class="list-disc list-inside mt-1 space-y-0.5"><li>⚠️ Otsu's Thresholding มุ่งเน้น 'Maximize Between-Class Variance' ซึ่งเทียบเท่ากับการ 'Minimize Within-Class Variance' (ผลรวมความแปรปรวนรวมทั้งหมดคงที่)</li><li>⚠️ Watershed Algorithm มักใช้กับ 'Gradient Magnitude' ของภาพ ไม่ใช่ใช้กับภาพ Grayscale ดิบๆ โดยตรง</li></ul>
+        </div>
+      </div>
+
+      <!-- L12 -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+          <h2 class="text-lg sm:text-xl font-bold text-white">Lecture 12: Texture Description & Analysis</h2>
+          <span class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-blue-950 text-blue-400 border border-blue-800/60">L12</span>
+        </div>
+        <p class="text-slate-400 text-xs sm:text-sm"><strong>การบรรยายลักษณะเนื้อสัมผัสของภาพ (Texture Description):</strong> ความหมายของ Texture คุณลักษณะทางสถิติอันดับหนึ่งจากฮิสโทแกรม เมทริกซ์ความร่วมเกิดของระดับเทา (GLCM) คุณลักษณะของ Haralick และ Local Binary Patterns (LBP)</p>
+
+        <div class="space-y-3 pt-2">
+          <strong class="text-sm text-white">🔑 แนวคิดหลักและสูตรคำนวณ:</strong>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• First-Order Histogram Statistics</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">วิเคราะห์จากการแจกแจงความถี่ระดับสีโดยไม่คำนึงถึงตำแหน่งเชิงพื้นที่:
+• Mean (m): ความสว่างเฉลี่ย m = Σ z_i * p(z_i)
+• Variance (σ²): ความเปรียบต่างความเข้มสี σ² = Σ (z_i - m)² * p(z_i)
+• Skewness (μ3): ความเบ้ของฮิสโทแกรม (สมมาตร = 0, เบ้ซ้าย/ขวา)
+• Kurtosis (μ4): ความโด่งของฮิสโทแกรม (ความแหลมคมของการกระจาย)
+• Uniformity (Energy): U = Σ p(z_i)² (สูงสุดเมื่อภาพมีสีเดียว)
+• Entropy: H = -Σ p(z_i) * log2(p(z_i)) (บอกความสุ่มไร้ระเบียบ)</div>
+        </div>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Gray-Level Co-occurrence Matrix (GLCM)</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">เมทริกซ์สถิติอันดับสอง P(i, j | d, θ) ที่นับจำนวนคู่พิกเซลที่มีระดับสี i และ j อยู่ห่างกันเป็นระยะทาง d ในทิศทางมุม θ
+• ทิศทางมาตรฐาน: 0° (แนวนอนขวา), 45° (ทแยงขวาบน), 90° (แนวตั้งลงล่าง), 135° (ทแยงซ้ายบน)
+• Symmetric GLCM: ทำเมทริกซ์ให้สมมาตรโดยบวกกับทรานสโพสของตัวเอง: P_sym = P + P^T
+• Normalized GLCM: p(i, j) = P(i, j) / Σ P (ทำให้ผลรวมสมาชิกทั้งหมดเท่ากับ 1.0)</div>
+        </div>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Haralick Texture Features</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">คุณลักษณะเด่นคำนวณจาก Normalized GLCM p(i, j):
+1. Contrast = Σ Σ (i - j)² * p(i, j) (วัดการเปลี่ยนแปลงระดับสีเฉพาะที่ ยิ่งต่างเยอะค่ายิ่งสูง)
+2. Dissimilarity = Σ Σ |i - j| * p(i, j)
+3. Homogeneity (Inverse Difference Moment - IDM) = Σ Σ p(i, j) / (1 + (i - j)²) (สูงเมื่อสมาชิกเกาะกลุ่มอยู่แถวเส้นทแยงมุม i=j เนื้อสัมผัสเรียบเนียน)
+4. Angular Second Moment (ASM / Energy) = Σ Σ p(i, j)² (วัดความสม่ำเสมอซ้ำซากของลวดลาย)
+5. Entropy = -Σ Σ p(i, j) * log2(p(i, j)) (วัดความซับซ้อนไร้ทิศทางของลวดลาย)
+6. Correlation = Σ Σ [(i - μ_x)(j - μ_y) * p(i, j)] / (σ_x * σ_y)</div>
+        </div>
+        <div class="space-y-1">
+          <div class="font-bold text-blue-400 text-xs sm:text-sm">• Local Binary Patterns (LBP)</div>
+          <div class="text-xs sm:text-sm text-slate-300 pl-3 leading-relaxed whitespace-pre-line">การสกัดคุณลักษณะเนื้อสัมผัสแบบ Local Texture Operator:
+1. กำหนดหน้าต่าง 3x3 รอบพิกเซลศูนย์กลาง (gc)
+2. ทำ Threshold พิกเซลรอบข้างทั้ง 8 ตัว: ถ้า gp >= gc ให้ค่าเป็น 1 มิฉะนั้น 0
+3. นำเลขฐานสอง 8 บิตมาคูณถ่วงน้ำหนัก 2^0 ถึง 2^7 แล้วรวมเป็นรหัสทศนิยม LBP (0-255)
+4. สร้างฮิสโทแกรมของค่า LBP ทั้งภาพมาใช้เป็น Feature Vector</div>
+        </div>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-rose-950/30 border border-rose-500/30 text-xs text-rose-200">
+          <strong class="text-rose-400">⚠️ หลุมพรางข้อสอบที่มักออกบ่อย:</strong>
+          <ul class="list-disc list-inside mt-1 space-y-0.5"><li>⚠️ Contrast vs Homogeneity ของ GLCM จะมีพฤติกรรมตรงกันข้ามกัน: ถ้าภาพมีลวดลายคมชัดหยาบ Contrast จะสูง Homogeneity จะต่ำ; ถ้าภาพเรียบเนียนเนื้อมะเนียน Homogeneity จะสูง Contrast จะต่ำ</li><li>⚠️ First-Order Statistics ไม่สามารถบอกข้อมูลทิศทาง (Directionality) หรือระยะห่างเชิงพื้นที่ได้ จึงต้องใช้ Second-Order Statistics อย่าง GLCM</li></ul>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="mt-auto border-t border-slate-800 bg-slate-900/60 py-6 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4">
+      <p class="mb-1 font-semibold text-slate-400">310-3311 Digital Image Processing — Academic Exam Mastery Hub 2026</p>
+      <p>จัดทำเพื่อการเตรียมความพร้อมสอบปลายภาค • รองรับการใช้งานเต็มรูปแบบบนมือถือ แท็บเล็ต และคอมพิวเตอร์</p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMobileMenu() {
+      const d = document.getElementById('mobileDropdown');
+      if (d) d.classList.toggle('hidden');
+    }
+  </script>
+</body>
+</html>
+
