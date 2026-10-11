@@ -32,6 +32,36 @@
       }
     }
   </script>
+  <!-- KaTeX Math Rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+  <style>
+    .katex { font-size: 1.08em; color: #93c5fd; }
+    .katex-display { margin: 0.75em 0; overflow-x: auto; overflow-y: hidden; padding: 0.25em 0; }
+  </style>
+  <script>
+    function renderMath(element) {
+      if (window.renderMathInElement) {
+        renderMathInElement(element || document.body, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false},
+            {left: '\(', right: '\)', display: false},
+            {left: '\\[', right: '\\]', display: true}
+          ],
+          throwOnError: false
+        });
+      }
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+      if (window.renderMathInElement) {
+        renderMath();
+      } else {
+        window.addEventListener('load', function() { renderMath(); });
+      }
+    });
+  </script>
   <style>
     :root {
       --bg: #090d16;
@@ -549,6 +579,7 @@
     $('#intro-target').textContent = 'เกณฑ์ผ่าน: ' + curFloor.target_pass + '%';
     $('#intro-qcount').textContent = curFloor.question_count;
     $('#intro-briefing').innerHTML = curFloor.briefing;
+    if (window.renderMath) renderMath($('#intro-briefing'));
     $('#hud-level-text').textContent = 'ชั้น ' + curFloor.floor + ' · ' + curFloor.badge;
     show('s-intro');
   }
@@ -624,6 +655,8 @@
       </div>
     `;
 
+    if (window.renderMath) renderMath(body);
+
     let done = false;
     const choose = b => {
       if (done) return;
@@ -670,6 +703,7 @@
     $('#fb-title').textContent = ok ? '🎉 ถูกต้องแม่นยำ!' : '❌ ยังไม่ถูกต้อง';
     $('#fb-pts').textContent = '+' + pts + ' PTS';
     $('#fb-text').innerHTML = explain || '';
+    if (window.renderMath) renderMath($('#fb-text'));
     fb.classList.remove('hidden');
 
     const last = G.i === G.qs.length - 1;
@@ -741,6 +775,7 @@
       </div>
     ` : '<div class="text-emerald-400 font-bold text-center py-4">🎯 ไร้ที่ติ! คุณตอบถูกครบทุกข้อ 100% เต็ม</div>';
 
+    if (window.renderMath) renderMath($('#r-review'));
     $('#hud-bar').style.width = '100%';
     show('s-result');
   }

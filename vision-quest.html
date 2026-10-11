@@ -32,6 +32,36 @@
       }
     }
   </script>
+  <!-- KaTeX Math Rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+  <style>
+    .katex { font-size: 1.08em; color: #93c5fd; }
+    .katex-display { margin: 0.75em 0; overflow-x: auto; overflow-y: hidden; padding: 0.25em 0; }
+  </style>
+  <script>
+    function renderMath(element) {
+      if (window.renderMathInElement) {
+        renderMathInElement(element || document.body, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false},
+            {left: '\(', right: '\)', display: false},
+            {left: '\\[', right: '\\]', display: true}
+          ],
+          throwOnError: false
+        });
+      }
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+      if (window.renderMathInElement) {
+        renderMath();
+      } else {
+        window.addEventListener('load', function() { renderMath(); });
+      }
+    });
+  </script>
   <style>
     :root {
       --bg: #090d16;
@@ -787,6 +817,7 @@
     $('#fb-title').textContent = ok ? (pts === 100 ? '🎉 ยอดเยี่ยม ถูกต้องสมบูรณ์!' : '👍 ผ่านด่าน') : '❌ ยังไม่ใช่';
     $('#fb-pts').textContent = '+' + pts + ' PTS';
     $('#fb-text').innerHTML = explain || '';
+    if (window.renderMath) renderMath($('#fb-text'));
     fb.classList.remove('hidden');
 
     const last = G.i === G.qs.length - 1;

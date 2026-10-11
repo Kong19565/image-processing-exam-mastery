@@ -110,6 +110,36 @@
     .prose-dark hr { border: none; border-top: 1px dashed #334155; margin: 1.5rem 0; }
     .prose-dark strong, .prose-dark b { color: #f8fafc; font-weight: 700; }
   </style>
+  <!-- KaTeX Math Rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+  <style>
+    .katex { font-size: 1.08em; color: #93c5fd; }
+    .katex-display { margin: 0.75em 0; overflow-x: auto; overflow-y: hidden; padding: 0.25em 0; }
+  </style>
+  <script>
+    function renderMath(element) {
+      if (window.renderMathInElement) {
+        renderMathInElement(element || document.body, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false},
+            {left: '\(', right: '\)', display: false},
+            {left: '\[', right: '\]', display: true}
+          ],
+          throwOnError: false
+        });
+      }
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+      if (window.renderMathInElement) {
+        renderMath();
+      } else {
+        window.addEventListener('load', function() { renderMath(); });
+      }
+    });
+  </script>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-blue-600 selection:text-white">
 

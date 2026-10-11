@@ -110,6 +110,36 @@
     .prose-dark hr { border: none; border-top: 1px dashed #334155; margin: 1.5rem 0; }
     .prose-dark strong, .prose-dark b { color: #f8fafc; font-weight: 700; }
   </style>
+  <!-- KaTeX Math Rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+  <style>
+    .katex { font-size: 1.08em; color: #93c5fd; }
+    .katex-display { margin: 0.75em 0; overflow-x: auto; overflow-y: hidden; padding: 0.25em 0; }
+  </style>
+  <script>
+    function renderMath(element) {
+      if (window.renderMathInElement) {
+        renderMathInElement(element || document.body, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false},
+            {left: '\(', right: '\)', display: false},
+            {left: '\[', right: '\]', display: true}
+          ],
+          throwOnError: false
+        });
+      }
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+      if (window.renderMathInElement) {
+        renderMath();
+      } else {
+        window.addEventListener('load', function() { renderMath(); });
+      }
+    });
+  </script>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-blue-600 selection:text-white">
 
@@ -1473,25 +1503,26 @@
       let text = '';
       const origStr = `(${sim8Origin[0]}, ${sim8Origin[1]})`;
       if (sim8Op === 'dilation') {
-        text = `<b>Dilation ($A \oplus B$):</b> จุด Origin ของเคอร์เนลตั้งอยู่ที่ <code>${origStr}</code><br>` +
+        text = `<b>Dilation ($A \\oplus B$):</b> จุด Origin ของเคอร์เนลตั้งอยู่ที่ <code>${origStr}</code><br>` +
           `• นิยาม: ขอเพียงมีจุด 1 ของ SE แตะโดน Foreground ของภาพ A เพียงจุดเดียว ตำแหน่ง Origin จะถูกระบายเป็น 1 ทันที<br>` +
-          `• <b>การสะท้อน (Reflect) 180°:</b> เคอร์เนลสะท้อน $\hat{B} = \{-w \mid w \in B\}$ ` +
+          `• <b>การสะท้อน (Reflect) 180°:</b> เคอร์เนลสะท้อน $\\hat{B} = \\{-w \\mid w \\in B\\}$ ` +
           (sim8Origin[0] === 0 && sim8Origin[1] === 0 ? 
-            `<span class="text-amber-400 font-bold">เนื่องจาก Origin อยู่ที่บนซ้าย (0,0) $\hat{B}$ จึงสะท้อนยื่นไปทางล่างขวา ส่งผลให้ภาพผลลัพธ์ถูกเลื่อนขยายไปทางล่างขวา (Translation Shift) อย่างเห็นได้ชัด! (ตรงตามที่อาจารย์ย้ำในคลิป 7 ก.ย. 00:28)</span>` : 
+            `<span class="text-amber-400 font-bold">เนื่องจาก Origin อยู่ที่บนซ้าย (0,0) $\\hat{B}$ จึงสะท้อนยื่นไปทางล่างขวา ส่งผลให้ภาพผลลัพธ์ถูกเลื่อนขยายไปทางล่างขวา (Translation Shift) อย่างเห็นได้ชัด! (ตรงตามที่อาจารย์ย้ำในคลิป 7 ก.ย. 00:28)</span>` : 
             `หาก Origin อยู่ตรงกลาง (1,1) วัตถุจะพองตัวออกรอบทิศทางอย่างสมดุล`);
       } else if (sim8Op === 'erosion') {
-        text = `<b>Erosion ($A \ominus B$):</b> จุด Origin อยู่ที่ <code>${origStr}</code><br>` +
-          `• นิยาม: ช่อง Origin จะระบายเป็น 1 ได้ <i>ก็ต่อเมื่อทุกจุด 1 ของเคอร์เนล B ซ้อนทับพอดีกับพิกเซล Foreground (1) ของภาพ A ทั้งหมด ($B_z \subseteq A$)</i><br>` +
+        text = `<b>Erosion ($A \\ominus B$):</b> จุด Origin อยู่ที่ <code>${origStr}</code><br>` +
+          `• นิยาม: ช่อง Origin จะระบายเป็น 1 ได้ <i>ก็ต่อเมื่อทุกจุด 1 ของเคอร์เนล B ซ้อนทับพอดีกับพิกเซล Foreground (1) ของภาพ A ทั้งหมด ($B_z \\subseteq A$)</i><br>` +
           `• หากมีแม้แต่จุดเดียวของ B แตะโดนพื้นหลัง (0) ผลลัพธ์จะเป็น 0 ทันที วัตถุจึงหดตัวและส่วนยื่นเล็กๆ หลุดหาย`;
       } else if (sim8Op === 'opening') {
-        text = `<b>Opening ($A \circ B = (A \ominus B) \oplus B$):</b> การกร่อน (Erosion) ตามด้วยการขยาย (Dilation)<br>` +
+        text = `<b>Opening ($A \\circ B = (A \\ominus B) \\oplus B$):</b> การกร่อน (Erosion) ตามด้วยการขยาย (Dilation)<br>` +
           `• ช่วยขจัดติ่งแหลมและจุดรบกวนสีขาวภายนอกวัตถุ โดยที่ขนาดหลักของวัตถุยังคงเดิม<br>` +
           `• <b>หลุมพรางรูปตัว j:</b> หากโจทย์ไม่ระบุว่าสีขาวหรือดำคือวัตถุ ตามหลัก Duality การทำ Opening บนสีขาวจะเท่ากับ Closing บนสีดำพอดี!`;
       } else {
-        text = `<b>Closing ($A ullet B = (A \oplus B) \ominus B$):</b> การขยาย (Dilation) ตามด้วยการกร่อน (Erosion)<br>` +
+        text = `<b>Closing ($A \\bullet B = (A \\oplus B) \\ominus B$):</b> การขยาย (Dilation) ตามด้วยการกร่อน (Erosion)<br>` +
           `• ช่วยอุดรูโหว่สีดำภายในวัตถุและเชื่อมสะพานคอดให้ติดกัน โดยขนาดภายนอกไม่ขยายโตขึ้น`;
       }
       box.innerHTML = text;
+      if (window.renderMath) renderMath(box);
     }
 
     window.addEventListener('DOMContentLoaded', () => {
