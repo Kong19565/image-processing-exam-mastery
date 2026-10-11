@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <title>7 ห้องทดลองเสมือนจริง — Image Processing Exam Mastery Hub</title>
+  <title>8 ห้องทดลองเสมือนจริง — Image Processing Exam Mastery Hub</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -181,7 +181,7 @@
 
       <div class="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-xl">
         <h1 class="text-2xl sm:text-3xl font-extrabold text-white flex items-center gap-2">
-          <span>🧪</span> 7 ห้องทดลองอินเทอร์แอคทีฟ (Interactive Simulators)
+          <span>🧪</span> 8 ห้องทดลองอินเทอร์แอคทีฟ (Interactive Simulators)
         </h1>
         <p class="text-slate-400 text-sm mt-1">
           ทดลองปรับพารามิเตอร์จริงและดูผลการคำนวณแบบ Real-time เพื่อสร้างความเข้าใจเชิงภาพและคณิตศาสตร์
@@ -197,6 +197,7 @@
         <button onclick="showSim(5)" id="sim-btn-5" class="px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 whitespace-nowrap">5. Otsu Threshold</button>
         <button onclick="showSim(6)" id="sim-btn-6" class="px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 whitespace-nowrap">6. GLCM Texture</button>
         <button onclick="showSim(7)" id="sim-btn-7" class="px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 whitespace-nowrap">7. Confusion Matrix</button>
+        <button onclick="showSim(8)" id="sim-btn-8" class="px-3.5 py-2 rounded-lg text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500/30 whitespace-nowrap font-bold">8. Pencil Shading & Origin Shift (อาจารย์เน้น!)</button>
       </div>
 
       <!-- SIM 1: Point Operations -->
@@ -497,6 +498,143 @@
             </div>
           </div>
         </div>
+      <!-- SIM 8: Pencil-Shading & Asymmetric SE Origin -->
+      <div id="sim-card-8" class="hidden bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-5 sm:p-6 shadow-xl space-y-5">
+        <div class="border-b border-slate-800 pb-3 flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 mb-1">
+              🔥 ถอดรหัสข้อสอบ Final 7 ก.ย. 00:24 & 00:28
+            </div>
+            <h2 class="text-lg sm:text-xl font-bold text-white">
+              🧪 ห้องทดลองที่ 8: Dilation / Erosion Pencil-Shading & Asymmetric SE Origin
+            </h2>
+          </div>
+          <span class="text-xs font-mono text-amber-400 bg-amber-950/60 px-2.5 py-1 rounded border border-amber-500/30">
+            จำลองโจทย์ระบายตารางจริง
+          </span>
+        </div>
+
+        <!-- Controls Bar -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs">
+          <!-- Preset selector & Clear -->
+          <div class="space-y-2">
+            <label class="block font-bold text-slate-300">1. เลือกรูปทรง Input A (หรือคลิกตารางเพื่อวาดเอง):</label>
+            <div class="flex flex-wrap gap-1.5">
+              <button onclick="setSim8Pattern('j_shape')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-amber-300 rounded border border-amber-500/30">รูปตัว J (หลุมพราง Duality)</button>
+              <button onclick="setSim8Pattern('box')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded">กล่องสี่เหลี่ยม</button>
+              <button onclick="setSim8Pattern('cross')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded">กากบาท</button>
+              <button onclick="clearSim8Input()" class="px-2.5 py-1 bg-rose-950/50 hover:bg-rose-900/60 text-rose-300 rounded border border-rose-800/40">ล้างกระดาน</button>
+            </div>
+            <div class="text-[11px] text-slate-400">คลิกที่ช่องตาราง A เพื่อสลับค่า 0 (ดำ) / 1 (ขาว)</div>
+          </div>
+
+          <!-- Structuring Element SE & Origin -->
+          <div class="space-y-2">
+            <label class="block font-bold text-slate-300">2. Structuring Element B (3x3) & Origin:</label>
+            <div class="flex items-center gap-2">
+              <span class="text-slate-400">ตำแหน่ง Origin:</span>
+              <select id="sim8-origin-sel" onchange="setSim8Origin(this.value)" class="bg-slate-800 border border-slate-700 text-amber-300 rounded px-2 py-1 font-mono text-xs">
+                <option value="0,0">(0,0) บนซ้าย (ครูย้ำ! ขยายเยื้องล่างขวา)</option>
+                <option value="1,1" selected>(1,1) กึ่งกลาง (สมมาตรปกติ)</option>
+                <option value="2,2">(2,2) ล่างขวา (ขยายเยื้องบนซ้าย)</option>
+              </select>
+            </div>
+            <div class="flex flex-wrap gap-1.5">
+              <button onclick="setSim8SEPreset('l_shape')" class="px-2 py-0.5 bg-slate-800 hover:bg-slate-700 text-amber-300 rounded border border-amber-500/30">L-Shape (ไม่สมมาตร)</button>
+              <button onclick="setSim8SEPreset('cross')" class="px-2 py-0.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded">Cross 3x3</button>
+              <button onclick="setSim8SEPreset('hline')" class="px-2 py-0.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded">Horizontal 1x3</button>
+              <button onclick="setSim8SEPreset('box2')" class="px-2 py-0.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded">Box 2x2</button>
+            </div>
+          </div>
+
+          <!-- Operation & Practice Mode -->
+          <div class="space-y-2">
+            <label class="block font-bold text-slate-300">3. ตัวดำเนินการทางสัณฐานวิทยา:</label>
+            <div class="grid grid-cols-2 gap-1.5">
+              <button onclick="setSim8Op('dilation')" id="sim8-btn-dil" class="px-2.5 py-1 bg-amber-600 text-white font-bold rounded shadow">Dilation (A ⊕ B)</button>
+              <button onclick="setSim8Op('erosion')" id="sim8-btn-ero" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded">Erosion (A ⊖ B)</button>
+              <button onclick="setSim8Op('opening')" id="sim8-btn-ope" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded">Opening (A ∘ B)</button>
+              <button onclick="setSim8Op('closing')" id="sim8-btn-clo" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded">Closing (A • B)</button>
+            </div>
+            <div class="flex items-center gap-2 pt-1">
+              <label class="flex items-center gap-1.5 text-xs text-amber-300 cursor-pointer">
+                <input type="checkbox" id="sim8-practice-mode" onchange="toggleSim8PracticeMode()" class="rounded bg-slate-800 border-slate-700 text-amber-500 focus:ring-0">
+                <span>✏️ โหมดระบายสีสอบเอง (Exam Mode)</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Grids Area -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+          <!-- Col 1: Input A (7x7) -->
+          <div class="lg:col-span-4 bg-slate-950/70 p-4 rounded-xl border border-slate-800 text-center space-y-2">
+            <div class="flex justify-between items-center text-xs font-bold text-slate-300">
+              <span>ภาพอินพุต A (7x7 Grid)</span>
+              <span class="text-slate-500 font-mono">0=ดำ, 1=ขาว</span>
+            </div>
+            <div id="sim8-grid-a" class="inline-grid grid-cols-7 gap-1 p-2 bg-slate-900 border border-slate-800 rounded-xl select-none"></div>
+            <div class="text-[11px] text-slate-400">คลิกที่ช่องเพื่อเปลี่ยนค่า 0 หรือ 1</div>
+          </div>
+
+          <!-- Col 2: SE B (3x3) & Reflected SE B_hat -->
+          <div class="lg:col-span-3 bg-slate-950/70 p-4 rounded-xl border border-slate-800 space-y-4">
+            <div class="text-center space-y-2">
+              <div class="flex justify-between items-center text-xs font-bold text-slate-300">
+                <span>Kernel B (3x3)</span>
+                <span class="text-amber-400 font-mono text-[11px]">🔴 = Origin</span>
+              </div>
+              <div id="sim8-grid-b" class="inline-grid grid-cols-3 gap-1 p-2 bg-slate-900 border border-slate-800 rounded-xl select-none"></div>
+              <div class="text-[11px] text-slate-400">คลิกเพื่อสลับ 1/0 บน Kernel</div>
+            </div>
+
+            <!-- Reflected SE Visualization (B_hat) -->
+            <div class="p-3 bg-slate-900/80 rounded-lg border border-slate-800 space-y-1.5 text-xs">
+              <div class="font-bold text-amber-300 flex items-center justify-between">
+                <span>สะท้อน 180° (B̂):</span>
+                <span class="font-mono text-[10px] text-slate-400">{-w | w &isin; B}</span>
+              </div>
+              <div id="sim8-grid-b-hat" class="inline-grid grid-cols-3 gap-1 p-1.5 bg-slate-950 border border-slate-800 rounded-lg select-none mx-auto"></div>
+              <p class="text-[11px] text-slate-400 leading-relaxed">
+                🚨 <strong>กฎของครู:</strong> Dilation ต้องใช้ B̂ สะท้อน 180° รอบ Origin! หาก Origin อยู่บนซ้าย B̂ จะยื่นไปล่างขวา ทำให้ภาพขยายเลื่อนตำแหน่ง (Shift)!
+              </p>
+            </div>
+          </div>
+
+          <!-- Col 3: Result Grid (7x7) -->
+          <div class="lg:col-span-5 bg-slate-950/70 p-4 rounded-xl border border-slate-800 space-y-3">
+            <div class="flex justify-between items-center text-xs font-bold">
+              <span id="sim8-out-title" class="text-amber-400">ผลลัพธ์: Dilation (A ⊕ B)</span>
+              <span id="sim8-score-badge" class="hidden px-2 py-0.5 rounded text-xs font-mono font-bold"></span>
+            </div>
+
+            <div class="text-center">
+              <div id="sim8-grid-out" class="inline-grid grid-cols-7 gap-1 p-2 bg-slate-900 border border-slate-800 rounded-xl select-none"></div>
+            </div>
+
+            <!-- Practice Mode Action Buttons -->
+            <div id="sim8-practice-actions" class="hidden flex flex-wrap gap-2 justify-center pt-1">
+              <button onclick="checkSim8PencilAnswer()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-lg text-xs shadow-lg shadow-emerald-600/30 flex items-center gap-1.5">
+                <span>📝</span> ตรวจคำตอบที่ระบายสี
+              </button>
+              <button onclick="revealSim8Answer()" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs">
+                👀 ดูเฉลยที่ถูกต้อง
+              </button>
+              <button onclick="clearSim8Pencil()" class="px-3 py-2 bg-rose-950/60 hover:bg-rose-900 text-rose-300 rounded-lg text-xs">
+                🧹 ลบคำตอบ (ใช้ยางลบ)
+              </button>
+            </div>
+
+            <!-- Analysis & Step-by-Step Rationale -->
+            <div id="sim8-rationale-box" class="p-3 bg-slate-900 border border-slate-800 rounded-lg text-xs text-slate-300 space-y-1.5 leading-relaxed">
+              <div class="font-bold text-amber-300 flex items-center gap-1.5">
+                <span>💡</span> คำอธิบายผลลัพธ์เชิงทฤษฎี (Mathematical Rationale):
+              </div>
+              <div id="sim8-rationale-text" class="text-slate-300 text-[11.5px] leading-relaxed"></div>
+            </div>
+          </div>
+        </div>
+      </div>
       </div>
 
     </div>
@@ -504,7 +642,7 @@
 
   <script>
     function showSim(num) {
-      for (let i = 1; i <= 7; i++) {
+      for (let i = 1; i <= 8; i++) {
         const card = document.getElementById('sim-card-' + i);
         const btn = document.getElementById('sim-btn-' + i);
         if (card) card.classList.toggle('hidden', i !== num);
@@ -523,6 +661,8 @@
       if (num === 5) updateSim5();
       if (num === 6) updateSim6();
       if (num === 7) updateSim7();
+      initSim8();
+      if (num === 8) updateSim8();
     }
 
     // SIM 1 logic
@@ -972,6 +1112,388 @@
       document.getElementById('sim7-iou').innerText = iou.toFixed(4);
     }
 
+    
+    // SIM 8 logic
+    let sim8A = [
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 1, 0, 0, 0],
+      [0, 0, 0, 1, 0, 0, 0],
+      [0, 0, 0, 1, 0, 0, 0],
+      [0, 1, 0, 1, 0, 0, 0],
+      [0, 1, 1, 1, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0]
+    ];
+    let sim8B = [
+      [1, 0, 0],
+      [1, 0, 0],
+      [1, 1, 0]
+    ];
+    let sim8Origin = [0, 0];
+    let sim8Op = 'dilation';
+    let sim8User = Array.from({length: 7}, () => new Array(7).fill(0));
+    let sim8PracticeMode = false;
+
+    function initSim8() {
+      renderSim8A();
+      renderSim8B();
+      updateSim8();
+    }
+
+    function renderSim8A() {
+      const g = document.getElementById('sim8-grid-a');
+      if (!g) return;
+      g.innerHTML = '';
+      for (let r = 0; r < 7; r++) {
+        for (let c = 0; c < 7; c++) {
+          const btn = document.createElement('button');
+          btn.className = 'w-7 h-7 sm:w-8 sm:h-8 rounded text-xs font-mono font-bold flex items-center justify-center transition-all ' + 
+            (sim8A[r][c] ? 'bg-amber-400 text-slate-950 shadow-md shadow-amber-400/30' : 'bg-slate-950 border border-slate-800 text-slate-600 hover:border-slate-600');
+          btn.innerText = sim8A[r][c];
+          btn.title = `พิกเซล (${r}, ${c})`;
+          btn.onclick = () => {
+            sim8A[r][c] = sim8A[r][c] ? 0 : 1;
+            renderSim8A();
+            updateSim8();
+          };
+          g.appendChild(btn);
+        }
+      }
+    }
+
+    function renderSim8B() {
+      const g = document.getElementById('sim8-grid-b');
+      if (!g) return;
+      g.innerHTML = '';
+      for (let r = 0; r < 3; r++) {
+        for (let c = 0; c < 3; c++) {
+          const btn = document.createElement('button');
+          const isOrig = (r === sim8Origin[0] && c === sim8Origin[1]);
+          let cls = 'w-9 h-9 rounded text-xs font-mono font-bold flex items-center justify-center relative transition-all ';
+          if (sim8B[r][c]) {
+            cls += 'bg-blue-500 text-white shadow-md shadow-blue-500/30 ';
+          } else {
+            cls += 'bg-slate-950 border border-slate-800 text-slate-600 hover:border-slate-600 ';
+          }
+          if (isOrig) {
+            cls += 'ring-2 ring-rose-500 ring-offset-1 ring-offset-slate-900 ';
+          }
+          btn.className = cls;
+          btn.innerHTML = sim8B[r][c] + (isOrig ? '<span class="absolute top-0.5 right-0.5 w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>' : '');
+          btn.title = `SE (${r}, ${c})` + (isOrig ? ' [ORIGIN]' : '');
+          btn.onclick = () => {
+            sim8B[r][c] = sim8B[r][c] ? 0 : 1;
+            renderSim8B();
+            updateSim8();
+          };
+          g.appendChild(btn);
+        }
+      }
+      renderSim8BHat();
+    }
+
+    function renderSim8BHat() {
+      const g = document.getElementById('sim8-grid-b-hat');
+      if (!g) return;
+      g.innerHTML = '';
+      const origR = sim8Origin[0], origC = sim8Origin[1];
+      for (let r = 0; r < 3; r++) {
+        for (let c = 0; c < 3; c++) {
+          const refR = 2 - r;
+          const refC = 2 - c;
+          const val = sim8B[refR][refC];
+          const isOrig = (refR === origR && refC === origC);
+          const cell = document.createElement('div');
+          cell.className = 'w-7 h-7 rounded text-[10px] font-mono font-bold flex items-center justify-center ' + 
+            (val ? 'bg-amber-500/30 border border-amber-400 text-amber-300' : 'bg-slate-900 border border-slate-800 text-slate-700') + 
+            (isOrig ? ' ring-1 ring-rose-400' : '');
+          cell.innerText = val;
+          g.appendChild(cell);
+        }
+      }
+    }
+
+    function setSim8Origin(val) {
+      const parts = val.split(',').map(x => parseInt(x));
+      sim8Origin = [parts[0], parts[1]];
+      renderSim8B();
+      updateSim8();
+    }
+
+    function setSim8Pattern(type) {
+      const arr = Array.from({length: 7}, () => new Array(7).fill(0));
+      if (type === 'j_shape') {
+        arr[1][3] = 1; arr[2][3] = 1; arr[3][3] = 1;
+        arr[4][1] = 1; arr[4][3] = 1;
+        arr[5][1] = 1; arr[5][2] = 1; arr[5][3] = 1;
+      } else if (type === 'box') {
+        for (let r = 2; r <= 4; r++) {
+          for (let c = 2; c <= 4; c++) arr[r][c] = 1;
+        }
+      } else if (type === 'cross') {
+        for (let i = 1; i <= 5; i++) {
+          arr[3][i] = 1;
+          arr[i][3] = 1;
+        }
+      }
+      sim8A = arr;
+      renderSim8A();
+      if (sim8PracticeMode) clearSim8Pencil();
+      updateSim8();
+    }
+
+    function clearSim8Input() {
+      sim8A = Array.from({length: 7}, () => new Array(7).fill(0));
+      renderSim8A();
+      if (sim8PracticeMode) clearSim8Pencil();
+      updateSim8();
+    }
+
+    function setSim8SEPreset(type) {
+      const b = Array.from({length: 3}, () => new Array(3).fill(0));
+      if (type === 'l_shape') {
+        b[0][0] = 1; b[1][0] = 1; b[2][0] = 1; b[2][1] = 1;
+        document.getElementById('sim8-origin-sel').value = '0,0';
+        sim8Origin = [0, 0];
+      } else if (type === 'cross') {
+        b[0][1] = 1; b[1][0] = 1; b[1][1] = 1; b[1][2] = 1; b[2][1] = 1;
+        document.getElementById('sim8-origin-sel').value = '1,1';
+        sim8Origin = [1, 1];
+      } else if (type === 'hline') {
+        b[1][0] = 1; b[1][1] = 1; b[1][2] = 1;
+        document.getElementById('sim8-origin-sel').value = '1,1';
+        sim8Origin = [1, 1];
+      } else if (type === 'box2') {
+        b[0][0] = 1; b[0][1] = 1; b[1][0] = 1; b[1][1] = 1;
+        document.getElementById('sim8-origin-sel').value = '0,0';
+        sim8Origin = [0, 0];
+      }
+      sim8B = b;
+      renderSim8B();
+      updateSim8();
+    }
+
+    function setSim8Op(op) {
+      sim8Op = op;
+      ['dilation', 'erosion', 'opening', 'closing'].forEach(o => {
+        const btn = document.getElementById('sim8-btn-' + o.slice(0, 3));
+        if (btn) {
+          if (o === op) {
+            btn.className = 'px-2.5 py-1 bg-amber-600 text-white font-bold rounded shadow';
+          } else {
+            btn.className = 'px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded';
+          }
+        }
+      });
+      const tMap = {
+        'dilation': 'ผลลัพธ์: Dilation (A ⊕ B) — ขยายตัว',
+        'erosion': 'ผลลัพธ์: Erosion (A ⊖ B) — กร่อนตัว',
+        'opening': 'ผลลัพธ์: Opening (A ∘ B) — ลบจุดกวนภายนอก',
+        'closing': 'ผลลัพธ์: Closing (A • B) — อุดรูโหว่ภายใน'
+      };
+      document.getElementById('sim8-out-title').innerText = tMap[op];
+      updateSim8();
+    }
+
+    function computeErosion(inp, b, orig) {
+      const out = Array.from({length: 7}, () => new Array(7).fill(0));
+      for (let r = 0; r < 7; r++) {
+        for (let c = 0; c < 7; c++) {
+          let fit = true;
+          for (let br = 0; br < 3; br++) {
+            for (let bc = 0; bc < 3; bc++) {
+              if (b[br][bc] === 1) {
+                const ir = r + (br - orig[0]);
+                const ic = c + (bc - orig[1]);
+                if (ir < 0 || ir >= 7 || ic < 0 || ic >= 7 || inp[ir][ic] !== 1) {
+                  fit = false;
+                  break;
+                }
+              }
+            }
+            if (!fit) break;
+          }
+          if (fit) out[r][c] = 1;
+        }
+      }
+      return out;
+    }
+
+    function computeDilation(inp, b, orig) {
+      const out = Array.from({length: 7}, () => new Array(7).fill(0));
+      for (let r = 0; r < 7; r++) {
+        for (let c = 0; c < 7; c++) {
+          if (inp[r][c] === 1) {
+            for (let br = 0; br < 3; br++) {
+              for (let bc = 0; bc < 3; bc++) {
+                if (b[br][bc] === 1) {
+                  const outR = r + (br - orig[0]);
+                  const outC = c + (bc - orig[1]);
+                  if (outR >= 0 && outR < 7 && outC >= 0 && outC < 7) {
+                    out[outR][outC] = 1;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      return out;
+    }
+
+    function toggleSim8PracticeMode() {
+      sim8PracticeMode = document.getElementById('sim8-practice-mode').checked;
+      const act = document.getElementById('sim8-practice-actions');
+      const badge = document.getElementById('sim8-score-badge');
+      if (sim8PracticeMode) {
+        act.classList.remove('hidden');
+        badge.classList.remove('hidden');
+        badge.className = 'px-2 py-0.5 rounded text-xs font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40';
+        badge.innerText = 'โหมดระบายสีคำตอบ';
+        clearSim8Pencil();
+      } else {
+        act.classList.add('hidden');
+        badge.classList.add('hidden');
+      }
+      updateSim8();
+    }
+
+    function clearSim8Pencil() {
+      sim8User = Array.from({length: 7}, () => new Array(7).fill(0));
+      updateSim8();
+    }
+
+    function checkSim8PencilAnswer() {
+      let correctMat;
+      if (sim8Op === 'dilation') correctMat = computeDilation(sim8A, sim8B, sim8Origin);
+      else if (sim8Op === 'erosion') correctMat = computeErosion(sim8A, sim8B, sim8Origin);
+      else if (sim8Op === 'opening') {
+        const er = computeErosion(sim8A, sim8B, sim8Origin);
+        correctMat = computeDilation(er, sim8B, sim8Origin);
+      } else {
+        const di = computeDilation(sim8A, sim8B, sim8Origin);
+        correctMat = computeErosion(di, sim8B, sim8Origin);
+      }
+
+      let matchCount = 0;
+      for (let r = 0; r < 7; r++) {
+        for (let c = 0; c < 7; c++) {
+          if (sim8User[r][c] === correctMat[r][c]) matchCount++;
+        }
+      }
+      const scorePct = Math.round((matchCount / 49) * 100);
+      const badge = document.getElementById('sim8-score-badge');
+      badge.classList.remove('hidden');
+      if (scorePct === 100) {
+        badge.className = 'px-2.5 py-1 rounded text-xs font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/50 animate-bounce';
+        badge.innerText = `🎉 ถูกต้อง 100% (${matchCount}/49 ช่อง)`;
+      } else {
+        badge.className = 'px-2.5 py-1 rounded text-xs font-mono font-bold bg-rose-500/20 text-rose-300 border border-rose-500/50';
+        badge.innerText = `⚠️ ความถูกต้อง: ${scorePct}% (${matchCount}/49 ช่อง)`;
+      }
+      renderSim8OutputGrid(correctMat, true);
+    }
+
+    function revealSim8Answer() {
+      let correctMat;
+      if (sim8Op === 'dilation') correctMat = computeDilation(sim8A, sim8B, sim8Origin);
+      else if (sim8Op === 'erosion') correctMat = computeErosion(sim8A, sim8B, sim8Origin);
+      else if (sim8Op === 'opening') {
+        const er = computeErosion(sim8A, sim8B, sim8Origin);
+        correctMat = computeDilation(er, sim8B, sim8Origin);
+      } else {
+        const di = computeDilation(sim8A, sim8B, sim8Origin);
+        correctMat = computeErosion(di, sim8B, sim8Origin);
+      }
+      sim8User = correctMat.map(row => [...row]);
+      updateSim8();
+    }
+
+    function updateSim8() {
+      let result;
+      if (sim8Op === 'dilation') {
+        result = computeDilation(sim8A, sim8B, sim8Origin);
+      } else if (sim8Op === 'erosion') {
+        result = computeErosion(sim8A, sim8B, sim8Origin);
+      } else if (sim8Op === 'opening') {
+        const er = computeErosion(sim8A, sim8B, sim8Origin);
+        result = computeDilation(er, sim8B, sim8Origin);
+      } else {
+        const di = computeDilation(sim8A, sim8B, sim8Origin);
+        result = computeErosion(di, sim8B, sim8Origin);
+      }
+
+      renderSim8OutputGrid(result, false);
+      updateSim8Rationale(result);
+    }
+
+    function renderSim8OutputGrid(correctMat, showDiff) {
+      const g = document.getElementById('sim8-grid-out');
+      if (!g) return;
+      g.innerHTML = '';
+      const displayMat = sim8PracticeMode ? sim8User : correctMat;
+
+      for (let r = 0; r < 7; r++) {
+        for (let c = 0; c < 7; c++) {
+          const btn = document.createElement('button');
+          let cls = 'w-7 h-7 sm:w-8 sm:h-8 rounded text-xs font-mono font-bold flex items-center justify-center transition-all ';
+          const val = displayMat[r][c];
+
+          if (showDiff && sim8PracticeMode) {
+            const correctVal = correctMat[r][c];
+            if (val === correctVal) {
+              cls += (val ? 'bg-emerald-500 text-white shadow' : 'bg-slate-950 border border-emerald-800 text-emerald-400');
+            } else {
+              cls += 'bg-rose-600 text-white animate-pulse ring-2 ring-rose-400';
+            }
+          } else {
+            if (sim8PracticeMode) {
+              cls += (val ? 'bg-amber-500 text-slate-950 shadow-md ring-1 ring-amber-300' : 'bg-slate-950 border border-slate-800 text-slate-500 hover:border-amber-500/50');
+            } else {
+              cls += (val ? 'bg-emerald-400 text-slate-950 shadow-md shadow-emerald-400/30' : 'bg-slate-950 border border-slate-800 text-slate-700');
+            }
+          }
+
+          btn.className = cls;
+          btn.innerText = val;
+          btn.title = `พิกเซล (${r}, ${c}): ` + (val ? 'ระบาย 1' : 'เว้น 0');
+          if (sim8PracticeMode) {
+            btn.onclick = () => {
+              sim8User[r][c] = sim8User[r][c] ? 0 : 1;
+              renderSim8OutputGrid(correctMat, false);
+            };
+          }
+          g.appendChild(btn);
+        }
+      }
+    }
+
+    function updateSim8Rationale(result) {
+      const box = document.getElementById('sim8-rationale-text');
+      if (!box) return;
+      let text = '';
+      const origStr = `(${sim8Origin[0]}, ${sim8Origin[1]})`;
+      if (sim8Op === 'dilation') {
+        text = `<b>Dilation ($A \oplus B$):</b> จุด Origin ของเคอร์เนลตั้งอยู่ที่ <code>${origStr}</code><br>` +
+          `• นิยาม: ขอเพียงมีจุด 1 ของ SE แตะโดน Foreground ของภาพ A เพียงจุดเดียว ตำแหน่ง Origin จะถูกระบายเป็น 1 ทันที<br>` +
+          `• <b>การสะท้อน (Reflect) 180°:</b> เคอร์เนลสะท้อน $\hat{B} = \{-w \mid w \in B\}$ ` +
+          (sim8Origin[0] === 0 && sim8Origin[1] === 0 ? 
+            `<span class="text-amber-400 font-bold">เนื่องจาก Origin อยู่ที่บนซ้าย (0,0) $\hat{B}$ จึงสะท้อนยื่นไปทางล่างขวา ส่งผลให้ภาพผลลัพธ์ถูกเลื่อนขยายไปทางล่างขวา (Translation Shift) อย่างเห็นได้ชัด! (ตรงตามที่อาจารย์ย้ำในคลิป 7 ก.ย. 00:28)</span>` : 
+            `หาก Origin อยู่ตรงกลาง (1,1) วัตถุจะพองตัวออกรอบทิศทางอย่างสมดุล`);
+      } else if (sim8Op === 'erosion') {
+        text = `<b>Erosion ($A \ominus B$):</b> จุด Origin อยู่ที่ <code>${origStr}</code><br>` +
+          `• นิยาม: ช่อง Origin จะระบายเป็น 1 ได้ <i>ก็ต่อเมื่อทุกจุด 1 ของเคอร์เนล B ซ้อนทับพอดีกับพิกเซล Foreground (1) ของภาพ A ทั้งหมด ($B_z \subseteq A$)</i><br>` +
+          `• หากมีแม้แต่จุดเดียวของ B แตะโดนพื้นหลัง (0) ผลลัพธ์จะเป็น 0 ทันที วัตถุจึงหดตัวและส่วนยื่นเล็กๆ หลุดหาย`;
+      } else if (sim8Op === 'opening') {
+        text = `<b>Opening ($A \circ B = (A \ominus B) \oplus B$):</b> การกร่อน (Erosion) ตามด้วยการขยาย (Dilation)<br>` +
+          `• ช่วยขจัดติ่งแหลมและจุดรบกวนสีขาวภายนอกวัตถุ โดยที่ขนาดหลักของวัตถุยังคงเดิม<br>` +
+          `• <b>หลุมพรางรูปตัว j:</b> หากโจทย์ไม่ระบุว่าสีขาวหรือดำคือวัตถุ ตามหลัก Duality การทำ Opening บนสีขาวจะเท่ากับ Closing บนสีดำพอดี!`;
+      } else {
+        text = `<b>Closing ($A ullet B = (A \oplus B) \ominus B$):</b> การขยาย (Dilation) ตามด้วยการกร่อน (Erosion)<br>` +
+          `• ช่วยอุดรูโหว่สีดำภายในวัตถุและเชื่อมสะพานคอดให้ติดกัน โดยขนาดภายนอกไม่ขยายโตขึ้น`;
+      }
+      box.innerHTML = text;
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
       initSim1();
       initSim2();
@@ -980,6 +1502,7 @@
       updateSim5();
       initSim6();
       updateSim7();
+      initSim8();
     });
   </script>
 

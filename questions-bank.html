@@ -213,6 +213,7 @@
       <!-- Quick Jump Buttons -->
       <div class="bg-slate-900/60 border border-slate-800/80 rounded-xl p-3 flex flex-wrap gap-2 items-center">
         <span class="text-xs text-slate-400 font-semibold mr-1">กระโดดไปหมวด:</span>
+<button onclick="document.getElementById('sec-L0').scrollIntoView({behavior: 'smooth'})" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-all">L0 (12 ข้อ)</button>
 <button onclick="document.getElementById('sec-L1').scrollIntoView({behavior: 'smooth'})" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-all">L1 (5 ข้อ)</button>
 <button onclick="document.getElementById('sec-L2').scrollIntoView({behavior: 'smooth'})" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-all">L2 (5 ข้อ)</button>
 <button onclick="document.getElementById('sec-L3').scrollIntoView({behavior: 'smooth'})" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-all">L3 (5 ข้อ)</button>
@@ -232,6 +233,7 @@
       <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 sm:p-6 shadow-xl prose-dark">
         <h2>📑 สารบัญหมวดข้อสอบทั้งหมด (Table of Contents)</h2>
         <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-1 text-sm">
+<li><a href="#sec-L0" class="text-blue-400 hover:underline">ชุด 0: จุดเน้นที่อาจารย์ย้ำในคลิปบรรยาย (12 ข้อ)</a></li>
 <li><a href="#sec-L1" class="text-blue-400 hover:underline">Lecture 1: Introduction to Image Processing (5 ข้อ)</a></li>
 <li><a href="#sec-L2" class="text-blue-400 hover:underline">Lecture 2: Control and Fine-tune (5 ข้อ)</a></li>
 <li><a href="#sec-L3" class="text-blue-400 hover:underline">Lecture 3: Human Visual Perception (5 ข้อ)</a></li>
@@ -249,13 +251,486 @@
       </div>
 
       <!-- All Question Sections -->
+    <!-- Section L0 -->
+    <div id="sec-L0" class="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-xl prose-dark">
+      <h2>📌 ชุด 0: จุดเน้นที่อาจารย์ย้ำในคลิปบรรยาย (รวม 12 ข้อ)</h2>
+      <!-- Question 1 -->
+      <div class="question-block my-4 pt-3 border-t border-slate-800/80">
+        <h3 id="q-Q_L00_01" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
+          <span>ข้อที่ 1: ชุด 0: จุดเน้นที่อาจารย์ย้ำในคลิปบรรยาย</span>
+          <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L00_01</span>
+        </h3>
+        <p class="mt-2 text-slate-300 text-sm leading-relaxed">
+          <strong>โจทย์:</strong> [7 ก.ย. 00:24] อาจารย์แนะนำว่า 'สอบ Final ให้เตรียมดินสอกับยางลบไปด้วย ครูจะให้ตารางมาระบาย' ในการทำข้อสอบระบายตารางพิกเซลด้วยมือสำหรับการกร่อน (Erosion: A ⊖ B) และการขยาย (Dilation: A ⊕ B) กฎเกณฑ์ที่ตำแหน่ง Origin ของ Structuring Element คือข้อใด?
+        </p>
+
+        <div class="space-y-1.5 my-3">
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">A</span>
+            <span class="text-slate-200">Erosion: ช่อง Origin จะถูกระบายเป็น 1 ก็ต่อเมื่อ 'ทุกพิกเซลที่เป็น 1 ของ SE ซ้อนทับพอดีกับพิกเซล Foreground (1) ของภาพ A ทั้งหมด (B_z ⊆ A)'; ส่วน Dilation: ช่อง Origin จะถูกระบายเป็น 1 ถ้ามี 'พิกเซล 1 ของ SE อย่างน้อย 1 จุดแตะ/ทับกับพิกเซล Foreground ของภาพ A'</span>
+          </div>
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">B</span>
+            <span class="text-slate-200">Erosion ระบายเมื่อมีอย่างน้อย 1 จุดทับซ้อน, Dilation ระบายเมื่อทับซ้อนทั้งหมดครบทุกช่อง</span>
+          </div>
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">C</span>
+            <span class="text-slate-200">ทั้งคู่ระบายเฉพาะบริเวณเส้นขอบนอกของวัตถุเท่านั้น</span>
+          </div>
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">D</span>
+            <span class="text-slate-200">ให้หาผลรวมเฉลี่ยของพิกเซลรอบข้างแล้วปัดเศษเป็น 0 หรือ 1</span>
+          </div>
+        </div>
+
+        <div class="p-3 sm:p-4 rounded-xl bg-emerald-950/30 border border-emerald-500/30 text-xs sm:text-sm text-emerald-200">
+          <div class="font-bold text-emerald-400 flex items-center gap-1.5">
+            <span>✓</span> เฉลย: ตัวเลือก A — Erosion: ช่อง Origin จะถูกระบายเป็น 1 ก็ต่อเมื่อ 'ทุกพิกเซลที่เป็น 1 ของ SE ซ้อนทับพอดีกับพิกเซล Foreground (1) ของภาพ A ทั้งหมด (B_z ⊆ A)'; ส่วน Dilation: ช่อง Origin จะถูกระบายเป็น 1 ถ้ามี 'พิกเซล 1 ของ SE อย่างน้อย 1 จุดแตะ/ทับกับพิกเซล Foreground ของภาพ A'
+          </div>
+          <div class="mt-2 text-slate-300 leading-relaxed pt-2 border-t border-emerald-800/30">
+            <strong class="text-emerald-300">💡 วิธีคิด & เหตุผลเชิงคณิตศาสตร์:</strong><br>
+            นิยามสากลของสัณฐานวิทยา: (1) Erosion: จุด Origin จะได้ผลลัพธ์เป็น 1 ก็ต่อเมื่อ SE ทั้งแผ่นบรรจุอยู่ภายในตัววัตถุ A อย่างสมบูรณ์ หากมีแม้แต่จุดเดียวของ SE หลุดออกไปที่พื้นหลัง ผลลัพธ์ที่ Origin จะเป็น 0 ทันที (ทำให้วัตถุหดเล็กลง); (2) Dilation: ขอเพียงมีจุด 1 ของ SE แตะโดนวัตถุ A เพียงจุดเดียว จุด Origin จะกลายเป็น 1 ทันที (ทำให้วัตถุขยายตัว)
+          </div>
+        </div>
+      </div>
+      <!-- Question 2 -->
+      <div class="question-block my-4 pt-3 border-t border-slate-800/80">
+        <h3 id="q-Q_L00_02" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
+          <span>ข้อที่ 2: ชุด 0: จุดเน้นที่อาจารย์ย้ำในคลิปบรรยาย</span>
+          <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L00_02</span>
+        </h3>
+        <p class="mt-2 text-slate-300 text-sm leading-relaxed">
+          <strong>โจทย์:</strong> [7 ก.ย. 00:28] อาจารย์ย้ำว่า 'ความยากมันจะไปออกสอบ ให้ดูว่า origin อยู่ที่ไหน' หากโจทย์กำหนด Structuring Element (SE) ที่มีรูปร่างไม่สมมาตร (Asymmetric) และกำหนดจุด Origin ไว้ที่มุมซ้ายบน (0, 0) แทนที่จะเป็นจุดกึ่งกลาง ข้อใดคือสิ่งที่ต้องระวังเป็นพิเศษในการระบายสี Dilation (A ⊕ B)?
+        </p>
+
+        <div class="space-y-1.5 my-3">
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">A</span>
+            <span class="text-slate-200">ต้องทำการสะท้อน (Reflect) SE รอบจุด Origin 180° ก่อน (B̂ = {-w | w ∈ B}) ซึ่งการที่ Origin อยู่มุมซ้ายบนและไม่สมมาตร จะทำให้ทิศทางการขยายตัวและการเลื่อนตำแหน่ง (Translation Shift) ของวัตถุเยื้องไปทางล่างขวา ต่างจากการที่ Origin อยู่ตรงกลาง</span>
+          </div>
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">B</span>
+            <span class="text-slate-200">สามารถเลื่อนจุด Origin กลับมาไว้ตรงกลางได้เสมอโดยผลลัพธ์ของภาพไม่เปลี่ยนแปลง</span>
+          </div>
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">C</span>
+            <span class="text-slate-200">SE ที่ไม่สมมาตรจะสามารถทำได้เฉพาะการกร่อน (Erosion) เท่านั้น ไม่สามารถทำ Dilation ได้</span>
+          </div>
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">D</span>
+            <span class="text-slate-200">ไม่เกิดผลกระทบใดๆ เพราะ Dilation ไม่ขึ้นกับตำแหน่งของจุดกำเนิด Origin</span>
+          </div>
+        </div>
+
+        <div class="p-3 sm:p-4 rounded-xl bg-emerald-950/30 border border-emerald-500/30 text-xs sm:text-sm text-emerald-200">
+          <div class="font-bold text-emerald-400 flex items-center gap-1.5">
+            <span>✓</span> เฉลย: ตัวเลือก A — ต้องทำการสะท้อน (Reflect) SE รอบจุด Origin 180° ก่อน (B̂ = {-w | w ∈ B}) ซึ่งการที่ Origin อยู่มุมซ้ายบนและไม่สมมาตร จะทำให้ทิศทางการขยายตัวและการเลื่อนตำแหน่ง (Translation Shift) ของวัตถุเยื้องไปทางล่างขวา ต่างจากการที่ Origin อยู่ตรงกลาง
+          </div>
+          <div class="mt-2 text-slate-300 leading-relaxed pt-2 border-t border-emerald-800/30">
+            <strong class="text-emerald-300">💡 วิธีคิด & เหตุผลเชิงคณิตศาสตร์:</strong><br>
+            ในนิยาม Dilation ทางคณิตศาสตร์ A ⊕ B = {z | (B̂)_z ∩ A ≠ ∅} เคอร์เนล B ต้องถูกสะท้อนกลับ 180° รอบจุด Origin ก่อนเลื่อนไปกวาดภาพ หาก SE สมมาตรและ Origin อยู่ตรงกลาง B̂ จะเท่ากับ B แต่ถ้า SE ไม่สมมาตร หรือ Origin อยู่ที่มุมซ้ายบน เคอร์เนลสะท้อน B̂ จะยื่นไปทางขวาล่าง ส่งผลให้ภาพผลลัพธ์ถูก Shift เลื่อนตำแหน่งไปคนละทิศทาง หากไม่อ่านตำแหน่ง Origin ที่โจทย์กำหนดให้ดี ภาพที่ระบายออกมาจะผิดตำแหน่งทั้งหมด!
+          </div>
+        </div>
+      </div>
+      <!-- Question 3 -->
+      <div class="question-block my-4 pt-3 border-t border-slate-800/80">
+        <h3 id="q-Q_L00_03" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
+          <span>ข้อที่ 3: ชุด 0: จุดเน้นที่อาจารย์ย้ำในคลิปบรรยาย</span>
+          <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L00_03</span>
+        </h3>
+        <p class="mt-2 text-slate-300 text-sm leading-relaxed">
+          <strong>โจทย์:</strong> [7 ก.ย. 00:36] อาจารย์ระบุว่า 'ให้ Input กับ Output แล้วให้ออกแบบ SE... Final มันไม่ได้ง่าย' ในการออกแบบคู่ Structuring Element B = (B1, B2) ของ Hit-or-Miss Transform (A ⊛ B) เพื่อตรวจจับมุมบนซ้าย (Top-Left Corner) ของวัตถุสีขาวบนพื้นหลังดำ ควรออกแบบอย่างไร?
+        </p>
+
+        <div class="space-y-1.5 my-3">
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">A</span>
+            <span class="text-slate-200">B1 (Foreground) ต้องมีค่า 1 ที่ตำแหน่งมุมและขอบด้านในตัววัตถุ, B2 (Background) ต้องมีค่า 1 ที่ตำแหน่งรอบนอกของมุม (ย่านที่เป็นพื้นหลังว่าง), และช่องที่ไม่สนใจให้กำหนดเป็น Don't Care (X)</span>
+          </div>
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">B</span>
+            <span class="text-slate-200">กำหนดค่า 1 ใน B1 ทุกช่องทั้ง 9 ช่อง และกำหนด B2 เป็น 0 ทั้งหมด</span>
+          </div>
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">C</span>
+            <span class="text-slate-200">กำหนดเฉพาะ B1 โดยไม่ต้องมี B2 เพราะการตรวจสอบพื้นหลังไม่จำเป็นใน Hit-or-Miss</span>
+          </div>
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">D</span>
+            <span class="text-slate-200">ใส่ค่าติดลบ -1 ในช่องที่ต้องการให้เป็นพื้นหลังของ B1</span>
+          </div>
+        </div>
+
+        <div class="p-3 sm:p-4 rounded-xl bg-emerald-950/30 border border-emerald-500/30 text-xs sm:text-sm text-emerald-200">
+          <div class="font-bold text-emerald-400 flex items-center gap-1.5">
+            <span>✓</span> เฉลย: ตัวเลือก A — B1 (Foreground) ต้องมีค่า 1 ที่ตำแหน่งมุมและขอบด้านในตัววัตถุ, B2 (Background) ต้องมีค่า 1 ที่ตำแหน่งรอบนอกของมุม (ย่านที่เป็นพื้นหลังว่าง), และช่องที่ไม่สนใจให้กำหนดเป็น Don't Care (X)
+          </div>
+          <div class="mt-2 text-slate-300 leading-relaxed pt-2 border-t border-emerald-800/30">
+            <strong class="text-emerald-300">💡 วิธีคิด & เหตุผลเชิงคณิตศาสตร์:</strong><br>
+            Hit-or-Miss Transform มีสูตร A ⊛ B = (A ⊖ B1) ∩ (A^c ⊖ B2) โดย B1 ตรวจสอบ 'สิ่งที่ต้องมี' (Hit) ใน Foreground และ B2 ตรวจสอบ 'สิ่งที่ต้องไม่มี' (Miss) ใน Background โดยที่ B1 และ B2 ต้องไม่ซ้อนทับกัน (B1 ∩ B2 = ∅) สำหรับการตรวจจับมุมบนซ้าย: พิกเซลที่เป็นตัววัตถุ (มุมและด้านล่าง/ขวา) ต้องอยู่ใน B1 ส่วนพิกเซลที่เป็นพื้นหลังว่างด้านนอก (บน ซ้าย และเฉียงบนซ้าย) ต้องอยู่ใน B2 ส่วนช่องที่เหลือให้เป็น X (Don't care)
+          </div>
+        </div>
+      </div>
+      <!-- Question 4 -->
+      <div class="question-block my-4 pt-3 border-t border-slate-800/80">
+        <h3 id="q-Q_L00_04" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
+          <span>ข้อที่ 4: ชุด 0: จุดเน้นที่อาจารย์ย้ำในคลิปบรรยาย</span>
+          <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L00_04</span>
+        </h3>
+        <p class="mt-2 text-slate-300 text-sm leading-relaxed">
+          <strong>โจทย์:</strong> [20 ก.ค. 00:27] อาจารย์ย้ำว่า 'ขอย้ำอีกครั้งว่าตรงนี้ออกข้อสอบได้ ให้วิเคราะห์ว่าปัญหาเกิดจากอะไร ไม่ให้เขียนโค้ด' หากโปรแกรมเมอร์ใช้ Box Filter 3x3 โดยใส่เคอร์เนลเป็น np.ones((3,3)) แต่ลืมหารด้วย 9 ผลลัพธ์บนภาพ Grayscale (uint8 0-255) จะเกิดปัญหาอะไร และเพราะเหตุใด?
+        </p>
+
+        <div class="space-y-1.5 my-3">
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">A</span>
+            <span class="text-slate-200">เกิดปัญหา Saturation ขาวโพลน (Clipped to 255) เกือบทั้งภาพ หรือเกิด Overflow โมดูโล 256 ทำให้เกิดจุดมืดสีเพี้ยนลายเส้นหลอกตา เพราะผลรวมค่าน้ำหนักเคอร์เนลเท่ากับ 9 แทนที่จะเป็น 1 ความสว่างรวมจึงขยายขึ้น 9 เท่า</span>
+          </div>
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">B</span>
+            <span class="text-slate-200">ภาพจะมืดสนิทกลายเป็นสีดำทั้งหมด เพราะตัวหารเป็นศูนย์</span>
+          </div>
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">C</span>
+            <span class="text-slate-200">ภาพจะเบลออย่างนุ่มนวลกว่าปกติ 9 เท่าโดยไม่มีผลข้างเคียง</span>
+          </div>
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">D</span>
+            <span class="text-slate-200">ภาพจะเลื่อนตำแหน่งไปทางขวา 9 พิกเซล</span>
+          </div>
+        </div>
+
+        <div class="p-3 sm:p-4 rounded-xl bg-emerald-950/30 border border-emerald-500/30 text-xs sm:text-sm text-emerald-200">
+          <div class="font-bold text-emerald-400 flex items-center gap-1.5">
+            <span>✓</span> เฉลย: ตัวเลือก A — เกิดปัญหา Saturation ขาวโพลน (Clipped to 255) เกือบทั้งภาพ หรือเกิด Overflow โมดูโล 256 ทำให้เกิดจุดมืดสีเพี้ยนลายเส้นหลอกตา เพราะผลรวมค่าน้ำหนักเคอร์เนลเท่ากับ 9 แทนที่จะเป็น 1 ความสว่างรวมจึงขยายขึ้น 9 เท่า
+          </div>
+          <div class="mt-2 text-slate-300 leading-relaxed pt-2 border-t border-emerald-800/30">
+            <strong class="text-emerald-300">💡 วิธีคิด & เหตุผลเชิงคณิตศาสตร์:</strong><br>
+            Box filter ที่ถูกต้องต้อง Normalized ด้วยการหารจำนวนสมาชิก (คูณ 1/9) เพื่อให้ผลรวมสัมประสิทธิ์เป็น 1 ซึ่งรักษาความสว่างเฉลี่ยเดิมไว้ หากไม่หาร ผลรวมน้ำหนักคือ 9 ทำให้พิกเซลที่ความสว่างเดิมเพียง 29 เมื่อรวม 9 จุดจะกลายเป็น 29 × 9 = 261 > 255 ส่งผลให้ภาพขาวโพลนเกือบทั้งหมด (Saturation) หรือเกิด Modulo Overflow วนกลับมาเป็นสีดำเพี้ยนรุนแรงในประเภทข้อมูล uint8
+          </div>
+        </div>
+      </div>
+      <!-- Question 5 -->
+      <div class="question-block my-4 pt-3 border-t border-slate-800/80">
+        <h3 id="q-Q_L00_05" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
+          <span>ข้อที่ 5: ชุด 0: จุดเน้นที่อาจารย์ย้ำในคลิปบรรยาย</span>
+          <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L00_05</span>
+        </h3>
+        <p class="mt-2 text-slate-300 text-sm leading-relaxed">
+          <strong>โจทย์:</strong> [31 ส.ค. 01:01] อาจารย์เน้นย้ำว่า 'ที่ผมสอนไป มันออกสอบได้ ขอย้ำ รู้ว่าแต่ละตัวคืออะไร ปรับแล้วเป็นอย่างไร' ในอัลกอริทึม Canny Edge Detection การปรับพารามิเตอร์ threshold1 (Low) และ threshold2 (High) ส่งผลต่อเส้นขอบอย่างไร?
+        </p>
+
+        <div class="space-y-1.5 my-3">
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">A</span>
+            <span class="text-slate-200">threshold2 (High) คัดกรองขอบที่แข็งแกร่งแน่นอน (Strong Edges) ยิ่งปรับสูงขอบยิ่งน้อยและได้เฉพาะขอบคมชัด; ส่วน threshold1 (Low) ยอมรับขอบที่อ่อนแอกว่า (Weak Edges) ที่เชื่อมต่อกับ Strong Edges ช่วยให้เส้นขอบต่อเนื่องไม่ขาดตอน หากปรับ threshold1 ต่ำเกินไป noise จะติดเข้ามาเป็นขอบ</span>
+          </div>
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">B</span>
+            <span class="text-slate-200">threshold1 ใช้ตรวจจับขอบในแนวตั้ง และ threshold2 ใช้ตรวจจับขอบในแนวนอน</span>
+          </div>
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">C</span>
+            <span class="text-slate-200">threshold1 กำหนดความหนาของเส้นขอบ และ threshold2 กำหนดค่าความเร็วของฟิลเตอร์</span>
+          </div>
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">D</span>
+            <span class="text-slate-200">ทั้งสองค่าต้องมีค่าเท่ากันเสมอ มิฉะนั้น Canny จะไม่สามารถทำงานได้</span>
+          </div>
+        </div>
+
+        <div class="p-3 sm:p-4 rounded-xl bg-emerald-950/30 border border-emerald-500/30 text-xs sm:text-sm text-emerald-200">
+          <div class="font-bold text-emerald-400 flex items-center gap-1.5">
+            <span>✓</span> เฉลย: ตัวเลือก A — threshold2 (High) คัดกรองขอบที่แข็งแกร่งแน่นอน (Strong Edges) ยิ่งปรับสูงขอบยิ่งน้อยและได้เฉพาะขอบคมชัด; ส่วน threshold1 (Low) ยอมรับขอบที่อ่อนแอกว่า (Weak Edges) ที่เชื่อมต่อกับ Strong Edges ช่วยให้เส้นขอบต่อเนื่องไม่ขาดตอน หากปรับ threshold1 ต่ำเกินไป noise จะติดเข้ามาเป็นขอบ
+          </div>
+          <div class="mt-2 text-slate-300 leading-relaxed pt-2 border-t border-emerald-800/30">
+            <strong class="text-emerald-300">💡 วิธีคิด & เหตุผลเชิงคณิตศาสตร์:</strong><br>
+            Canny ใช้เทคนิค Hysteresis Thresholding: พิกเซลที่มี Gradient ≥ T_high จะถูกนับเป็นขอบแน่นอนทันที; พิกเซลที่มี T_low ≤ Gradient < T_high จะถูกยอมรับเป็นขอบก็ต่อเมื่อมันเชื่อมต่ออยู่กับขอบที่แข็งแกร่ง (8-connectivity); และ Gradient < T_low จะถูกตัดทิ้งทั้งหมด
+          </div>
+        </div>
+      </div>
+      <!-- Question 6 -->
+      <div class="question-block my-4 pt-3 border-t border-slate-800/80">
+        <h3 id="q-Q_L00_06" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
+          <span>ข้อที่ 6: ชุด 0: จุดเน้นที่อาจารย์ย้ำในคลิปบรรยาย</span>
+          <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L00_06</span>
+        </h3>
+        <p class="mt-2 text-slate-300 text-sm leading-relaxed">
+          <strong>โจทย์:</strong> [20 ก.ค. 01:14] อาจารย์ระบุว่าเคยออกสอบ 'Purkinje effect: ตา 2 โหมด ทำไมที่มืดสีแดงดูดำ' ปรากฏการณ์นี้อธิบายเหตุผลทางสรีรวิทยาของสายตามนุษย์ไว้อย่างไร?
+        </p>
+
+        <div class="space-y-1.5 my-3">
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">A</span>
+            <span class="text-slate-200">ในที่มืดสลัวดวงตาเปลี่ยนมาใช้เซลล์ Rods (Scotopic Vision) ซึ่งมีจุดไวแสงสูงสุดอยู่ที่ ~507 nm (สีเขียวอมฟ้า) และแทบไม่มีความไวต่อสเปกตรัมแสงคลื่นยาวสีแดง (>650 nm) เลย ต่างจากเซลล์ Cones ในเวลากลางวันที่มีจุดไวแสงอยู่ที่ ~555 nm วัตถุสีแดงจึงดูมืดสนิทในที่แสงน้อย</span>
+          </div>
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">B</span>
+            <span class="text-slate-200">เพราะแสงสีแดงมีความถี่สูงเกินไปในความมืดทำให้เลนส์ตากรองทิ้ง</span>
+          </div>
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">C</span>
+            <span class="text-slate-200">เพราะในความมืดรูม่านตาหดตัวลงทำให้แสงสีแดงสะท้อนออก</span>
+          </div>
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">D</span>
+            <span class="text-slate-200">เพราะสมองมนุษย์สั่งปิดการรับรู้สีแดงอัตโนมัติเมื่อไม่มีแสงอาทิตย์</span>
+          </div>
+        </div>
+
+        <div class="p-3 sm:p-4 rounded-xl bg-emerald-950/30 border border-emerald-500/30 text-xs sm:text-sm text-emerald-200">
+          <div class="font-bold text-emerald-400 flex items-center gap-1.5">
+            <span>✓</span> เฉลย: ตัวเลือก A — ในที่มืดสลัวดวงตาเปลี่ยนมาใช้เซลล์ Rods (Scotopic Vision) ซึ่งมีจุดไวแสงสูงสุดอยู่ที่ ~507 nm (สีเขียวอมฟ้า) และแทบไม่มีความไวต่อสเปกตรัมแสงคลื่นยาวสีแดง (>650 nm) เลย ต่างจากเซลล์ Cones ในเวลากลางวันที่มีจุดไวแสงอยู่ที่ ~555 nm วัตถุสีแดงจึงดูมืดสนิทในที่แสงน้อย
+          </div>
+          <div class="mt-2 text-slate-300 leading-relaxed pt-2 border-t border-emerald-800/30">
+            <strong class="text-emerald-300">💡 วิธีคิด & เหตุผลเชิงคณิตศาสตร์:</strong><br>
+            ดวงตามนุษย์มี 2 โหมด: กลางวันใช้ Cones (Photopic) รับแสงสีแดง-เขียว-น้ำเงินได้ดี (พีคที่ 555 nm); แต่ในที่แสงสลัวจะเปลี่ยนมาใช้ Rods (Scotopic) ซึ่งไม่แยกสีและมีช่วงสเปกตรัมที่ตอบสนองพีคอยู่ที่ 507 nm (Cyan) รอดส์ตาบอดต่อแสงสีแดงเกือบ 100% ทำให้วัตถุสีแดงไม่สามารถกระตุ้นรอดส์ได้ จึงปรากฏเป็นสีมืดดำสนิท นี่เป็นเหตุผลที่ห้องมืดล้างฟิล์มและค็อกพิทเครื่องบินใช้แสงสีแดงเพื่อให้ตาปรับเข้ากับความมืดได้เร็ว
+          </div>
+        </div>
+      </div>
+      <!-- Question 7 -->
+      <div class="question-block my-4 pt-3 border-t border-slate-800/80">
+        <h3 id="q-Q_L00_07" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
+          <span>ข้อที่ 7: ชุด 0: จุดเน้นที่อาจารย์ย้ำในคลิปบรรยาย</span>
+          <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L00_07</span>
+        </h3>
+        <p class="mt-2 text-slate-300 text-sm leading-relaxed">
+          <strong>โจทย์:</strong> [20 ก.ค. 01:40] อาจารย์ยกตัวอย่างโจทย์ที่เคยออกสอบ 'หาป้ายสีแดงด้วย Hue' ทำไมการสกัดสีแดงใน OpenCV ด้วย HSV จึงไม่สามารถใช้คำสั่ง cv2.inRange(hsv, lower, upper) เพียงครั้งเดียวได้ และต้องเขียนแก้ปัญหาอย่างไร?
+        </p>
+
+        <div class="space-y-1.5 my-3">
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">A</span>
+            <span class="text-slate-200">เพราะสีแดงอยู่ตรงรอยต่อ 0° และ 360° ของวงล้อสี HSV (ใน OpenCV Hue มีค่า 0–180 สีแดงจึงแบ่งเป็นช่วง 0–10 และ 170–180) ต้องสร้าง Mask สองช่วงแล้วนำมารวมกันด้วย cv2.bitwise_or()</span>
+          </div>
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">B</span>
+            <span class="text-slate-200">เพราะสีแดงไม่มีค่า Saturation ในระบบสี HSV</span>
+          </div>
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">C</span>
+            <span class="text-slate-200">เพราะ OpenCV บันทึกสีแดงเป็นค่าติดลบเสมอ</span>
+          </div>
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">D</span>
+            <span class="text-slate-200">เพราะต้องแปลงภาพเป็น Grayscale ก่อนจึงจะหา Hue ของสีแดงได้</span>
+          </div>
+        </div>
+
+        <div class="p-3 sm:p-4 rounded-xl bg-emerald-950/30 border border-emerald-500/30 text-xs sm:text-sm text-emerald-200">
+          <div class="font-bold text-emerald-400 flex items-center gap-1.5">
+            <span>✓</span> เฉลย: ตัวเลือก A — เพราะสีแดงอยู่ตรงรอยต่อ 0° และ 360° ของวงล้อสี HSV (ใน OpenCV Hue มีค่า 0–180 สีแดงจึงแบ่งเป็นช่วง 0–10 และ 170–180) ต้องสร้าง Mask สองช่วงแล้วนำมารวมกันด้วย cv2.bitwise_or()
+          </div>
+          <div class="mt-2 text-slate-300 leading-relaxed pt-2 border-t border-emerald-800/30">
+            <strong class="text-emerald-300">💡 วิธีคิด & เหตุผลเชิงคณิตศาสตร์:</strong><br>
+            วงล้อสี Hue เป็นรูปวงกลม 360° (OpenCV ย่อเหลือ 0–180 เพื่อให้เก็บใน 1 ไบต์ uint8 ได้) สีแดงบริสุทธิ์อยู่ที่ 0° ซึ่งคาบเกี่ยวกับ 360° (180 ใน OpenCV) หากกำหนด [170, s, v] ถึง [10, s, v] ใน inRange เดียว ตัวฟังก์ชันจะไม่เข้าใจเพราะ lower > upper จึงต้องตัด Mask 1 สำหรับย่าน 0–10 และ Mask 2 สำหรับ 170–180 แล้วใช้ cv2.bitwise_or(mask1, mask2) ผสานกัน
+          </div>
+        </div>
+      </div>
+      <!-- Question 8 -->
+      <div class="question-block my-4 pt-3 border-t border-slate-800/80">
+        <h3 id="q-Q_L00_08" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
+          <span>ข้อที่ 8: ชุด 0: จุดเน้นที่อาจารย์ย้ำในคลิปบรรยาย</span>
+          <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L00_08</span>
+        </h3>
+        <p class="mt-2 text-slate-300 text-sm leading-relaxed">
+          <strong>โจทย์:</strong> [10 ส.ค. คลิปสอง 00:05] อาจารย์ยกตัวอย่างโจทย์ที่เคยออกสอบ 'ลบเส้นสมุดด้วย filter ที่วาดเองใน frequency domain' หากเส้นบรรทัดสมุดเป็นลายเส้นคาบเวลาแนวนอน (Periodic Horizontal Lines) ควรกระทำอย่างไรใน 2D DFT Spectrum?
+        </p>
+
+        <div class="space-y-1.5 my-3">
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">A</span>
+            <span class="text-slate-200">เส้นแนวนอนคาบเวลาจะปรากฏเป็นจุดสว่าง (Spikes) เรียงตัวบนแกนแนวตั้ง (u=0, v ≠ 0) ใน Fourier Spectrum ให้สร้าง Mask ค่า 1.0 ทั้งหมด แล้ววาดแถบสีดำ (0.0) ปิดทับเฉพาะจุดสว่างบนแกนตั้งเหล่านั้น โดยต้องเว้นจุดศูนย์กลาง DC Component (M/2, N/2) ไว้เสมอ</span>
+          </div>
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">B</span>
+            <span class="text-slate-200">วาดวงกลมสีดำทับจุดศูนย์กลางของภาพทั้งหมด</span>
+          </div>
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">C</span>
+            <span class="text-slate-200">ปิดแถบแนวนอนทั้งหมดใน Fourier Spectrum ให้เป็นสีดำ</span>
+          </div>
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">D</span>
+            <span class="text-slate-200">ทำการหมุนภาพ 90 องศาแล้วใช้ Gaussian Lowpass Filter</span>
+          </div>
+        </div>
+
+        <div class="p-3 sm:p-4 rounded-xl bg-emerald-950/30 border border-emerald-500/30 text-xs sm:text-sm text-emerald-200">
+          <div class="font-bold text-emerald-400 flex items-center gap-1.5">
+            <span>✓</span> เฉลย: ตัวเลือก A — เส้นแนวนอนคาบเวลาจะปรากฏเป็นจุดสว่าง (Spikes) เรียงตัวบนแกนแนวตั้ง (u=0, v ≠ 0) ใน Fourier Spectrum ให้สร้าง Mask ค่า 1.0 ทั้งหมด แล้ววาดแถบสีดำ (0.0) ปิดทับเฉพาะจุดสว่างบนแกนตั้งเหล่านั้น โดยต้องเว้นจุดศูนย์กลาง DC Component (M/2, N/2) ไว้เสมอ
+          </div>
+          <div class="mt-2 text-slate-300 leading-relaxed pt-2 border-t border-emerald-800/30">
+            <strong class="text-emerald-300">💡 วิธีคิด & เหตุผลเชิงคณิตศาสตร์:</strong><br>
+            เส้นลายคาบเวลาแนวนอนใน Spatial domain จะเกิดการแปลงฟูริเยร์เป็นฮาร์มอนิกความถี่บนแกนแนวตั้ง (เพราะความถี่ตั้งฉากกับแนวลายเส้น) การวาดฟิลเตอร์กำจัดแบบ Custom Notch Filter คือการสร้างแถบสีดำ (ค่า 0.0) บล็อกความถี่บนแกนแนวตั้งเฉพาะจุดที่มี Spikes และรักษาจุดกึ่งกลาง DC Component F(0,0) ไว้เพื่อไม่ให้ภาพมืดสนิท
+          </div>
+        </div>
+      </div>
+      <!-- Question 9 -->
+      <div class="question-block my-4 pt-3 border-t border-slate-800/80">
+        <h3 id="q-Q_L00_09" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
+          <span>ข้อที่ 9: ชุด 0: จุดเน้นที่อาจารย์ย้ำในคลิปบรรยาย</span>
+          <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L00_09</span>
+        </h3>
+        <p class="mt-2 text-slate-300 text-sm leading-relaxed">
+          <strong>โจทย์:</strong> [10 ส.ค. คลิปสอง 00:09] อาจารย์พูดถึงโจทย์ 'นับจำนวนของในภาพ' ลำดับขั้นตอนการประมวลผล (Pipeline) ที่ถูกต้องและสมบูรณ์ที่สุดในการนับจำนวนวัตถุที่มีการแตะชิดกันเล็กน้อยและมีจุดรบกวนคือข้อใด?
+        </p>
+
+        <div class="space-y-1.5 my-3">
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">A</span>
+            <span class="text-slate-200">แปลงเป็น Grayscale ➔ Binarization (Otsu) ➔ Morphological Opening (กำจัดจุดรบกวนและตัดสะพานเนื้อที่แตะกัน) ➔ cv2.connectedComponentsWithStats() ➔ นับจำนวน Label ที่มีพื้นที่ (Area) ผ่านเกณฑ์ โดยตัด Label 0 (Background) ออก</span>
+          </div>
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">B</span>
+            <span class="text-slate-200">ใช้ Canny Edge Detection แล้วนับจำนวนพิกเซลสีขาวทั้งหมดในภาพ</span>
+          </div>
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">C</span>
+            <span class="text-slate-200">นำภาพไปคูณด้วย 2 แล้วหาค่าเฉลี่ยความสว่าง</span>
+          </div>
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">D</span>
+            <span class="text-slate-200">ทำ Dilation ด้วยเคอร์เนลขนาดใหญ่แล้วนับจำนวนรูโหว่</span>
+          </div>
+        </div>
+
+        <div class="p-3 sm:p-4 rounded-xl bg-emerald-950/30 border border-emerald-500/30 text-xs sm:text-sm text-emerald-200">
+          <div class="font-bold text-emerald-400 flex items-center gap-1.5">
+            <span>✓</span> เฉลย: ตัวเลือก A — แปลงเป็น Grayscale ➔ Binarization (Otsu) ➔ Morphological Opening (กำจัดจุดรบกวนและตัดสะพานเนื้อที่แตะกัน) ➔ cv2.connectedComponentsWithStats() ➔ นับจำนวน Label ที่มีพื้นที่ (Area) ผ่านเกณฑ์ โดยตัด Label 0 (Background) ออก
+          </div>
+          <div class="mt-2 text-slate-300 leading-relaxed pt-2 border-t border-emerald-800/30">
+            <strong class="text-emerald-300">💡 วิธีคิด & เหตุผลเชิงคณิตศาสตร์:</strong><br>
+            ลำดับมาตรฐานในการนับวัตถุ: (1) แปลงภาพเป็น Binary ด้วย Otsu เพื่อแยกวัตถุออกจากพื้นหลัง, (2) ทำ Opening (A ∘ B) เพื่อลบจุดรบกวนขนาดเล็กและตัดสะพานเนื้อที่แตะกันบางๆ ให้ขาดออกจากกัน, (3) ใช้ connectedComponentsWithStats เพื่อจัดกลุ่มพิกเซลที่เชื่อมต่อกัน (4- หรือ 8-connectivity) และคัดกรองขนาดพื้นที่ Area ไม่ให้นับฝุ่นผงที่หลงเหลือ
+          </div>
+        </div>
+      </div>
+      <!-- Question 10 -->
+      <div class="question-block my-4 pt-3 border-t border-slate-800/80">
+        <h3 id="q-Q_L00_10" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
+          <span>ข้อที่ 10: ชุด 0: จุดเน้นที่อาจารย์ย้ำในคลิปบรรยาย</span>
+          <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L00_10</span>
+        </h3>
+        <p class="mt-2 text-slate-300 text-sm leading-relaxed">
+          <strong>โจทย์:</strong> [31 ส.ค. 00:33] อาจารย์ยกตัวอย่างโจทย์ 'หาแนวของวัตถุด้วย covariance matrix (ครูบอกว่าน่าจะเป็นปากกา)' การคำนวณหามุมเอียงและทิศทางการวางตัวของวัตถุรูปทรงยาวจากพิกัดพิกเซลด้วย Covariance Matrix มีหลักการทางคณิตศาสตร์อย่างไร?
+        </p>
+
+        <div class="space-y-1.5 my-3">
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">A</span>
+            <span class="text-slate-200">หาจุดกึ่งกลาง Centroid (x̄, ȳ) ลบออกจากพิกัดพิกเซล แล้วสร้าง Covariance Matrix 2x2 ของพิกัด (x, y) เพื่อหา Eigenvectors; เวกเตอร์เจาะจงที่คู่กับ Eigenvalue ค่ามากที่สุดจะชี้ไปตามแนวแกนยาวของด้ามปากกา มุมเอียงคำนวณได้จาก θ = arctan(vy / vx)</span>
+          </div>
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">B</span>
+            <span class="text-slate-200">หาค่าพิกเซลสูงสุดและต่ำสุดแล้วนำมาลบกัน</span>
+          </div>
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">C</span>
+            <span class="text-slate-200">ทำการคูณเมทริกซ์พิกเซลด้วยเมทริกซ์เอกลักษณ์</span>
+          </div>
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">D</span>
+            <span class="text-slate-200">คำนวณหาเส้นรอบรูปด้วย Sobel แล้วหาค่ามัธยฐาน</span>
+          </div>
+        </div>
+
+        <div class="p-3 sm:p-4 rounded-xl bg-emerald-950/30 border border-emerald-500/30 text-xs sm:text-sm text-emerald-200">
+          <div class="font-bold text-emerald-400 flex items-center gap-1.5">
+            <span>✓</span> เฉลย: ตัวเลือก A — หาจุดกึ่งกลาง Centroid (x̄, ȳ) ลบออกจากพิกัดพิกเซล แล้วสร้าง Covariance Matrix 2x2 ของพิกัด (x, y) เพื่อหา Eigenvectors; เวกเตอร์เจาะจงที่คู่กับ Eigenvalue ค่ามากที่สุดจะชี้ไปตามแนวแกนยาวของด้ามปากกา มุมเอียงคำนวณได้จาก θ = arctan(vy / vx)
+          </div>
+          <div class="mt-2 text-slate-300 leading-relaxed pt-2 border-t border-emerald-800/30">
+            <strong class="text-emerald-300">💡 วิธีคิด & เหตุผลเชิงคณิตศาสตร์:</strong><br>
+            นี่คือหลักการของ Principal Component Analysis (PCA) บนพิกัดเรขาคณิต: เมทริกซ์ความแปรปรวนร่วม C = [[μ20, μ11], [μ11, μ02]] บรรจุการกระจายตัวของจุดพิกเซลในระนาบ (x, y) ทิศทางที่มีความแปรปรวนสูงสุด (ความยาวของปากกา) สอดคล้องกับ First Principal Component หรือ Eigenvector ที่มีค่า Eigenvalue สูงสุด มุมทิศทางจึงหาได้โดยตรงจาก θ = arctan(vy / vx)
+          </div>
+        </div>
+      </div>
+      <!-- Question 11 -->
+      <div class="question-block my-4 pt-3 border-t border-slate-800/80">
+        <h3 id="q-Q_L00_11" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
+          <span>ข้อที่ 11: ชุด 0: จุดเน้นที่อาจารย์ย้ำในคลิปบรรยาย</span>
+          <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L00_11</span>
+        </h3>
+        <p class="mt-2 text-slate-300 text-sm leading-relaxed">
+          <strong>โจทย์:</strong> [7 ก.ย. 00:15] อาจารย์สมมติโจทย์ 'ให้รูป A, B กับรูปผลลัพธ์ แล้วให้บอกว่าเกิดจาก set operation อะไร' หากรูปผลลัพธ์มีเฉพาะพื้นที่ที่อยู่ในรูป A แต่ถูกเจาะเนื้อหายไปในบริเวณที่รูป B ซ้อนทับ การดำเนินการทางเซตนี้คือข้อใด?
+        </p>
+
+        <div class="space-y-1.5 my-3">
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">A</span>
+            <span class="text-slate-200">ผลต่างเซต A - B หรือ A ∩ B^c (Relative Complement / Set Difference)</span>
+          </div>
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">B</span>
+            <span class="text-slate-200">ยูเนียน A ∪ B (Union)</span>
+          </div>
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">C</span>
+            <span class="text-slate-200">อินเตอร์เซกชัน A ∩ B (Intersection)</span>
+          </div>
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">D</span>
+            <span class="text-slate-200">ผลต่างสมมาตร A Δ B (Symmetric Difference / XOR)</span>
+          </div>
+        </div>
+
+        <div class="p-3 sm:p-4 rounded-xl bg-emerald-950/30 border border-emerald-500/30 text-xs sm:text-sm text-emerald-200">
+          <div class="font-bold text-emerald-400 flex items-center gap-1.5">
+            <span>✓</span> เฉลย: ตัวเลือก A — ผลต่างเซต A - B หรือ A ∩ B^c (Relative Complement / Set Difference)
+          </div>
+          <div class="mt-2 text-slate-300 leading-relaxed pt-2 border-t border-emerald-800/30">
+            <strong class="text-emerald-300">💡 วิธีคิด & เหตุผลเชิงคณิตศาสตร์:</strong><br>
+            A - B = A ∩ B^c หมายถึง เซตของพิกเซลทั้งหมดที่อยู่ใน A แต่ไม่อยู่ใน B ส่งผลให้เนื้อของวัตถุ A ในส่วนที่โดน B ซ้อนทับถูกลบทิ้งไปจนเกิดเป็นรอยแหว่ง ส่วนถ้าเป็น A Δ B (XOR) จะต้องเหลือเนื้อของ B ในส่วนที่ไม่ทับกับ A ด้วย
+          </div>
+        </div>
+      </div>
+      <!-- Question 12 -->
+      <div class="question-block my-4 pt-3 border-t border-slate-800/80">
+        <h3 id="q-Q_L00_12" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
+          <span>ข้อที่ 12: ชุด 0: จุดเน้นที่อาจารย์ย้ำในคลิปบรรยาย</span>
+          <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L00_12</span>
+        </h3>
+        <p class="mt-2 text-slate-300 text-sm leading-relaxed">
+          <strong>โจทย์:</strong> [7 ก.ย. 00:30] หลุมพรางข้อสอบที่อาจารย์ย้ำโดยตรง 'รูปตัว j: ถ้าโจทย์ไม่บอกว่าสีไหนเป็น 1 ให้ตอบว่าบอกไม่ได้ว่าเป็น Opening หรือ Closing' เหตุผลทางทฤษฎีคือข้อใด?
+        </p>
+
+        <div class="space-y-1.5 my-3">
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">A</span>
+            <span class="text-slate-200">เพราะตามหลัก Duality (A ∘ B)^c = A^c • B̂ การกร่อน/ขยายของสีขาวจะเทียบเท่ากับการขยาย/กร่อนของสีดำ หากสลับบทบาทของ Foreground และ Background ผลลัพธ์ของ Opening บนสีหนึ่งจะเทียบเท่ากับ Closing บนอีกสีหนึ่งพอดี</span>
+          </div>
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">B</span>
+            <span class="text-slate-200">เพราะรูปตัว j ไม่ใช่วัตถุที่มีความต่อเนื่องทางเรขาคณิต</span>
+          </div>
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">C</span>
+            <span class="text-slate-200">เพราะ Opening และ Closing ให้ผลลัพธ์เหมือนกันเสมอในทุกกรณี</span>
+          </div>
+          <div class="p-2 sm:p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs sm:text-sm flex items-start gap-2">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-700 text-slate-300 font-bold text-xs flex-shrink-0 mt-0.5">D</span>
+            <span class="text-slate-200">เพราะโปรแกรมคอมพิวเตอร์จะเกิดข้อผิดพลาดในการประมวลผลตัวอักษร j</span>
+          </div>
+        </div>
+
+        <div class="p-3 sm:p-4 rounded-xl bg-emerald-950/30 border border-emerald-500/30 text-xs sm:text-sm text-emerald-200">
+          <div class="font-bold text-emerald-400 flex items-center gap-1.5">
+            <span>✓</span> เฉลย: ตัวเลือก A — เพราะตามหลัก Duality (A ∘ B)^c = A^c • B̂ การกร่อน/ขยายของสีขาวจะเทียบเท่ากับการขยาย/กร่อนของสีดำ หากสลับบทบาทของ Foreground และ Background ผลลัพธ์ของ Opening บนสีหนึ่งจะเทียบเท่ากับ Closing บนอีกสีหนึ่งพอดี
+          </div>
+          <div class="mt-2 text-slate-300 leading-relaxed pt-2 border-t border-emerald-800/30">
+            <strong class="text-emerald-300">💡 วิธีคิด & เหตุผลเชิงคณิตศาสตร์:</strong><br>
+            นี่คือกับดักข้อสอบที่อาจารย์ย้ำโดยตรงในคลิปบรรยาย 7 ก.ย. (00:30): สัณฐานวิทยามีคุณสมบัติ Duality (A ⊖ B)^c = A^c ⊕ B̂ หากไม่นิยามว่าสีขาวหรือดำคือ 1 (วัตถุ) การกร่อนติ่งแหลมของสีขาวทิ้ง (Opening ของสีขาว) จะมีค่าเท่ากับการถมรูโหว่ของสีดำ (Closing ของสีดำ) พอดี ดังนั้นถ้าโจทย์ไม่นิยามสีของ 1 ให้ชัดเจน คำตอบที่ถูกต้องตามหลักวิชาการคือ 'ไม่สามารถระบุได้ว่าเป็น Opening หรือ Closing'
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Section L1 -->
     <div id="sec-L1" class="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-xl prose-dark">
       <h2>📌 Lecture 1: Introduction to Image Processing (รวม 5 ข้อ)</h2>
-      <!-- Question 1 -->
+      <!-- Question 13 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L01_01" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 1: Lecture 1: Introduction to Image Processing</span>
+          <span>ข้อที่ 13: Lecture 1: Introduction to Image Processing</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L01_01</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -291,10 +766,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 2 -->
+      <!-- Question 14 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L01_02" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 2: Lecture 1: Introduction to Image Processing</span>
+          <span>ข้อที่ 14: Lecture 1: Introduction to Image Processing</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L01_02</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -330,10 +805,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 3 -->
+      <!-- Question 15 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L01_03" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 3: Lecture 1: Introduction to Image Processing</span>
+          <span>ข้อที่ 15: Lecture 1: Introduction to Image Processing</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L01_03</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -369,10 +844,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 4 -->
+      <!-- Question 16 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L01_04" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 4: Lecture 1: Introduction to Image Processing</span>
+          <span>ข้อที่ 16: Lecture 1: Introduction to Image Processing</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L01_04</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -408,10 +883,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 5 -->
+      <!-- Question 17 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L01_05" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 5: Lecture 1: Introduction to Image Processing</span>
+          <span>ข้อที่ 17: Lecture 1: Introduction to Image Processing</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L01_05</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -452,10 +927,10 @@
     <!-- Section L2 -->
     <div id="sec-L2" class="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-xl prose-dark">
       <h2>📌 Lecture 2: Control and Fine-tune (รวม 5 ข้อ)</h2>
-      <!-- Question 6 -->
+      <!-- Question 18 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L02_01" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 6: Lecture 2: Control and Fine-tune</span>
+          <span>ข้อที่ 18: Lecture 2: Control and Fine-tune</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L02_01</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -491,10 +966,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 7 -->
+      <!-- Question 19 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L02_02" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 7: Lecture 2: Control and Fine-tune</span>
+          <span>ข้อที่ 19: Lecture 2: Control and Fine-tune</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L02_02</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -530,10 +1005,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 8 -->
+      <!-- Question 20 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L02_03" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 8: Lecture 2: Control and Fine-tune</span>
+          <span>ข้อที่ 20: Lecture 2: Control and Fine-tune</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L02_03</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -569,10 +1044,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 9 -->
+      <!-- Question 21 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L02_04" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 9: Lecture 2: Control and Fine-tune</span>
+          <span>ข้อที่ 21: Lecture 2: Control and Fine-tune</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L02_04</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -608,10 +1083,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 10 -->
+      <!-- Question 22 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L02_05" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 10: Lecture 2: Control and Fine-tune</span>
+          <span>ข้อที่ 22: Lecture 2: Control and Fine-tune</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L02_05</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -652,10 +1127,10 @@
     <!-- Section L3 -->
     <div id="sec-L3" class="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-xl prose-dark">
       <h2>📌 Lecture 3: Human Visual Perception (รวม 5 ข้อ)</h2>
-      <!-- Question 11 -->
+      <!-- Question 23 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L03_01" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 11: Lecture 3: Human Visual Perception</span>
+          <span>ข้อที่ 23: Lecture 3: Human Visual Perception</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L03_01</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -691,10 +1166,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 12 -->
+      <!-- Question 24 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L03_02" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 12: Lecture 3: Human Visual Perception</span>
+          <span>ข้อที่ 24: Lecture 3: Human Visual Perception</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L03_02</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -730,10 +1205,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 13 -->
+      <!-- Question 25 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L03_03" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 13: Lecture 3: Human Visual Perception</span>
+          <span>ข้อที่ 25: Lecture 3: Human Visual Perception</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L03_03</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -769,10 +1244,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 14 -->
+      <!-- Question 26 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L03_04" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 14: Lecture 3: Human Visual Perception</span>
+          <span>ข้อที่ 26: Lecture 3: Human Visual Perception</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L03_04</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -808,10 +1283,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 15 -->
+      <!-- Question 27 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L03_05" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 15: Lecture 3: Human Visual Perception</span>
+          <span>ข้อที่ 27: Lecture 3: Human Visual Perception</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L03_05</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -852,10 +1327,10 @@
     <!-- Section L4 -->
     <div id="sec-L4" class="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-xl prose-dark">
       <h2>📌 Lecture 4: Point Operation (รวม 7 ข้อ)</h2>
-      <!-- Question 16 -->
+      <!-- Question 28 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L04_01" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 16: Lecture 4: Point Operation</span>
+          <span>ข้อที่ 28: Lecture 4: Point Operation</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L04_01</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -891,10 +1366,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 17 -->
+      <!-- Question 29 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L04_02" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 17: Lecture 4: Point Operation</span>
+          <span>ข้อที่ 29: Lecture 4: Point Operation</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L04_02</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -930,10 +1405,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 18 -->
+      <!-- Question 30 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L04_03" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 18: Lecture 4: Point Operation</span>
+          <span>ข้อที่ 30: Lecture 4: Point Operation</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L04_03</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -969,10 +1444,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 19 -->
+      <!-- Question 31 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L04_04" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 19: Lecture 4: Point Operation</span>
+          <span>ข้อที่ 31: Lecture 4: Point Operation</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L04_04</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -1008,10 +1483,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 20 -->
+      <!-- Question 32 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L04_05" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 20: Lecture 4: Point Operation</span>
+          <span>ข้อที่ 32: Lecture 4: Point Operation</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L04_05</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -1047,10 +1522,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 21 -->
+      <!-- Question 33 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L04_06" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 21: Lecture 4: Point Operation</span>
+          <span>ข้อที่ 33: Lecture 4: Point Operation</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L04_06</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -1086,10 +1561,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 22 -->
+      <!-- Question 34 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L04_07" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 22: Lecture 4: Point Operation</span>
+          <span>ข้อที่ 34: Lecture 4: Point Operation</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L04_07</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -1130,10 +1605,10 @@
     <!-- Section L5 -->
     <div id="sec-L5" class="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-xl prose-dark">
       <h2>📌 Lecture 5: Spatial Filtering (รวม 6 ข้อ)</h2>
-      <!-- Question 23 -->
+      <!-- Question 35 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L05_01" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 23: Lecture 5: Spatial Filtering</span>
+          <span>ข้อที่ 35: Lecture 5: Spatial Filtering</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L05_01</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -1169,10 +1644,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 24 -->
+      <!-- Question 36 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L05_02" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 24: Lecture 5: Spatial Filtering</span>
+          <span>ข้อที่ 36: Lecture 5: Spatial Filtering</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L05_02</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -1208,10 +1683,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 25 -->
+      <!-- Question 37 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L05_03" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 25: Lecture 5: Spatial Filtering</span>
+          <span>ข้อที่ 37: Lecture 5: Spatial Filtering</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L05_03</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -1247,10 +1722,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 26 -->
+      <!-- Question 38 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L05_04" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 26: Lecture 5: Spatial Filtering</span>
+          <span>ข้อที่ 38: Lecture 5: Spatial Filtering</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L05_04</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -1286,10 +1761,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 27 -->
+      <!-- Question 39 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L05_05" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 27: Lecture 5: Spatial Filtering</span>
+          <span>ข้อที่ 39: Lecture 5: Spatial Filtering</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L05_05</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -1325,10 +1800,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 28 -->
+      <!-- Question 40 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L05_06" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 28: Lecture 5: Spatial Filtering</span>
+          <span>ข้อที่ 40: Lecture 5: Spatial Filtering</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L05_06</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -1369,10 +1844,10 @@
     <!-- Section L6 -->
     <div id="sec-L6" class="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-xl prose-dark">
       <h2>📌 Lecture 6: Frequency Domain Analysis (รวม 6 ข้อ)</h2>
-      <!-- Question 29 -->
+      <!-- Question 41 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L06_01" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 29: Lecture 6: Frequency Domain Analysis</span>
+          <span>ข้อที่ 41: Lecture 6: Frequency Domain Analysis</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L06_01</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -1408,10 +1883,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 30 -->
+      <!-- Question 42 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L06_02" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 30: Lecture 6: Frequency Domain Analysis</span>
+          <span>ข้อที่ 42: Lecture 6: Frequency Domain Analysis</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L06_02</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -1447,10 +1922,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 31 -->
+      <!-- Question 43 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L06_03" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 31: Lecture 6: Frequency Domain Analysis</span>
+          <span>ข้อที่ 43: Lecture 6: Frequency Domain Analysis</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L06_03</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -1486,10 +1961,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 32 -->
+      <!-- Question 44 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L06_04" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 32: Lecture 6: Frequency Domain Analysis</span>
+          <span>ข้อที่ 44: Lecture 6: Frequency Domain Analysis</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L06_04</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -1525,10 +2000,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 33 -->
+      <!-- Question 45 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L06_05" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 33: Lecture 6: Frequency Domain Analysis</span>
+          <span>ข้อที่ 45: Lecture 6: Frequency Domain Analysis</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L06_05</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -1564,10 +2039,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 34 -->
+      <!-- Question 46 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L06_06" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 34: Lecture 6: Frequency Domain Analysis</span>
+          <span>ข้อที่ 46: Lecture 6: Frequency Domain Analysis</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L06_06</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -1608,10 +2083,10 @@
     <!-- Section L7 -->
     <div id="sec-L7" class="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-xl prose-dark">
       <h2>📌 Lecture 7: Image Restoration (รวม 6 ข้อ)</h2>
-      <!-- Question 35 -->
+      <!-- Question 47 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L07_01" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 35: Lecture 7: Image Restoration</span>
+          <span>ข้อที่ 47: Lecture 7: Image Restoration</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L07_01</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -1647,10 +2122,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 36 -->
+      <!-- Question 48 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L07_02" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 36: Lecture 7: Image Restoration</span>
+          <span>ข้อที่ 48: Lecture 7: Image Restoration</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L07_02</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -1686,10 +2161,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 37 -->
+      <!-- Question 49 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L07_03" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 37: Lecture 7: Image Restoration</span>
+          <span>ข้อที่ 49: Lecture 7: Image Restoration</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L07_03</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -1725,10 +2200,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 38 -->
+      <!-- Question 50 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L07_04" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 38: Lecture 7: Image Restoration</span>
+          <span>ข้อที่ 50: Lecture 7: Image Restoration</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L07_04</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -1764,10 +2239,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 39 -->
+      <!-- Question 51 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L07_05" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 39: Lecture 7: Image Restoration</span>
+          <span>ข้อที่ 51: Lecture 7: Image Restoration</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L07_05</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -1803,10 +2278,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 40 -->
+      <!-- Question 52 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L07_06" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 40: Lecture 7: Image Restoration</span>
+          <span>ข้อที่ 52: Lecture 7: Image Restoration</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L07_06</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -1847,10 +2322,10 @@
     <!-- Section L8 -->
     <div id="sec-L8" class="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-xl prose-dark">
       <h2>📌 Lecture 8: MediaPipe Workshop (รวม 4 ข้อ)</h2>
-      <!-- Question 41 -->
+      <!-- Question 53 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L08_01" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 41: Lecture 8: MediaPipe Workshop</span>
+          <span>ข้อที่ 53: Lecture 8: MediaPipe Workshop</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L08_01</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -1886,10 +2361,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 42 -->
+      <!-- Question 54 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L08_02" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 42: Lecture 8: MediaPipe Workshop</span>
+          <span>ข้อที่ 54: Lecture 8: MediaPipe Workshop</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L08_02</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -1925,10 +2400,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 43 -->
+      <!-- Question 55 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L08_03" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 43: Lecture 8: MediaPipe Workshop</span>
+          <span>ข้อที่ 55: Lecture 8: MediaPipe Workshop</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L08_03</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -1964,10 +2439,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 44 -->
+      <!-- Question 56 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L08_04" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 44: Lecture 8: MediaPipe Workshop</span>
+          <span>ข้อที่ 56: Lecture 8: MediaPipe Workshop</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L08_04</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -2008,10 +2483,10 @@
     <!-- Section L9 -->
     <div id="sec-L9" class="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-xl prose-dark">
       <h2>📌 Lecture 9: Edge and Corner Detection (รวม 6 ข้อ)</h2>
-      <!-- Question 45 -->
+      <!-- Question 57 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L09_01" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 45: Lecture 9: Edge and Corner Detection</span>
+          <span>ข้อที่ 57: Lecture 9: Edge and Corner Detection</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L09_01</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -2047,10 +2522,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 46 -->
+      <!-- Question 58 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L09_02" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 46: Lecture 9: Edge and Corner Detection</span>
+          <span>ข้อที่ 58: Lecture 9: Edge and Corner Detection</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L09_02</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -2086,10 +2561,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 47 -->
+      <!-- Question 59 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L09_03" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 47: Lecture 9: Edge and Corner Detection</span>
+          <span>ข้อที่ 59: Lecture 9: Edge and Corner Detection</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L09_03</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -2125,10 +2600,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 48 -->
+      <!-- Question 60 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L09_04" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 48: Lecture 9: Edge and Corner Detection</span>
+          <span>ข้อที่ 60: Lecture 9: Edge and Corner Detection</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L09_04</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -2164,10 +2639,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 49 -->
+      <!-- Question 61 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L09_05" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 49: Lecture 9: Edge and Corner Detection</span>
+          <span>ข้อที่ 61: Lecture 9: Edge and Corner Detection</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L09_05</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -2203,10 +2678,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 50 -->
+      <!-- Question 62 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L09_06" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 50: Lecture 9: Edge and Corner Detection</span>
+          <span>ข้อที่ 62: Lecture 9: Edge and Corner Detection</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L09_06</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -2247,10 +2722,10 @@
     <!-- Section L10 -->
     <div id="sec-L10" class="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-xl prose-dark">
       <h2>📌 Lecture 10: Morphological Processing (รวม 6 ข้อ)</h2>
-      <!-- Question 51 -->
+      <!-- Question 63 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L10_01" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 51: Lecture 10: Morphological Processing</span>
+          <span>ข้อที่ 63: Lecture 10: Morphological Processing</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L10_01</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -2286,10 +2761,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 52 -->
+      <!-- Question 64 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L10_02" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 52: Lecture 10: Morphological Processing</span>
+          <span>ข้อที่ 64: Lecture 10: Morphological Processing</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L10_02</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -2325,10 +2800,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 53 -->
+      <!-- Question 65 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L10_03" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 53: Lecture 10: Morphological Processing</span>
+          <span>ข้อที่ 65: Lecture 10: Morphological Processing</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L10_03</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -2364,10 +2839,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 54 -->
+      <!-- Question 66 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L10_04" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 54: Lecture 10: Morphological Processing</span>
+          <span>ข้อที่ 66: Lecture 10: Morphological Processing</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L10_04</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -2403,10 +2878,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 55 -->
+      <!-- Question 67 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L10_05" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 55: Lecture 10: Morphological Processing</span>
+          <span>ข้อที่ 67: Lecture 10: Morphological Processing</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L10_05</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -2444,10 +2919,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 56 -->
+      <!-- Question 68 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L10_06" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 56: Lecture 10: Morphological Processing</span>
+          <span>ข้อที่ 68: Lecture 10: Morphological Processing</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L10_06</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -2488,10 +2963,10 @@
     <!-- Section L11 -->
     <div id="sec-L11" class="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-xl prose-dark">
       <h2>📌 Lecture 11: Image Segmentation (รวม 6 ข้อ)</h2>
-      <!-- Question 57 -->
+      <!-- Question 69 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L11_01" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 57: Lecture 11: Image Segmentation</span>
+          <span>ข้อที่ 69: Lecture 11: Image Segmentation</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L11_01</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -2527,10 +3002,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 58 -->
+      <!-- Question 70 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L11_02" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 58: Lecture 11: Image Segmentation</span>
+          <span>ข้อที่ 70: Lecture 11: Image Segmentation</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L11_02</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -2566,10 +3041,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 59 -->
+      <!-- Question 71 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L11_03" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 59: Lecture 11: Image Segmentation</span>
+          <span>ข้อที่ 71: Lecture 11: Image Segmentation</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L11_03</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -2605,10 +3080,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 60 -->
+      <!-- Question 72 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L11_04" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 60: Lecture 11: Image Segmentation</span>
+          <span>ข้อที่ 72: Lecture 11: Image Segmentation</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L11_04</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -2644,10 +3119,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 61 -->
+      <!-- Question 73 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L11_05" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 61: Lecture 11: Image Segmentation</span>
+          <span>ข้อที่ 73: Lecture 11: Image Segmentation</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L11_05</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -2683,10 +3158,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 62 -->
+      <!-- Question 74 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L11_06" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 62: Lecture 11: Image Segmentation</span>
+          <span>ข้อที่ 74: Lecture 11: Image Segmentation</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L11_06</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -2727,10 +3202,10 @@
     <!-- Section L12 -->
     <div id="sec-L12" class="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-xl prose-dark">
       <h2>📌 Lecture 12: Texture Description (รวม 5 ข้อ)</h2>
-      <!-- Question 63 -->
+      <!-- Question 75 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L12_01" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 63: Lecture 12: Texture Description</span>
+          <span>ข้อที่ 75: Lecture 12: Texture Description</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L12_01</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -2766,10 +3241,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 64 -->
+      <!-- Question 76 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L12_02" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 64: Lecture 12: Texture Description</span>
+          <span>ข้อที่ 76: Lecture 12: Texture Description</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L12_02</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -2805,10 +3280,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 65 -->
+      <!-- Question 77 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L12_03" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 65: Lecture 12: Texture Description</span>
+          <span>ข้อที่ 77: Lecture 12: Texture Description</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L12_03</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -2844,10 +3319,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 66 -->
+      <!-- Question 78 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L12_04" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 66: Lecture 12: Texture Description</span>
+          <span>ข้อที่ 78: Lecture 12: Texture Description</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L12_04</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -2883,10 +3358,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 67 -->
+      <!-- Question 79 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_L12_05" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 67: Lecture 12: Texture Description</span>
+          <span>ข้อที่ 79: Lecture 12: Texture Description</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_L12_05</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -2927,10 +3402,10 @@
     <!-- Section LAB -->
     <div id="sec-LAB" class="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-xl prose-dark">
       <h2>📌 Lab Practical: Exam Strategy (รวม 5 ข้อ)</h2>
-      <!-- Question 68 -->
+      <!-- Question 80 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_LAB_01" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 68: Lab Practical: Exam Strategy</span>
+          <span>ข้อที่ 80: Lab Practical: Exam Strategy</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_LAB_01</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -2966,10 +3441,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 69 -->
+      <!-- Question 81 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_LAB_02" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 69: Lab Practical: Exam Strategy</span>
+          <span>ข้อที่ 81: Lab Practical: Exam Strategy</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_LAB_02</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -3005,10 +3480,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 70 -->
+      <!-- Question 82 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_LAB_03" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 70: Lab Practical: Exam Strategy</span>
+          <span>ข้อที่ 82: Lab Practical: Exam Strategy</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_LAB_03</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -3044,10 +3519,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 71 -->
+      <!-- Question 83 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_LAB_04" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 71: Lab Practical: Exam Strategy</span>
+          <span>ข้อที่ 83: Lab Practical: Exam Strategy</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_LAB_04</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">
@@ -3083,10 +3558,10 @@
           </div>
         </div>
       </div>
-      <!-- Question 72 -->
+      <!-- Question 84 -->
       <div class="question-block my-4 pt-3 border-t border-slate-800/80">
         <h3 id="q-Q_LAB_05" class="text-sm sm:text-base font-bold text-slate-100 flex items-center justify-between">
-          <span>ข้อที่ 72: Lab Practical: Exam Strategy</span>
+          <span>ข้อที่ 84: Lab Practical: Exam Strategy</span>
           <span class="text-xs font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">Q_LAB_05</span>
         </h3>
         <p class="mt-2 text-slate-300 text-sm leading-relaxed">

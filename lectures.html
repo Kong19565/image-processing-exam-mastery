@@ -189,6 +189,330 @@
         </p>
       </div>
 
+      <!-- PROFESSOR EXAM LEAKS & TIPS SECTION -->
+      <section id="prof-leaks" class="bg-gradient-to-b from-amber-950/30 via-slate-900 to-slate-900 border-2 border-amber-500/50 rounded-xl sm:rounded-2xl p-5 sm:p-6 shadow-2xl space-y-5">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-amber-500/30 pb-4">
+          <div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 mb-1">
+              🔥 ถอดเทปคำต่อคำจากคลิปบรรยาย 22 มิ.ย. - 7 ก.ย.
+            </div>
+            <h2 class="text-xl sm:text-2xl font-black text-white">
+              12 จุดเน้นข้อสอบ Final ที่อาจารย์ย้ำในห้องเรียน
+            </h2>
+            <p class="text-slate-400 text-xs sm:text-sm mt-0.5">
+              รวมทุกคำเตือน ข้อควรระวัง กฎเหล็ก และเทคนิคการคำนวณที่ครูฟันธงว่าออกสอบ
+            </p>
+          </div>
+          <a href="questions-bank.html#sec-L0" class="px-4 py-2 rounded-xl text-xs font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 transition-all flex items-center gap-1.5 self-start sm:self-auto shadow-lg shadow-amber-500/20">
+            🎯 ตะลุยโจทย์ 12 ข้อเน้นอาจารย์ ➔
+          </a>
+        </div>
+        <div class="grid grid-cols-1 gap-4">
+        <!-- HINT_01 -->
+        <div class="p-4 sm:p-5 rounded-xl bg-slate-950/80 border border-amber-500/40 hover:border-amber-400 transition-all space-y-3 shadow-lg">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-2.5">
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">FINAL CONFIRMED</span>
+              <span class="text-xs font-mono text-slate-400">🕒 7 ก.ย. 00:24</span>
+              <span class="text-xs text-slate-500">(L10 Morphological Processing (หัวข้อ 5, 7))</span>
+            </div>
+            <span class="text-xs font-bold font-mono text-amber-400">HINT_01</span>
+          </div>
+          <h3 class="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+            <span>🎯</span> ระบายตาราง Dilation & Erosion ด้วยมือ (เตรียมดินสอ + ยางลบ)
+          </h3>
+          <div class="p-2.5 rounded-lg bg-amber-950/30 border border-amber-500/30 text-xs sm:text-sm text-amber-200 italic">
+            🗣️ <strong>คำพูดอาจารย์ในคลิป:</strong> &ldquo;สอบ Final ผมแนะนำว่าเตรียมดินสอกับยางลบไปด้วย ครูจะให้ตารางมาระบาย&rdquo;
+          </div>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed"><strong>สรุปสาระสำคัญ:</strong> การคำนวณการขยาย (Dilation) และการกร่อน (Erosion) บนตารางกริดไบนารีระดับพิกเซลด้วยมือ</p>
+          <div class="space-y-1.5 text-xs sm:text-sm text-slate-300">
+            <strong class="text-amber-300">📌 กฎเหล็ก & วิธีคำนวณที่ต้องจำ:</strong>
+            <ul class="list-disc list-inside space-y-1 pl-1 leading-relaxed"><li><b>Erosion ($A \ominus B$):</b> ช่อง Origin จะถูกระบายเป็น 1 <i>ก็ต่อเมื่อทุกจุดที่เป็น 1 ของ SE ซ้อนทับพอดีกับพิกเซล Foreground (1) ของภาพ A ทั้งหมด ($B_z \subseteq A$)</i> หากมีแม้แต่จุดเดียวของ SE หลุดไปแตะพื้นหลัง (0) $\to$ ผลลัพธ์ที่ Origin = 0 ทันที (ทำให้วัตถุหดเล็กลง ติ่งแหลมภายนอกหลุดหาย)</li><li><b>Dilation ($A \oplus B$):</b> ช่อง Origin จะถูกระบายเป็น 1 <i>ขอเพียงมีจุด 1 ของ SE แตะโดนพิกเซล Foreground ของภาพ A แม้เพียงจุดเดียว ($\hat{B}_z \cap A \neq \emptyset$)</i> $\to$ ผลลัพธ์ที่ Origin = 1 ทันที (ทำให้วัตถุพองตัว อุดรูโหว่ภายใน)</li><li><b>เทคนิคการระบายข้อสอบ:</b> ให้กวาดตรวจทีละแถวจากซ้ายไปขวา ใช้ดินสอร่างเส้นขอบของคำตอบก่อน แล้วจึงแรเงาให้เต็มช่อง ระวังพิกเซลริมขอบตาราง (Border padding) หากโจทย์ไม่ได้ระบุให้ถือว่าขอบนอกตารางเป็น 0 (Background)</li></ul>
+          </div>
+          <div class="p-2.5 rounded-lg bg-rose-950/30 border border-rose-500/30 text-xs text-rose-200">
+            <strong class="text-rose-400">⚠️ หลุมพรางที่อาจารย์เตือน:</strong> อย่าสับสนระหว่างเงื่อนไข 'ทับซ้อนทั้งหมด (Fit)' ของ Erosion กับ 'แตะโดนบางส่วน (Hit)' ของ Dilation
+          </div>
+        </div>
+        <!-- HINT_02 -->
+        <div class="p-4 sm:p-5 rounded-xl bg-slate-950/80 border border-amber-500/40 hover:border-amber-400 transition-all space-y-3 shadow-lg">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-2.5">
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">HIGH DIFFICULTY</span>
+              <span class="text-xs font-mono text-slate-400">🕒 7 ก.ย. 00:28</span>
+              <span class="text-xs text-slate-500">(L10 Morphological Processing (หัวข้อ 9))</span>
+            </div>
+            <span class="text-xs font-bold font-mono text-amber-400">HINT_02</span>
+          </div>
+          <h3 class="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+            <span>🎯</span> Structuring Element (SE) ไม่สมมาตร & ตำแหน่ง Origin ที่ไม่ใช่ตรงกลาง
+          </h3>
+          <div class="p-2.5 rounded-lg bg-amber-950/30 border border-amber-500/30 text-xs sm:text-sm text-amber-200 italic">
+            🗣️ <strong>คำพูดอาจารย์ในคลิป:</strong> &ldquo;ความยากมันจะไปออกสอบ ให้ดูว่า origin อยู่ที่ไหน&rdquo;
+          </div>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed"><strong>สรุปสาระสำคัญ:</strong> การเลื่อนตำแหน่ง (Translation Shift) ของภาพผลลัพธ์เมื่อจุดกำเนิด Origin ไม่อยู่ที่กึ่งกลางของเคอร์เนล</p>
+          <div class="space-y-1.5 text-xs sm:text-sm text-slate-300">
+            <strong class="text-amber-300">📌 กฎเหล็ก & วิธีคำนวณที่ต้องจำ:</strong>
+            <ul class="list-disc list-inside space-y-1 pl-1 leading-relaxed"><li><b>สูตรคณิตศาสตร์ของ Dilation:</b> $A \oplus B = \{z \mid (\hat{B})_z \cap A \neq \emptyset\}$ โดย $\hat{B} = \{-w \mid w \in B\}$ คือ <i>การสะท้อนเคอร์เนล 180° รอบจุด Origin</i></li><li><b>หาก SE สมมาตรและ Origin อยู่ตรงกลาง:</b> เคอร์เนลสะท้อน $\hat{B} = B$ ผลลัพธ์จะขยายออกรอบทิศทางอย่างสมดุล</li><li><b>หาก Origin อยู่ที่มุมบนซ้าย $(0, 0)$ และ SE ไม่สมมาตร:</b> เคอร์เนลสะท้อน $\hat{B}$ จะพลิกไปยื่นทางขวาล่าง ส่งผลให้ <i>ภาพผลลัพธ์ถูก Shift เลื่อนตำแหน่งไปทางล่างขวา</i> ตรงกันข้ามกับตำแหน่ง Origin</li><li><b>หากทำ Erosion:</b> $A \ominus B = \{z \mid (B)_z \subseteq A\}$ ไม่มีการสะท้อนเคอร์เนล ดังนั้นทิศทางการหดตัวจะสอดคล้องกับทิศทางตรงของ $B$</li></ul>
+          </div>
+          <div class="p-2.5 rounded-lg bg-rose-950/30 border border-rose-500/30 text-xs text-rose-200">
+            <strong class="text-rose-400">⚠️ หลุมพรางที่อาจารย์เตือน:</strong> นักศึกษาส่วนใหญ่มักติดกับดักคิดว่า Origin อยู่ตรงกลางเสมอ ต้องมองหาเครื่องหมายดอกจัน (*) หรือวงกลมระบุจุด Origin บน SE ที่โจทย์กำหนดเป็นอันดับแรก
+          </div>
+        </div>
+        <!-- HINT_03 -->
+        <div class="p-4 sm:p-5 rounded-xl bg-slate-950/80 border border-amber-500/40 hover:border-amber-400 transition-all space-y-3 shadow-lg">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-2.5">
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">FINAL DESIGN PROBLEM</span>
+              <span class="text-xs font-mono text-slate-400">🕒 7 ก.ย. 00:36</span>
+              <span class="text-xs text-slate-500">(L10 Morphological Processing (หัวข้อ 12))</span>
+            </div>
+            <span class="text-xs font-bold font-mono text-amber-400">HINT_03</span>
+          </div>
+          <h3 class="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+            <span>🎯</span> การออกแบบ Structuring Element ของ Hit-or-Miss Transform
+          </h3>
+          <div class="p-2.5 rounded-lg bg-amber-950/30 border border-amber-500/30 text-xs sm:text-sm text-amber-200 italic">
+            🗣️ <strong>คำพูดอาจารย์ในคลิป:</strong> &ldquo;ให้ Input กับ Output แล้วให้ออกแบบ SE... Final มันไม่ได้ง่าย&rdquo;
+          </div>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed"><strong>สรุปสาระสำคัญ:</strong> การวิเคราะห์ภาพต้นฉบับและภาพผลลัพธ์ย้อนกลับเพื่อหาคู่ Structuring Element B = (B1, B2)</p>
+          <div class="space-y-1.5 text-xs sm:text-sm text-slate-300">
+            <strong class="text-amber-300">📌 กฎเหล็ก & วิธีคำนวณที่ต้องจำ:</strong>
+            <ul class="list-disc list-inside space-y-1 pl-1 leading-relaxed"><li><b>สูตร Hit-or-Miss:</b> $A \circledast B = (A \ominus B_1) \cap (A^c \ominus B_2)$</li><li><b>องค์ประกอบคู่ SE:</b> $B_1$ คือรูปทรง Foreground ที่ต้องการจับคู่ (Hit) และ $B_2$ คือรูปทรง Background รอบข้างที่ต้องการให้ว่าง (Miss) โดยเงื่อนไขสำคัญคือ $B_1 \cap B_2 = \emptyset$</li><li><b>การออกแบบตรวจจับมุมบนซ้าย (Top-Left Corner):</b><br>• $B_1$: ต้องมีค่า 1 ที่ Origin `(0,0)`, ขวา `(0,1)` และล่าง `(1,0)` (เนื้อของสี่เหลี่ยม)<br>• $B_2$: ต้องมีค่า 1 ที่ตำแหน่งรอบนอก บน `(-1,0)`, ซ้าย `(0,-1)` และเฉียงบนซ้าย `(-1,-1)` (พื้นหลังว่าง)<br>• ช่องอื่นๆ: ให้ใส่สัญลักษณ์ `X` (Don't care คือเป็น 0 หรือ 1 ก็ได้ ไม่ส่งผลต่อการตรวจจับ)</li></ul>
+          </div>
+          <div class="p-2.5 rounded-lg bg-rose-950/30 border border-rose-500/30 text-xs text-rose-200">
+            <strong class="text-rose-400">⚠️ หลุมพรางที่อาจารย์เตือน:</strong> หากออกแบบเฉพาะ B1 (Foreground) อย่างเดียว จะกลายเป็นการกร่อน (Erosion) ธรรมดาซึ่งจะตรวจจับทุกบริเวณที่มีเนื้อวัตถุขนาดใหญ่ ไม่สามารถเจาะจงเฉพาะจุดมุมหรือเส้นเดี่ยวได้
+          </div>
+        </div>
+        <!-- HINT_04 -->
+        <div class="p-4 sm:p-5 rounded-xl bg-slate-950/80 border border-amber-500/40 hover:border-amber-400 transition-all space-y-3 shadow-lg">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-2.5">
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">ANALYTICAL ESSAY</span>
+              <span class="text-xs font-mono text-slate-400">🕒 20 ก.ค. 00:27</span>
+              <span class="text-xs text-slate-500">(L5 Filtering (หัวข้อ 3, 4))</span>
+            </div>
+            <span class="text-xs font-bold font-mono text-amber-400">HINT_04</span>
+          </div>
+          <h3 class="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+            <span>🎯</span> Box Filter ไม่หาร (Unnormalized Box Filter / Sum Filter)
+          </h3>
+          <div class="p-2.5 rounded-lg bg-amber-950/30 border border-amber-500/30 text-xs sm:text-sm text-amber-200 italic">
+            🗣️ <strong>คำพูดอาจารย์ในคลิป:</strong> &ldquo;ขอย้ำอีกครั้งว่าตรงนี้ออกข้อสอบได้ ให้วิเคราะห์ว่าปัญหาเกิดจากอะไร ไม่ให้เขียนโค้ด&rdquo;
+          </div>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed"><strong>สรุปสาระสำคัญ:</strong> ข้อสอบข้อเขียนเชิงวิเคราะห์: ผลกระทบเมื่อใช้เคอร์เนล 3x3 ที่ผลรวมค่าน้ำหนักไม่เท่ากับ 1</p>
+          <div class="space-y-1.5 text-xs sm:text-sm text-slate-300">
+            <strong class="text-amber-300">📌 กฎเหล็ก & วิธีคำนวณที่ต้องจำ:</strong>
+            <ul class="list-disc list-inside space-y-1 pl-1 leading-relaxed"><li><b>หลักการฟิลเตอร์เฉลี่ย (Normalized Box):</b> เคอร์เนลต้องคูณด้วย $\frac{1}{9}$ เพื่อให้ผลรวมสัมประสิทธิ์เป็น 1 ซึ่งรักษาค่าเฉลี่ยความสว่างเดิมของภาพ (Preserve Average Brightness)</li><li><b>เมื่อไม่หาร (Unnormalized / Sum Filter: `np.ones((3,3))`):</b> ผลรวมน้ำหนักคือ 9 ทำให้แต่ละพิกเซลผลลัพธ์เท่ากับผลรวมของพิกเซลข้างเคียง 9 จุด ความสว่างรวมจึงขยายขึ้น 9 เท่า!</li><li><b>ผลลัพธ์ที่เกิดขึ้นจริง:</b><br>1. <i>กรณีมี Saturation (เช่น `cv2.filter2D`):</i> พิกเซลเดิมที่มีค่าเฉลี่ยเกิน 28 เมื่อคูณ 9 จะได้เกิน 255 ($29 \times 9 = 261$) ทำให้พิกเซลเกือบทั้งภาพถูก Clamping ปัดเศษไปที่ 255 เกิด <b>ภาพขาวโพลนทั้งแผ่น (White Washout / Extreme Saturation)</b><br>2. <i>กรณีคำนวณแบบโมดูโล (NumPy uint8 ดิบ):</i> เกิด <b>Overflow Wrap-around</b> ($270 \pmod{256} = 14$) จุดที่ควรจะสว่างกลายเป็นจุดมืด เกิดเส้นริ้วสีเพี้ยนลายเส้นหลอกตาอย่างรุนแรง</li></ul>
+          </div>
+          <div class="p-2.5 rounded-lg bg-rose-950/30 border border-rose-500/30 text-xs text-rose-200">
+            <strong class="text-rose-400">⚠️ หลุมพรางที่อาจารย์เตือน:</strong> ต้องตอบทั้งกลไกทางคณิตศาสตร์ (ผลรวมน้ำหนักเป็น 9) และอาการทางภาพ (Saturation ขาวโพลน หรือ Overflow โมดูโล 256)
+          </div>
+        </div>
+        <!-- HINT_05 -->
+        <div class="p-4 sm:p-5 rounded-xl bg-slate-950/80 border border-amber-500/40 hover:border-amber-400 transition-all space-y-3 shadow-lg">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-2.5">
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">PARAMETER TUNING</span>
+              <span class="text-xs font-mono text-slate-400">🕒 31 ส.ค. 01:01</span>
+              <span class="text-xs text-slate-500">(L5, L9, L11 (ชุด 7 ข้อ 7.2, 7.3))</span>
+            </div>
+            <span class="text-xs font-bold font-mono text-amber-400">HINT_05</span>
+          </div>
+          <h3 class="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+            <span>🎯</span> การวิเคราะห์พารามิเตอร์ของเครื่องมือและอัลกอริทึม
+          </h3>
+          <div class="p-2.5 rounded-lg bg-amber-950/30 border border-amber-500/30 text-xs sm:text-sm text-amber-200 italic">
+            🗣️ <strong>คำพูดอาจารย์ในคลิป:</strong> &ldquo;ที่ผมสอนไป มันออกสอบได้ ขอย้ำ รู้ว่าแต่ละตัวคืออะไร ปรับแล้วเป็นอย่างไร&rdquo;
+          </div>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed"><strong>สรุปสาระสำคัญ:</strong> ความเข้าใจบทบาทของพารามิเตอร์แต่ละตัวในฟังก์ชันประมวลผลภาพ</p>
+          <div class="space-y-1.5 text-xs sm:text-sm text-slate-300">
+            <strong class="text-amber-300">📌 กฎเหล็ก & วิธีคำนวณที่ต้องจำ:</strong>
+            <ul class="list-disc list-inside space-y-1 pl-1 leading-relaxed"><li><b>Canny Edge (`threshold1`, `threshold2`):</b><br>• `threshold2` ($T_{high}$): ขอบเขตบน คัดกรอง Strong Edges ปรับสูง $\to$ เส้นขอบเหลือน้อย คัดเฉพาะขอบเด่นชัดมาก<br>• `threshold1` ($T_{low}$): ขอบเขตล่าง คัดกรอง Weak Edges ที่เชื่อมกับขอบหลัก ปรับต่ำ $\to$ เส้นขอบต่อเนื่องไม่ขาดตอน แต่ถ้าต่ำเกินไป noise จะโผล่ขึ้นมาเป็นขอบ</li><li><b>Adaptive Threshold (`blockSize`, `C`):</b><br>• `blockSize`: ขนาดพื้นที่เพื่อนบ้านที่นำมาหาค่าเฉลี่ย (ต้องเป็นเลขคี่เสมอ เช่น 11, 21)<br>• `C`: ค่าคงที่ที่นำมาลบออกจากค่าเฉลี่ย ใช้ปรับชดเชยแสงเงา</li><li><b>K-Means Clustering (`K`, `criteria`):</b><br>• `K`: จำนวนกลุ่มสี/เซกเมนต์<br>• `criteria`: เงื่อนไขหยุดการวนซ้ำ (Max Iterations หรือค่า $\epsilon$ การเปลี่ยนแปลงของจุด Centroid)</li></ul>
+          </div>
+          <div class="p-2.5 rounded-lg bg-rose-950/30 border border-rose-500/30 text-xs text-rose-200">
+            <strong class="text-rose-400">⚠️ หลุมพรางที่อาจารย์เตือน:</strong> ข้อสอบมักถามว่า 'ถ้าต้องการลดสัญญาณรบกวนใน Canny ควรปรับค่าใด' คำตอบคือ เพิ่ม $T_{low}$ และ $T_{high}$ หรือเพิ่ม Gaussian Kernel Size
+          </div>
+        </div>
+        <!-- HINT_06 -->
+        <div class="p-4 sm:p-5 rounded-xl bg-slate-950/80 border border-amber-500/40 hover:border-amber-400 transition-all space-y-3 shadow-lg">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-2.5">
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">HUMAN VISION</span>
+              <span class="text-xs font-mono text-slate-400">🕒 20 ก.ค. 01:14</span>
+              <span class="text-xs text-slate-500">(L3 Human Visual Perception & L5 (หัวข้อ 13))</span>
+            </div>
+            <span class="text-xs font-bold font-mono text-amber-400">HINT_06</span>
+          </div>
+          <h3 class="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+            <span>🎯</span> Purkinje Effect: ทำไมในที่มืดสีแดงจึงดูดำมืด
+          </h3>
+          <div class="p-2.5 rounded-lg bg-amber-950/30 border border-amber-500/30 text-xs sm:text-sm text-amber-200 italic">
+            🗣️ <strong>คำพูดอาจารย์ในคลิป:</strong> &ldquo;Purkinje effect: ตา 2 โหมด ทำไมที่มืดสีแดงดูดำ&rdquo;
+          </div>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed"><strong>สรุปสาระสำคัญ:</strong> ความแตกต่างระหว่างระบบการมองเห็นเวลากลางวัน (Photopic) และกลางคืน (Scotopic)</p>
+          <div class="space-y-1.5 text-xs sm:text-sm text-slate-300">
+            <strong class="text-amber-300">📌 กฎเหล็ก & วิธีคำนวณที่ต้องจำ:</strong>
+            <ul class="list-disc list-inside space-y-1 pl-1 leading-relaxed"><li><b>Photopic Vision (กลางวัน/แสงสว่าง):</b> ควบคุมโดยเซลล์รูปกรวย (Cones) กระจุกตัวที่ Fovea ไวแสงสูงสุดที่ <b>555 nm</b> (เขียว-เหลือง) ไวต่อสีแดง (คลื่นยาว ~650 nm) เป็นอย่างดี</li><li><b>Scotopic Vision (กลางคืน/แสงสลัว):</b> ควบคุมโดยเซลล์รูปแท่ง (Rods) กระจายตัวรอบนอก ไวแสงสูงสุดเลื่อนไปที่ <b>507 nm</b> (เขียวอมฟ้า / Cyan) เพื่อดักจับแสงที่มีพลังงานสูงในเวลากลางคืน</li><li><b>The Purkinje Shift:</b> เซลล์ Rods <i>แทบไม่มีการตอบสนองต่อสเปกตรัมแสงสีแดง (>650 nm) เลย</i> เมื่อแสงสว่างลดลง แสงที่สะท้อนจากวัตถุสีแดงจึงไม่สามารถกระตุ้น Rods ได้ ทำให้สมองรับรู้เป็น <b>สีดำมืดสนิท (Pitch Black / Dark Grey)</b> ในขณะที่วัตถุสีน้ำเงินและเขียวดูสว่างเด่นกว่า</li><li><b>การประยุกต์ใช้งาน:</b> ห้องมืดล้างฟิล์มและแผงควบคุมการบินทหารใช้แสงไฟสีแดง เพราะแสงสีแดงไม่ไปทำลายเม็ดสีโรดอปซิน (Rhodopsin) ในเซลล์แท่ง ทำให้สายตายังคงปรับเข้ากับความมืดภายนอกได้ทันที</li></ul>
+          </div>
+          <div class="p-2.5 rounded-lg bg-rose-950/30 border border-rose-500/30 text-xs text-rose-200">
+            <strong class="text-rose-400">⚠️ หลุมพรางที่อาจารย์เตือน:</strong> อย่าตอบว่า 'เพราะในที่มืดไม่มีสีแดง' แสงสีแดงยังมีอยู่ แต่วงจรเซลล์ Rods ของดวงตามนุษย์ไม่ตอบสนองต่อความยาวคลื่นนั้น
+          </div>
+        </div>
+        <!-- HINT_07 -->
+        <div class="p-4 sm:p-5 rounded-xl bg-slate-950/80 border border-amber-500/40 hover:border-amber-400 transition-all space-y-3 shadow-lg">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-2.5">
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">PRACTICAL LAB TRAP</span>
+              <span class="text-xs font-mono text-slate-400">🕒 20 ก.ค. 01:40</span>
+              <span class="text-xs text-slate-500">(L4, L5 Color Spaces & Pre-Test Q3 (หัวข้อ 17))</span>
+            </div>
+            <span class="text-xs font-bold font-mono text-amber-400">HINT_07</span>
+          </div>
+          <h3 class="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+            <span>🎯</span> การสกัดป้ายสีแดงด้วย HSV Hue (Hue Wrap-around Trap)
+          </h3>
+          <div class="p-2.5 rounded-lg bg-amber-950/30 border border-amber-500/30 text-xs sm:text-sm text-amber-200 italic">
+            🗣️ <strong>คำพูดอาจารย์ในคลิป:</strong> &ldquo;หาป้ายสีแดงด้วย Hue&rdquo;
+          </div>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed"><strong>สรุปสาระสำคัญ:</strong> กับดักการตัดสีแดงในปริภูมิสี HSV เมื่อค่า Hue อยู่ตรงรอยต่อของวงกลม 360°</p>
+          <div class="space-y-1.5 text-xs sm:text-sm text-slate-300">
+            <strong class="text-amber-300">📌 กฎเหล็ก & วิธีคำนวณที่ต้องจำ:</strong>
+            <ul class="list-disc list-inside space-y-1 pl-1 leading-relaxed"><li><b>พิกัดสีแดงใน HSV:</b> วงล้อสี Hue มีค่า 0° ถึง 360° ใน OpenCV ย่อลงครึ่งหนึ่งเหลือช่วง 0–180 เพื่อเก็บในข้อมูล uint8 (1 ไบต์)</li><li><b>กับดักรอยต่อ (Wrap-around):</b> สีแดงบริสุทธิ์อยู่ที่ 0° ซึ่งคาบเกี่ยวรอยต่อระหว่าง 360° กับ 0° ส่งผลให้ใน OpenCV สีแดงถูกแบ่งเป็น 2 ซีก:<br>• ซีกแรก: Hue ช่วง 0 ถึง 10<br>• ซีกสอง: Hue ช่วง 170 ถึง 180</li><li><b>ทำไมใช้ inRange คำสั่งเดียวไม่ได้:</b> หากใส่ `lower = [170, s, v]` และ `upper = [10, s, v]` ฟังก์ชัน `cv2.inRange` จะส่งค่าเป็น 0 ทั้งหมด เพราะ lower bound มีค่ามากกว่า upper bound</li><li><b>โค้ดที่ถูกต้อง 100%:</b><br><pre class='p-2 bg-slate-950 rounded text-xs text-sky-300 font-mono'>mask1 = cv2.inRange(hsv, np.array([0, 70, 50]), np.array([10, 255, 255]))
+mask2 = cv2.inRange(hsv, np.array([170, 70, 50]), np.array([180, 255, 255]))
+red_mask = cv2.bitwise_or(mask1, mask2)</pre></li></ul>
+          </div>
+          <div class="p-2.5 rounded-lg bg-rose-950/30 border border-rose-500/30 text-xs text-rose-200">
+            <strong class="text-rose-400">⚠️ หลุมพรางที่อาจารย์เตือน:</strong> การลืมทำ bitwise_or สองมาสก์จะทำให้ตรวจจับสีแดงหลุดหายไปครึ่งหนึ่งของเฉดสีทั้งหมดทันที
+          </div>
+        </div>
+        <!-- HINT_08 -->
+        <div class="p-4 sm:p-5 rounded-xl bg-slate-950/80 border border-amber-500/40 hover:border-amber-400 transition-all space-y-3 shadow-lg">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-2.5">
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">FOURIER NOTCH</span>
+              <span class="text-xs font-mono text-slate-400">🕒 10 ส.ค. คลิปสอง 00:05</span>
+              <span class="text-xs text-slate-500">(L6 Frequency Domain Analysis (ชุด 0 ข้อ 0.6, 0.7))</span>
+            </div>
+            <span class="text-xs font-bold font-mono text-amber-400">HINT_08</span>
+          </div>
+          <h3 class="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+            <span>🎯</span> การลบเส้นบรรทัดสมุดด้วย Filter วาดเองใน Frequency Domain
+          </h3>
+          <div class="p-2.5 rounded-lg bg-amber-950/30 border border-amber-500/30 text-xs sm:text-sm text-amber-200 italic">
+            🗣️ <strong>คำพูดอาจารย์ในคลิป:</strong> &ldquo;ลบเส้นสมุดด้วย filter ที่วาดเองใน frequency domain&rdquo;
+          </div>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed"><strong>สรุปสาระสำคัญ:</strong> การออกแบบ Custom Notch Filter เพื่อลบสัญญาณรบกวนคาบเวลาของเส้นแนวนอน</p>
+          <div class="space-y-1.5 text-xs sm:text-sm text-slate-300">
+            <strong class="text-amber-300">📌 กฎเหล็ก & วิธีคำนวณที่ต้องจำ:</strong>
+            <ul class="list-disc list-inside space-y-1 pl-1 leading-relaxed"><li><b>ทิศทางของเส้นในสเปกตรัม:</b> ลายเส้นคาบเวลาแนวนอน (Horizontal Periodic Lines) ใน Spatial Domain มีความถี่แปรผันในแนวตั้ง ดังนั้นใน Fourier Spectrum หลังทำ `fftshift` สัญญาณรบกวนจะปรากฏเป็น <i>คู่จุดสว่าง (Conjugate Spikes) เรียงตัวบนแกนแนวตั้ง $(u=0, v \neq 0)$</i></li><li><b>การออกแบบ Custom Filter Mask $H(u, v)$ ด้วยตนเอง:</b><br>1. สร้างเมทริกซ์ขนาดเท่าภาพ $M \times N$ กำหนดค่าเริ่มต้นเป็น 1.0 ทั้งหมด (Pass All)<br>2. วาดแถบสี่เหลี่ยมสีดำ (ค่า 0.0) ปิดทับเฉพาะบริเวณจุดสว่างบนแกนแนวตั้งตามระยะฮาร์มอนิกของเส้นสมุด<br>3. <b>กฎเหล็ก:</b> ต้องเว้นจุดกึ่งกลาง $(M/2, N/2)$ ซึ่งเป็น DC Component $F(0,0)$ ไว้เสมอ เพื่อรักษาความสว่างเฉลี่ยและคอนทราสต์ของตัวหนังสือในสมุด<br>4. นำสเปกตรัมมาคูณกับ Mask: $G(u, v) = F(u, v) \cdot H(u, v)$ แล้วทำ Inverse FFT คืนสภาพภาพ</li></ul>
+          </div>
+          <div class="p-2.5 rounded-lg bg-rose-950/30 border border-rose-500/30 text-xs text-rose-200">
+            <strong class="text-rose-400">⚠️ หลุมพรางที่อาจารย์เตือน:</strong> หากเผลอระบายสีดำทับจุดศูนย์กลาง DC Component ภาพผลลัพธ์หลัง Inverse FFT จะมืดสนิทเกือบ 100%
+          </div>
+        </div>
+        <!-- HINT_09 -->
+        <div class="p-4 sm:p-5 rounded-xl bg-slate-950/80 border border-amber-500/40 hover:border-amber-400 transition-all space-y-3 shadow-lg">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-2.5">
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">PIPELINE LOGIC</span>
+              <span class="text-xs font-mono text-slate-400">🕒 10 ส.ค. คลิปสอง 00:09</span>
+              <span class="text-xs text-slate-500">(L10, L11 Segmentation & Morphology (ชุด 0 ข้อ 0.8))</span>
+            </div>
+            <span class="text-xs font-bold font-mono text-amber-400">HINT_09</span>
+          </div>
+          <h3 class="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+            <span>🎯</span> Pipeline การนับจำนวนวัตถุในภาพ (Object Counting)
+          </h3>
+          <div class="p-2.5 rounded-lg bg-amber-950/30 border border-amber-500/30 text-xs sm:text-sm text-amber-200 italic">
+            🗣️ <strong>คำพูดอาจารย์ในคลิป:</strong> &ldquo;นับจำนวนของในภาพ&rdquo;
+          </div>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed"><strong>สรุปสาระสำคัญ:</strong> ขั้นตอนการตรวจนับจำนวนเหรียญ เซลล์ หรือวัตถุที่มีการสัมผัสกันและมี noise</p>
+          <div class="space-y-1.5 text-xs sm:text-sm text-slate-300">
+            <strong class="text-amber-300">📌 กฎเหล็ก & วิธีคำนวณที่ต้องจำ:</strong>
+            <ul class="list-disc list-inside space-y-1 pl-1 leading-relaxed"><li><b>ขั้นตอนที่ 1 (Binarization):</b> แปลงภาพเป็น Grayscale แล้วทำ Thresholding ด้วย Otsu เพื่อแยกวัตถุขาวบนพื้นหลังดำ</li><li><b>ขั้นตอนที่ 2 (Morphology Pre-cleaning):</b> ทำ Morphological Opening ($A \circ B = (A \ominus B) \oplus B$) เพื่อลบฝุ่นผงขนาดเล็กภายนอก และตัดคอดินคอดเชื่อม (Isthmus) บริเวณที่วัตถุแตะกันให้หลุดออกจากกัน</li><li><b>ขั้นตอนที่ 3 (Connected Components):</b> รันคำสั่ง `num_labels, labels, stats, centroids = cv2.connectedComponentsWithStats(binary, connectivity=8)`</li><li><b>ขั้นตอนที่ 4 (Filtering by Area):</b> วนลูปนับเฉพาะ Label $i \ge 1$ (ตัด Label 0 ที่เป็น Background ออกเสมอ) และกรองขนาด `stats[i, cv2.CC_STAT_AREA] > min_area` เพื่อตัดเศษ noise ที่อาจหลงเหลือ</li></ul>
+          </div>
+          <div class="p-2.5 rounded-lg bg-rose-950/30 border border-rose-500/30 text-xs text-rose-200">
+            <strong class="text-rose-400">⚠️ หลุมพรางที่อาจารย์เตือน:</strong> การลืมนับตัด Label 0 (Background) ออก จะทำให้จำนวนวัตถุที่นับได้เกินมา 1 ชิ้นเสมอ
+          </div>
+        </div>
+        <!-- HINT_10 -->
+        <div class="p-4 sm:p-5 rounded-xl bg-slate-950/80 border border-amber-500/40 hover:border-amber-400 transition-all space-y-3 shadow-lg">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-2.5">
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">EIGEN ANALYSIS</span>
+              <span class="text-xs font-mono text-slate-400">🕒 31 ส.ค. 00:33</span>
+              <span class="text-xs text-slate-500">(L9 Spatial Geometry & PCA (ชุด 0 ข้อ 0.9))</span>
+            </div>
+            <span class="text-xs font-bold font-mono text-amber-400">HINT_10</span>
+          </div>
+          <h3 class="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+            <span>🎯</span> การหาแนว/มุมเอียงของวัตถุด้วย Covariance Matrix & PCA (ปากกา)
+          </h3>
+          <div class="p-2.5 rounded-lg bg-amber-950/30 border border-amber-500/30 text-xs sm:text-sm text-amber-200 italic">
+            🗣️ <strong>คำพูดอาจารย์ในคลิป:</strong> &ldquo;หาแนวของวัตถุด้วย covariance matrix (ครูบอกว่าน่าจะเป็นปากกา)&rdquo;
+          </div>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed"><strong>สรุปสาระสำคัญ:</strong> การหาทิศทางการวางตัวและมุมเอียงของวัตถุทรงยาวจากพิกัดพิกเซลด้วยเมทริกซ์ความแปรปรวนร่วม</p>
+          <div class="space-y-1.5 text-xs sm:text-sm text-slate-300">
+            <strong class="text-amber-300">📌 กฎเหล็ก & วิธีคำนวณที่ต้องจำ:</strong>
+            <ul class="list-disc list-inside space-y-1 pl-1 leading-relaxed"><li><b>ขั้นตอนที่ 1: หาจุดศูนย์ถ่วง (Centroid):</b> $\bar{x} = \frac{1}{N}\sum x_i, \quad \bar{y} = \frac{1}{N}\sum y_i$ ของพิกเซลวัตถุทั้งหมด $N$ จุด</li><li><b>ขั้นตอนที่ 2: คำนวณ Central Moments:</b><br>• $\mu_{20} = \frac{1}{N}\sum (x_i - \bar{x})^2$ (ความแปรปรวนแกน X)<br>• $\mu_{02} = \frac{1}{N}\sum (y_i - \bar{y})^2$ (ความแปรปรวนแกน Y)<br>• $\mu_{11} = \frac{1}{N}\sum (x_i - \bar{x})(y_i - \bar{y})$ (ความแปรปรวนร่วม XY)</li><li><b>ขั้นตอนที่ 3: สร้าง Covariance Matrix $2 \times 2$:</b> $C = \begin{bmatrix} \mu_{20} & \mu_{11} \\ \mu_{11} & \mu_{02} \end{bmatrix}$</li><li><b>ขั้นตอนที่ 4: หา Eigenvalues และ Eigenvectors:</b><br>• First Principal Component (เวกเตอร์เจาะจง $v = (v_x, v_y)$ ที่คู่กับ $\lambda_{max}$) จะชี้ไปตามแนวแกนยาวของด้ามปากกา<br>• <b>มุมเอียงของปากกา:</b> $\theta = \arctan(v_y / v_x)$ หรือ $\theta = \frac{1}{2} \arctan\left(\frac{2\mu_{11}}{\mu_{20} - \mu_{02}}\right)$</li></ul>
+          </div>
+          <div class="p-2.5 rounded-lg bg-rose-950/30 border border-rose-500/30 text-xs text-rose-200">
+            <strong class="text-rose-400">⚠️ หลุมพรางที่อาจารย์เตือน:</strong> ถ้าสลับแกน x และ y ในสูตร arctan มุมที่ได้จะกลายเป็นมุมตั้งฉากกับแนวปากกา (Second Principal Component)
+          </div>
+        </div>
+        <!-- HINT_11 -->
+        <div class="p-4 sm:p-5 rounded-xl bg-slate-950/80 border border-amber-500/40 hover:border-amber-400 transition-all space-y-3 shadow-lg">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-2.5">
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">SET THEORY</span>
+              <span class="text-xs font-mono text-slate-400">🕒 7 ก.ย. 00:15</span>
+              <span class="text-xs text-slate-500">(L10 Mathematical Morphology (พื้นฐานเซต))</span>
+            </div>
+            <span class="text-xs font-bold font-mono text-amber-400">HINT_11</span>
+          </div>
+          <h3 class="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+            <span>🎯</span> การระบุ Set Operations ระหว่างภาพ Input A, B กับภาพผลลัพธ์
+          </h3>
+          <div class="p-2.5 rounded-lg bg-amber-950/30 border border-amber-500/30 text-xs sm:text-sm text-amber-200 italic">
+            🗣️ <strong>คำพูดอาจารย์ในคลิป:</strong> &ldquo;ให้รูป A, B กับรูปผลลัพธ์ แล้วให้บอกว่าเกิดจาก set operation อะไร&rdquo;
+          </div>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed"><strong>สรุปสาระสำคัญ:</strong> การจับคู่การดำเนินการทางเซตของภาพไบนารีจากภาพตัวอย่างในข้อสอบ</p>
+          <div class="space-y-1.5 text-xs sm:text-sm text-slate-300">
+            <strong class="text-amber-300">📌 กฎเหล็ก & วิธีคำนวณที่ต้องจำ:</strong>
+            <ul class="list-disc list-inside space-y-1 pl-1 leading-relaxed"><li><b>$A \cup B$ (Union):</b> รวมพิกเซลขาวทั้งหมดของทั้งสองภาพ (OR)</li><li><b>$A \cap B$ (Intersection):</b> เหลือเฉพาะบริเวณที่ทั้งสองภาพซ้อนทับกันพอดี (AND)</li><li><b>$A - B$ หรือ $A \cap B^c$ (Set Difference):</b> มีเฉพาะเนื้อของ A แต่ถูกเจาะรูแหว่งในส่วนที่ B ไปซ้อนทับ</li><li><b>$A \Delta B$ (Symmetric Difference / XOR):</b> เหลือเฉพาะส่วนที่ไม่ซ้อนทับกันของทั้งสองภาพ (ส่วนที่ซ้อนทับจะกลายเป็นดำ)</li><li><b>$A^c$ (Complement):</b> การกลับสีภาพ (Inverse/Negative: ขาวเป็นดำ ดำเป็นขาว)</li></ul>
+          </div>
+          <div class="p-2.5 rounded-lg bg-rose-950/30 border border-rose-500/30 text-xs text-rose-200">
+            <strong class="text-rose-400">⚠️ หลุมพรางที่อาจารย์เตือน:</strong> สังเกตความแตกต่างระหว่าง $A - B$ (เนื้อ B ไม่ปรากฏเลย) กับ $A \Delta B$ (เนื้อส่วนนอกของ B ยังคงปรากฏอยู่)
+          </div>
+        </div>
+        <!-- HINT_12 -->
+        <div class="p-4 sm:p-5 rounded-xl bg-slate-950/80 border border-amber-500/40 hover:border-amber-400 transition-all space-y-3 shadow-lg">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-2.5">
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">CRITICAL EXAM TRAP</span>
+              <span class="text-xs font-mono text-slate-400">🕒 7 ก.ย. 00:30</span>
+              <span class="text-xs text-slate-500">(L10 Mathematical Morphology (Duality Principle))</span>
+            </div>
+            <span class="text-xs font-bold font-mono text-amber-400">HINT_12</span>
+          </div>
+          <h3 class="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+            <span>🎯</span> หลุมพรางรูปตัว j: เมื่อไม่ระบุสีของ Foreground (1) และ Background (0)
+          </h3>
+          <div class="p-2.5 rounded-lg bg-amber-950/30 border border-amber-500/30 text-xs sm:text-sm text-amber-200 italic">
+            🗣️ <strong>คำพูดอาจารย์ในคลิป:</strong> &ldquo;รูปตัว j: ถ้าโจทย์ไม่บอกว่าสีไหนเป็น 1 ให้ตอบว่าบอกไม่ได้ว่าเป็น Opening หรือ Closing&rdquo;
+          </div>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed"><strong>สรุปสาระสำคัญ:</strong> กับดักข้อสอบข้อเขียนที่นักศึกษามักตกม้าตายเพราะลืมนึกถึงหลักการ Duality</p>
+          <div class="space-y-1.5 text-xs sm:text-sm text-slate-300">
+            <strong class="text-amber-300">📌 กฎเหล็ก & วิธีคำนวณที่ต้องจำ:</strong>
+            <ul class="list-disc list-inside space-y-1 pl-1 leading-relaxed"><li><b>หลักการ Duality ของสัณฐานวิทยา:</b> $(A \circ B)^c = A^c \bullet \hat{B}$</li><li><b>ความหมาย:</b> การกร่อนของพื้นที่สีขาว จะมีค่าเทียบเท่ากับการขยายของพื้นที่สีดำพอดี!</li><li><b>สถานการณ์โจทย์:</b> โจทย์แสดงภาพตัวอักษร 'j' ที่มีการปรับแต่ง เช่น ติ่งแหลมภายนอกถูกลบมนออก หรือรูในห่วงตัว j ถูกถมปิด แต่ <i>โจทย์ไม่ได้บอกว่าสีขาวหรือสีดำคือค่า 1 (ตัววัตถุ)</i></li><li><b>การตอบที่ได้คะแนนเต็ม:</b> ต้องตอบว่า <b>'ไม่สามารถระบุได้ว่าเป็น Opening หรือ Closing'</b> เพราะหากสีขาวคือวัตถุ ภาพอาจเป็น Opening แต่ถ้าสีดำคือวัตถุ ภาพเดียวกันนั้นจะกลายเป็น Closing พอดี!</li></ul>
+          </div>
+          <div class="p-2.5 rounded-lg bg-rose-950/30 border border-rose-500/30 text-xs text-rose-200">
+            <strong class="text-rose-400">⚠️ หลุมพรางที่อาจารย์เตือน:</strong> อย่าด่วนสรุปตามความเคยชินว่าสีขาวต้องเป็นวัตถุเสมอ เพราะในระบบประมวลผลเอกสารหรือสแกนเนอร์ พื้นหลังมักเป็นสีขาวและตัวอักษรเป็นสีดำ
+          </div>
+        </div>
+        </div>
+      </section>
+
       <!-- Quick Formulas Reference Grid -->
       <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 sm:p-6 shadow-xl space-y-4">
         <h2 class="text-lg font-bold text-blue-400 border-b border-slate-800 pb-2">
